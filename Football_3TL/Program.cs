@@ -1,4 +1,4 @@
-using Football_3TL.Data;
+﻿using Football_3TL.Data;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -6,7 +6,7 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
-//??ng k� chu?i k?t n?i CSDL
+//Đăng ký kết nối csdl
 builder.Services.AddDbContext <Football3tlContext>(options => { options.UseSqlServer(builder.Configuration.GetConnectionString("ConnFB3TL")); });
 
 builder.Services.AddHttpContextAccessor();

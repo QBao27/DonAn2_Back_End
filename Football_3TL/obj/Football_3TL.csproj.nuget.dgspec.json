@@ -1,26 +1,27 @@
 {
   "format": 1,
   "restore": {
-    "D:\\2025 - 2026\\HKI\\DoAn2\\Back_End\\Football_3TL\\Football_3TL\\Football_3TL.csproj": {}
+    "E:\\WORKSPACE\\DangHoc\\DoAn_2\\BackEnd_DoAn2_Web\\Football_3TL\\Football_3TL.csproj": {}
   },
   "projects": {
-    "D:\\2025 - 2026\\HKI\\DoAn2\\Back_End\\Football_3TL\\Football_3TL\\Football_3TL.csproj": {
+    "E:\\WORKSPACE\\DangHoc\\DoAn_2\\BackEnd_DoAn2_Web\\Football_3TL\\Football_3TL.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\2025 - 2026\\HKI\\DoAn2\\Back_End\\Football_3TL\\Football_3TL\\Football_3TL.csproj",
+        "projectUniqueName": "E:\\WORKSPACE\\DangHoc\\DoAn_2\\BackEnd_DoAn2_Web\\Football_3TL\\Football_3TL.csproj",
         "projectName": "Football_3TL",
-        "projectPath": "D:\\2025 - 2026\\HKI\\DoAn2\\Back_End\\Football_3TL\\Football_3TL\\Football_3TL.csproj",
-        "packagesPath": "C:\\Users\\acer\\.nuget\\packages\\",
-        "outputPath": "D:\\2025 - 2026\\HKI\\DoAn2\\Back_End\\Football_3TL\\Football_3TL\\obj\\",
+        "projectPath": "E:\\WORKSPACE\\DangHoc\\DoAn_2\\BackEnd_DoAn2_Web\\Football_3TL\\Football_3TL.csproj",
+        "packagesPath": "C:\\Users\\FPTSHOP\\.nuget\\packages\\",
+        "outputPath": "E:\\WORKSPACE\\DangHoc\\DoAn_2\\BackEnd_DoAn2_Web\\Football_3TL\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\acer\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\FPTSHOP\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
           "net8.0"
         ],
         "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
           "C:\\Program Files\\dotnet\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },

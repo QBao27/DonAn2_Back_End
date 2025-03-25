@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Football_3TL")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+758ecec31657cec729bfacc76ea63c23f3b4e947")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+b5156ec971352b2d319ae3d98b0d590c65d606de")]
 [assembly: System.Reflection.AssemblyProductAttribute("Football_3TL")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Football_3TL")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

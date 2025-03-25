@@ -1,65 +1,12 @@
 {
   "Version": 1,
-  "WorkspaceRootPath": "D:\\2025 - 2026\\HKI\\DoAn2\\Back_End\\Football_3TL\\",
-  "Documents": [
-    {
-      "AbsoluteMoniker": "D:0:0:{11F3DDA8-17BC-4BAE-ABD7-9A91760D81CA}|Football_3TL\\Football_3TL.csproj|d:\\2025 - 2026\\hki\\doan2\\back_end\\football_3tl\\football_3tl\\controllers\\homecontroller1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{11F3DDA8-17BC-4BAE-ABD7-9A91760D81CA}|Football_3TL\\Football_3TL.csproj|solutionrelative:football_3tl\\controllers\\homecontroller1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{11F3DDA8-17BC-4BAE-ABD7-9A91760D81CA}|Football_3TL\\Football_3TL.csproj|d:\\2025 - 2026\\hki\\doan2\\back_end\\football_3tl\\football_3tl\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{11F3DDA8-17BC-4BAE-ABD7-9A91760D81CA}|Football_3TL\\Football_3TL.csproj|solutionrelative:football_3tl\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    }
-  ],
+  "WorkspaceRootPath": "E:\\WORKSPACE\\DangHoc\\DoAn_2\\BackEnd_DoAn2_Web\\",
+  "Documents": [],
   "DocumentGroupContainers": [
     {
       "Orientation": 0,
       "VerticalTabListWidth": 256,
-      "DocumentGroups": [
-        {
-          "DockedWidth": 200,
-          "SelectedChildIndex": 4,
-          "Children": [
-            {
-              "$type": "Bookmark",
-              "Name": "ST:131:0:{116d2292-e37d-41cd-a077-ebacac4c8cc4}"
-            },
-            {
-              "$type": "Bookmark",
-              "Name": "ST:128:0:{75188d03-9892-4ae2-abf1-207126247ce5}"
-            },
-            {
-              "$type": "Bookmark",
-              "Name": "ST:132:0:{116d2292-e37d-41cd-a077-ebacac4c8cc4}"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "Program.cs",
-              "DocumentMoniker": "D:\\2025 - 2026\\HKI\\DoAn2\\Back_End\\Football_3TL\\Football_3TL\\Program.cs",
-              "RelativeDocumentMoniker": "Football_3TL\\Program.cs",
-              "ToolTip": "D:\\2025 - 2026\\HKI\\DoAn2\\Back_End\\Football_3TL\\Football_3TL\\Program.cs",
-              "RelativeToolTip": "Football_3TL\\Program.cs",
-              "ViewState": "AgIAAAwAAAAAAAAAAAAAAA0AAAAaAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-24T12:00:04.278Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "HomeController1.cs",
-              "DocumentMoniker": "D:\\2025 - 2026\\HKI\\DoAn2\\Back_End\\Football_3TL\\Football_3TL\\Controllers\\HomeController1.cs",
-              "RelativeDocumentMoniker": "Football_3TL\\Controllers\\HomeController1.cs",
-              "ToolTip": "D:\\2025 - 2026\\HKI\\DoAn2\\Back_End\\Football_3TL\\Football_3TL\\Controllers\\HomeController1.cs",
-              "RelativeToolTip": "Football_3TL\\Controllers\\HomeController1.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAYAAAAtAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-24T11:50:24.448Z",
-              "EditorCaption": ""
-            }
-          ]
-        }
-      ]
+      "DocumentGroups": []
     }
   ]
 }
