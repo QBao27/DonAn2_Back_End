@@ -398,3 +398,34 @@ FodyWeavers.xsd
 
 # JetBrains Rider
 *.sln.iml
+
+# Bỏ qua thư mục build của Visual Studio
+bin/
+obj/
+
+# Bỏ qua cài đặt của Visual Studio
+.vs/
+*.suo
+*.user
+*.cache
+
+# Bỏ qua file log, temp
+*.log
+*.tmp
+
+# Bỏ qua thông tin debug
+*.pdb
+
+# Bỏ qua file DLL và EXE
+*.dll
+*.exe
+
+# Bỏ qua file JSON metadata
+*.sourcelink.json
+
+# Bỏ qua thư viện bên ngoài (nếu có)
+packages/
+node_modules/
+
+# Bỏ qua file publish
+publish/
