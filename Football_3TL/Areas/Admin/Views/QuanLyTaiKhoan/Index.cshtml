@@ -1,0 +1,134 @@
+﻿<div class="main" id="content">
+    <nav class="navbar navbar-expand px-4 py-3">
+        <div class="navbar-collapse collapse">
+            <ul class="navbar-nav justify-content-between" style="width: 1380px;">
+                <li>
+                    <h2 style="font-weight: bolder;">Thông tin chủ sân</h2>
+                </li>
+                <li class="nav-item dropdown">
+                    <a href="#" data-bs-toggle="dropdown" class="nav-icon pe-md-0">
+                        <img src="images/account.png" class="avatar img-fluid" alt="">
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-end rounded" style="width: 180px;">
+                        <div class="row">
+                            <h4 style="font-weight: 600; font-size: larger;" class="ms-2">
+                                Huỳnh Quốc Bảo
+                            </h4>
+                        </div>
+                        <div class="d-flex">
+                            <a class="ms-2 cusor" data-bs-toggle="modal" data-bs-target="#doimk">Đổi mật khẩu</a>
+                        </div>
+                        <div class="d-flex">
+                            <a class="ms-2 cusor" style="color: red;">Đăng xuất</a>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <main class="content px-3 py-3">
+        <div class="container-fluid">
+            <div>
+
+                <div class="row justify-content-between mx-1 mb-4">
+                    <div class="input-group d-flex align-items-center border border-dark rounded"
+                         style="width: 300px;padding: 0;">
+                        <i class="fa-solid fa-magnifying-glass fa-1x ms-2 "></i>
+                        <input type="text" class="form-control input-border" placeholder="Thông tin khách hàng"
+                               aria-label="Username" aria-describedby="basic-addon1" style="border: 0;">
+                    </div>
+                </div>
+
+                <div class="row mt-2">
+                    <div class="col-12">
+                        <table class="table">
+                            <thead style="background: #0e2238;">
+                                <tr>
+                                    <th scope="col">#</th>
+                                    <th scope="col">Họ và tên</th>
+                                    <th scope="col">Tên sân bóng</th>
+                                    <th scope="col">Số điện thoại</th>
+                                    <th scope="col">Email</th>
+                                    <th scope="col"></th>
+
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <th scope="row">1</th>
+                                    <td>Huỳnh Quốc Bảo</td>
+                                    <td>Sân An Khánh</td>
+                                    <td>0376248323</td>
+                                    <td>QuocBao@gmail.com</td>
+                                    <td>
+                                        <a class="cusor me-2 mt-1 d-flex justify-content-end" data-bs-toggle="modal"
+                                           data-bs-target="#Thongtin1"
+                                           style="color: darkblue; font-style: italic; text-decoration: underline;">
+                                            Chi
+                                            tiết
+                                        </a>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    <!-- modal chi tiết -->
+    <div class="modal fade" id="Thongtin1" tabindex="-1" aria-labelledby="chitiet" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content" style="border-radius: 20px">
+                <div class="modal-header d-flex justify-content-center">
+                    <div>
+                        <h5 style="font-weight: bolder;">Thông tin chủ sân</h5>
+                    </div>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-12 px-0">
+                                <div class="container">
+                                    <div class="row mt-2">
+                                        <div class="col-4">
+                                            <h6>
+                                                <span style="font-weight: 600;">
+                                                    Họ
+                                                    tên:
+                                                </span>Huỳnh Quốc Bảo
+                                            </h6>
+                                        </div>
+                                        <div class="col-4">
+                                            <h6>
+                                                <span style="font-weight: 600;">
+                                                    Số
+                                                    điện thoại:
+                                                </span> 012345678
+                                            </h6>
+                                        </div>
+                                        <div class="col-4">
+                                            <h6> <span style="font-weight: 600;">Tên sân bóng: </span>An Khánh</h6>
+                                        </div>
+                                    </div>
+                                    <div class="row mt-2">
+                                        <div class="col-4">
+                                            <h6>
+                                                <span style="font-weight: 600;">Email:</span>
+                                                Quocbao@gmail.com
+                                            </h6>
+                                        </div>
+                                        <div class="col-8">
+                                            <h6><span style="font-weight: 600;">Địa chỉ: </span>33 Nguyễn Đệ, An Hòa, Ninh Kiều, Cần Thơ</h6>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
