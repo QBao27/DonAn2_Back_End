@@ -1,0 +1,267 @@
+﻿<div class="main" id="content">
+    <nav class="navbar navbar-expand px-4 py-3">
+        <div class="navbar-collapse collapse">
+            <ul class="navbar-nav justify-content-between" style="width: 1380px;">
+                <li>
+                    <h2 style="font-weight: bolder;">Quản lý đặt sân</h2>
+                </li>
+                <li class="nav-item dropdown">
+                    <a href="#" data-bs-toggle="dropdown" class="nav-icon pe-md-0">
+                        <img src="images/account.png" class="avatar img-fluid" alt="">
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-end rounded" style="width: 180px;">
+                        <div class="row">
+                            <h4 style="font-weight: 600; font-size: larger;" class="ms-2">
+                                Huỳnh Quốc Bảo
+                            </h4>
+                        </div>
+                        <div class="d-flex">
+                            <a class="ms-2 cusor" style="color: red;">Đăng xuất</a>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <main class="content px-3 py-3">
+        <div class="container-fluid">
+            <div>
+                <div class="row g-2">
+                    <!-- Ô tìm kiếm sân -->
+                    <div class="col-md-3">
+                        <div class="input-group border rounded-2">
+                            <span class="input-group-text bg-white border-0">
+                                <i class="fa-solid fa-magnifying-glass"></i>
+                            </span>
+                            <input type="text" class="form-control border-0" placeholder="Thông tin sân">
+                        </div>
+                    </div>
+                    <!-- Ô chọn ngày -->
+                    <div class="col-md-3">
+                        <input class="form-control" id="myID" style="border-radius: 10px; background-color: white;"
+                               placeholder="Ngày Nhận">
+                    </div>
+                    <!-- Ô chọn thời lượng -->
+                    <div class="col-md-3">
+                        <select class="form-select" id="selectThoiLuong" style="border-radius: 10px; background-color: white;">
+                            <option selected>Chọn thời lượng</option>
+                            <option value="1h">1 giờ</option>
+                            <option value="1.5h">1.5 giờ</option>
+                            <option value="2h">2 giờ</option>
+                        </select>
+                    </div>
+                    <!-- Ô chọn giờ nhận sân -->
+                    <div class="col-md-3">
+                        <select class="form-select" id="selectGio" style="border-radius: 10px; background-color: white;">
+                            <option selected>Chọn giờ nhận</option>
+                            <option value="08:00">08:00</option>
+                            <option value="10:00">10:00</option>
+                            <option value="12:00">12:00</option>
+                            <option value="14:00">14:00</option>
+                            <option value="16:00">16:00</option>
+                            <option value="18:00">18:00</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="row mt-2">
+                    <div class="col-12">
+                        <table class="table">
+                            <thead style="background: #0e2238;">
+                                <tr>
+                                    <th scope="col" class="col-1">STT</th>
+                                    <th scope="col" class="col-2">Tên sân</th>
+                                    <th scope="col" class="col-1">Loại sân</th>
+                                    <th scope="col" class="col-2 text-center">Giá sân</th>
+                                    <th scope="col" class="col-2">Trạng thái</th>
+                                    <th scope="col" class="col-2">Thanh toán</th>
+                                    <th scope="col" class="col-2"></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <th scope="row">1</th>
+                                    <td class="me-2">Sân A</td>
+                                    <td>Sân 5</td>
+                                    <td class="text-center">250.000 / 1h</td>
+                                    <td>Trống</td>
+                                    <td class="text-secondary">Chưa thanh toán</td>
+                                    <td>
+                                        <button type="button" class="btn btn-secondary btn-sm w-100"
+                                                style="border-radius: 10px;" data-bs-toggle="modal"
+                                                data-bs-target="#modalDatSan">
+                                            Đặt sân bóng
+                                        </button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">1</th>
+                                    <td class="me-2">Sân A</td>
+                                    <td>Sân 5</td>
+                                    <td class="text-center">250.000 / 1h</td>
+                                    <td>Đã đặt</td>
+                                    <td class="text-success">Đã thanh toán</td>
+                                    <td>
+                                        <button type="button" class="btn btn-warning btn-sm w-100"
+                                                style="border-radius: 10px;" data-bs-toggle="modal"
+                                                data-bs-target="#modalXemThongTin">
+                                            Xem thông tin
+                                        </button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">1</th>
+                                    <td class="me-2">Sân A</td>
+                                    <td>Sân 5</td>
+                                    <td class="text-center">250.000 / 1h</td>
+                                    <td>Hoạt động</td>
+                                    <td class="text-warning">Chưa thanh toán</td>
+                                    <td>
+                                        <button type="button" class="btn btn-success btn-sm w-100"
+                                                style="border-radius: 10px;" data-bs-toggle="modal"
+                                                data-bs-target="#modalXemThongTin">
+                                            Thanh toán
+                                        </button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+</div>
+
+<!-- Modal cho nút chọn sân -->
+<div class="modal fade" id="modalDatSan" tabindex="-1" aria-labelledby="modalDatSanLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" id="modalDatSanDialog">
+        <div class="modal-content" style="border-radius: 20px" id="modalDatSanContent">
+            <div class="modal-header d-flex justify-content-center">
+                <div>
+                    <h5 style="font-weight: bolder;">Thông tin sân</h5>
+                </div>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-12 px-0">
+                            <div class="container">
+                                <div class="row mt-2">
+                                    <div class="col-4">
+                                        <h6><span style="font-weight: 600;">Họ tên:</span></h6>
+                                        <input type="text" class="form-control" id="hovatenDatSan">
+                                        <span class="error text-danger" id="hovatenDatSanError"></span>
+                                    </div>
+                                    <div class="col-4">
+                                        <h6><span style="font-weight: 600;">Số điện thoại:</span></h6>
+                                        <input type="number" class="form-control" id="SoDienThoaiDatSan">
+                                        <span class="error text-danger" id="SoDienThoaiDatSanError"></span>
+                                    </div>
+                                    <div class="col-4">
+                                        <h6><span style="font-weight: 600;">Ngày nhận:</span></h6>
+                                        <input type="text" class="form-control" id="NgayDatSan" readonly>
+                                        <span class="error text-danger" id="NgayDatSanError"></span>
+                                    </div>
+                                </div>
+                                <div class="row mt-3">
+                                    <div class="col-4">
+                                        <h6><span style="font-weight: 600;">Giờ nhận:</span></h6>
+                                        <input type="text" class="form-control" id="GioDatSan" readonly>
+                                        <span class="error text-danger" id="GioDatSanError"></span>
+                                    </div>
+                                    <div class="col-4">
+                                        <h6><span style="font-weight: 600;">Thời lượng</span></h6>
+                                        <select type="number" class="form-select" id="ThoiLuongDatSan">
+                                            <option value="1">1 giờ</option>
+                                            <option value="2">1.5 giờ</option>
+                                            <option value="3">2 giờ</option>
+                                        </select>
+                                        <span class="error text-danger" id="ThoiLuongDatSanError"></span>
+                                    </div>
+                                    <div class="col-4">
+                                        <h6><span style="font-weight: 600;">Thanh toán:</span></h6>
+                                        <input type="text" class="form-control" id="thanhToanTrong" readonly>
+                                        <span class="error text-danger" id="thanhToanError"></span>
+                                    </div>
+                                </div>
+                                <div class="row d-flex justify-content-center mt-4 mb-2">
+                                    <button type="button" class="btn btn-success w-50" id="btnDatSanTrong" onclick="KiemTraLoiDatSan()">
+                                        Đặt
+                                        sân
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+<!-- Modal xem thông tin  -->
+<div class="modal fade" id="modalXemThongTin" tabindex="-1" aria-labelledby="modalXemThongTinLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" id="modalDatSanDialog">
+        <div class="modal-content" style="border-radius: 20px" id="modalDatSanContent">
+            <div class="modal-header d-flex justify-content-center">
+                <div>
+                    <h5 style="font-weight: bolder;">Thông tin sân</h5>
+                </div>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-12 px-0">
+                            <div class="container">
+                                <div class="row mt-2">
+                                    <div class="col-4">
+                                        <h6><span style="font-weight: 600;">Họ tên:</span></h6>
+                                        <input type="text" class="form-control" id="tenNguoiDatDaDat" readonly>
+                                        <span class="error text-danger" id="tenNguoiDatDaDatError"></span>
+                                    </div>
+                                    <div class="col-4">
+                                        <h6><span style="font-weight: 600;">Số điện thoại:</span></h6>
+                                        <input type="number" class="form-control" id="soDienThoaiDaDat" readonly>
+                                        <span class="error text-danger" id="soDienThoaiDaDatError"></span>
+                                    </div>
+                                    <div class="col-4">
+                                        <h6><span style="font-weight: 600;">Ngày nhận:</span></h6>
+                                        <input type="text" class="form-control" readonly>
+                                        <span class="error text-danger" id="ngayNhanDaDatError"></span>
+                                    </div>
+                                </div>
+                                <div class="row mt-3 mb-4">
+                                    <div class="col-4">
+                                        <h6><span style="font-weight: 600;">Giờ nhận:</span></h6>
+                                        <input type="text" class="form-control" id="ngayNhanDaDat" readonly>
+                                        <span class="error text-danger" id="ngayNhanDaDatError"></span>
+                                    </div>
+                                    <div class="col-4">
+                                        <h6><span style="font-weight: 600;">Thời lượng:</span></h6>
+                                        <input type="text" class="form-control" id="thoiLuongDaDat" readonly>
+                                        <span class="error text-danger" id="thoiLuongDaDatError"></span>
+                                        <span class="error text-danger" id="thoiLuongDaDatError"></span>
+                                    </div>
+                                    <div class="col-4">
+                                        <h6><span style="font-weight: 600;">Thanh toán:</span></h6>
+                                        <input type="text" class="form-control" id="thanhToanDaDat" readonly>
+                                        <span class="error text-danger" id="thanhToanDaDatError"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+<script>
+    flatpickr("#myID", {
+        dateFormat: "d-m-Y",
+    });
+</script>
