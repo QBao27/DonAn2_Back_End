@@ -20,7 +20,6 @@
     <Folder Include="Areas\Admin\Data\" />
     <Folder Include="Areas\Admin\Models\" />
     <Folder Include="Areas\ChuSan\Data\" />
-    <Folder Include="Areas\ChuSan\Models\" />
   </ItemGroup>
 
 </Project>

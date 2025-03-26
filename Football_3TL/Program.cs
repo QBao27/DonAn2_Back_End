@@ -31,6 +31,6 @@ app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "areas",
-    pattern: "{area=Admin}/{controller=QuanLyTaiKhoan}/{action=Index}/{id?}"
+    pattern: "{area=ChuSan}/{controller=QuanLySan}/{action=Index}/{id?}"
 ); 
 app.Run();

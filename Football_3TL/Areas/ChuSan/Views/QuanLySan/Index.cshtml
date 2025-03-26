@@ -1,4 +1,4 @@
-﻿<div class="main" class="" id="content">
+﻿<div class="main" id="content">
     <nav class="navbar navbar-expand px-4 py-3">
         <div class="container-fluid">
             <div class="navbar-collapse collapse">
@@ -31,7 +31,7 @@
                     <div class="col-12 col-md-4">
                         <div class="input-group align-items-center border border-dark rounded w-100">
                             <i class="fa-solid fa-magnifying-glass fa-1x ms-2"></i>
-                            <input type="text" class="form-control input-border border-0" placeholder="Thông tin sân">
+                            <input type="text" id="timKiemSan" class="form-control input-border border-0" placeholder="Thông tin sân" onkeyup="TimKiemSan()">
                         </div>
                     </div>
                     <div class="col-12 col-md-auto mt-2 mt-md-0">
@@ -55,20 +55,7 @@
                                         <th scope="col" class="col-2"></th>
                                     </tr>
                                 </thead>
-                                <tbody>
-                                    <tr>
-                                        <th scope="row">1</th>
-                                        <td>Sân 1</td>
-                                        <td>Sân 5</td>
-                                        <td>200k/giờ</td>
-                                        <td class="d-flex justify-content-end">
-                                            <button type="button" class="btn btn-warning me-2" data-bs-toggle="modal"
-                                                    data-bs-target="#sua" data-bs-dismiss="modal">
-                                                Sửa
-                                            </button>
-                                            <button type="button" class="btn btn-danger" onclick="HienThiThongBaoXoa()">Xóa</button>
-                                        </td>
-                                    </tr>
+                                <tbody id="sanBongTable">
                                 </tbody>
                             </table>
                         </div>
@@ -77,58 +64,63 @@
             </div>
         </div>
     </main>
+    <!-- Phần điều hướng phân trang -->
+    <div class="d-flex justify-content-center">
+        <ul class="pagination" id="pagination"></ul>
+    </div>
 
-    <!-- Modal thêm -->
+
+     <!-- Modal thêm -->
     <div class="modal fade" id="them" tabindex="-1" aria-labelledby="them" aria-hidden="true">
-        <div class="modal-dialog modal-fullscreen-xl-down">
-            <div class="modal-content" style="border-radius: 20px;">
-                <div class="modal-header d-flex justify-content-center text-center">
-                    <div>
-                        <h5 style="font-weight: bolder;">Thêm sân</h5>
+            <div class="modal-dialog modal-fullscreen-xl-down">
+                <div class="modal-content" style="border-radius: 20px;">
+                    <div class="modal-header d-flex justify-content-center text-center">
+                        <div>
+                            <h5 style="font-weight: bolder;">Thêm sân</h5>
+                        </div>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <div class="container-fluid">
-                        <div class="row">
-                            <div class="col-12">
-                                <label for="tenSan" class="ms-1 mb-1 label-modal">Tên sân</label>
-                                <input type="text" id="tenSan" class="form-control" placeholder="">
-                                <span id="errortenSan" class="text-danger"></span>
+                    <div class="modal-body">
+                        <div class="container-fluid">
+                            <div class="row">
+                                <div class="col-12">
+                                    <label for="tenSan" class="ms-1 mb-1 label-modal">Tên sân</label>
+                                    <input type="text" id="tenSan" class="form-control" placeholder="">
+                                    <span id="errortenSan" class="text-danger"></span>
+                                </div>
+                                <div class="col-12">
+                                    <label for="gia" class="ms-1 mb-1 label-modal">Giá</label>
+                                    <input type="number" id="gia" class="form-control" placeholder="">
+                                    <span id="errorGia" class="text-danger"></span>
+                                </div>
                             </div>
-                            <div class="col-12">
-                                <label for="gia" class="ms-1 mb-1 label-modal">Giá</label>
-                                <input type="number" id="gia" class="form-control" placeholder="">
-                                <span id="errorGia" class="text-danger"></span>
+                            <div class="row mt-3">
+                                <div class="col-12">
+                                    <label class="mb-1 ms-1 label-modal">Loại sân</label>
+                                    <select class="form-select" id="LoaiSan" required>
+                                        <option value="">Chọn loại sân</option>
+                                        <option value="5">Sân 5</option>
+                                        <option value="7">Sân 7</option>
+                                    </select>
+                                    <span class="error text-danger" id="ErrorLoaiSan"></span>
+                                </div>
                             </div>
                         </div>
-                        <div class="row mt-3">
-                            <div class="col-12">
-                                <label class="mb-1 ms-1 label-modal">Loại sân</label>
-                                <select class="form-select" id="LoaiSan" required>
-                                    <option value="">Chọn loại sân</option>
-                                    <option value="5">Sân 5</option>
-                                    <option value="7">Sân 7</option>
-                                </select>
-                                <span class="error text-danger" id="ErrorLoaiSan"></span>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- Nút thêm -->
-                    <div class="container my-2">
-                        <div class="row" style="justify-content: flex-end;">
-                            <div class="col-12 d-flex justify-content-end" style="width: 160px;">
-                                <button type="button" id="btnThem" class="btn btn-success w-100 w-md-auto"
-                                        style="font-size: small;" onclick="KiemTraLoi()">
-                                    Thêm sân
-                                </button>
+                        <!-- Nút thêm -->
+                        <div class="container my-2">
+                            <div class="row" style="justify-content: flex-end;">
+                                <div class="col-12 d-flex justify-content-end" style="width: 160px;">
+                                    <button type="button" id="btnThem" class="btn btn-success w-100 w-md-auto"
+                                            style="font-size: small;" onclick="KiemTraLoi()">
+                                        Thêm sân
+                                    </button>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
 
 
     <!-- Modal sửa -->
@@ -142,6 +134,7 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
+                    <input type="hidden" id="EditmaSan"> <!-- Ẩn mã sân -->
                     <div class="container-fluid">
                         <div class="row">
                             <div class="col-12">
