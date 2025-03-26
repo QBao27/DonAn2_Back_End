@@ -1,0 +1,340 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- BootStrap 5 CND -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <!-- Google font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap"
+          rel="stylesheet">
+    <!-- font awsome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
+          integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg=="
+          crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <!-- BootStrap icon -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+
+    <!-- OWN carousel -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css"
+          integrity="sha512-tS3S5qG0BlhnQROyJXvNjeEM4UpMXHrQfTGmbQ1gKmelCxlSEBUaxhRBj/EFTzpbP4RVSrpEikbmdJobCvhE3g=="
+          crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <!-- Flatpick -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <link rel="stylesheet" type="text/css" href="https://npmcdn.com/flatpickr/dist/themes/material_orange.css">
+
+    <!-- Thư viện để lấy tỉnh quận huyện -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" />
+
+    <!--Thư viện thông báo đẹp-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/noty/3.1.4/noty.min.css">
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="~/css/CssKhachHang/main.css">
+    <link rel="stylesheet" href="~/css/CssKhachHang/DanhSachSan.css">
+    <title>Hệ Thống Sân Bóng 3TL</title>
+</head>
+
+<body>
+    <!-- Header -->
+    <nav class="navbar navbar-expand-lg fixed-top px-2 bg-light">
+        <div class="container">
+            <a class="navbar-brand py-3" href="#">
+                <img src="https://img.thegioithethao.vn/media/logo/logo.svg" alt="Sport World">
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <div class="search-box mx-3 w-100">
+                    <input class="form-control" id="timkiem" style="font-size: larger;" type="text"
+                           placeholder="Tìm kiếm...">
+                    <div class="search-text"></div>
+                    <i class="bi bi-search search-icon"></i>
+                </div>
+            </div>
+
+            <div class="d-flex align-items-center gap-3 d-none d-lg-flex">
+                <div class="icon-box"><i class="bi bi-dribbble"></i><span>Sân thể thao</span></div>
+                <div class="icon-box"><i class="bi bi-people-fill"></i><span>Đội thể thao</span></div>
+                <div class="dropdown">
+                    <div class="icon-box dropdown-toggle" id="accountDropdown" data-bs-toggle="dropdown"
+                         aria-expanded="false">
+                        <i class="bi bi-person-fill"></i>
+                        <span>Tài khoản</span>
+                    </div>
+                    <ul class="dropdown-menu" aria-labelledby="accountDropdown" style="border-radius: 10px;">
+                        <li><a class="dropdown-item" onclick="modalLogin()">Đăng nhập</a></li>
+                        <li><a class="dropdown-item" onclick="modalSignUp()">Đăng ký</a></li>
+                    </ul>
+                </div>
+                <div class="icon-box"><i class="bi bi-facebook"></i><span>Facebook</span></div>
+                <div class="icon-box"><i class="bi bi-youtube"></i><span>Youtube</span></div>
+            </div>
+
+            <!-- Dropdown cho mobile -->
+            <div class="d-lg-none">
+                <div class="dropdown">
+                    <button class="btn btn-light dropdown-toggle" type="button" id="mobileDropdown"
+                            data-bs-toggle="dropdown" aria-expanded="false">
+                        <i class="bi bi-list"></i>
+                    </button>
+                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="mobileDropdown">
+                        <li><a class="dropdown-item" href="#"><i class="bi bi-dribbble"></i> Sân thể thao</a></li>
+                        <li><a class="dropdown-item" href="#"><i class="bi bi-people-fill"></i> Đội thể thao</a></li>
+                        <li>
+                            <a class="dropdown-item" onclick="modalLogin()">
+                                <i class="bi bi-person-fill"></i> Đăng
+                                nhập
+                            </a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item" onclick="modalSignUp()">
+                                <i class="bi bi-person-plus-fill"></i> Đăng
+                                ký
+                            </a>
+                        </li>
+                        <li><a class="dropdown-item" href="#"><i class="bi bi-facebook"></i> Facebook</a></li>
+                        <li><a class="dropdown-item" href="#"><i class="bi bi-youtube"></i> Youtube</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </nav>
+  
+    <!-- Modal đăng nhập -->
+    <div class="modal fade" id="modalDangNhap" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content" style="border-radius: 10px;">
+                <div class="modal-body">
+                    <div class="text-end">
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
+                                onclick="resetDataLogin()"></button>
+                    </div>
+                    <div class="d-flex justify-content-center">
+                        <h5 class="modal-title fw-bold">ĐĂNG NHẬP</h5>
+                    </div>
+                    <div class="p-3">
+                        <div class="mt-3" id="boxDangNhap">
+                            <input type="text" class="form-control border-1 border-dark" id="taiKhoanDangNhap"
+                                   placeholder="Nhập tài khoản" style="border-radius: 10px; font-size: large;" />
+                            <span id="taiKhoanDangNhapError" class="text-danger error-Login"
+                                  style="font-size: 0.875rem;"></span>
+                        </div>
+                        <div class="mt-3">
+                            <input type="password" class="form-control border-1 border-dark" id="matKhauDangNhap"
+                                   placeholder="Nhập mật khẩu" style="border-radius: 10px; font-size: large;" />
+                            <span id="matKhauDangNhapError" class="text-danger error-Login"
+                                  style="font-size: 0.875rem;"></span>
+                        </div>
+                        <div class="text-danger mt-3">*Đăng nhập vào trang quản lý sân bóng!</div>
+                        <button class="btn w-100 text-light mt-3" onclick="checkDataLogin()"
+                                style="background-color: rgb(20, 34, 56); border-radius: 10px;">
+                            Đăng Nhập
+                        </button>
+                        <div class=" text-center mt-3">
+                            <span>
+                                Bạn chưa có tài khoản? <a href="#" class="fw-medium text-decoration-none"
+                                                          onclick="modalLogin(), modalSignUp()">
+                                    Đăng ký
+                                    tài khoản
+                                </a>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Modal đăng ký -->
+    <div class="modal fade" id="modalDangKy" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content" style="border-radius: 10px;">
+                <div class="modal-body">
+                    <div class="text-end">
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
+                                onclick="resetDataSignUp()"></button>
+                    </div>
+                    <div class="d-flex justify-content-center">
+                        <h5 class="modal-title fw-bold">ĐĂNG KÝ</h5>
+                    </div>
+                    <div class="p-3">
+                        <div class="row">
+                            <div class="col-6 mt-3">
+                                <input type="text" class="form-control border-1 border-dark" id="fullNameSignUp"
+                                       placeholder="Nhập họ và tên" style="border-radius: 10px;" />
+                                <span id="fullNameSignUpError" class="text-danger error-Login"
+                                      style="font-size: 0.875rem;"></span>
+                            </div>
+                            <div class="col-6 mt-3">
+                                <input type="text" class="form-control border-1 border-dark" id="phoneSignUp"
+                                       placeholder="Nhập số điện thoại" style="border-radius: 10px;" />
+                                <span id="phoneSignUpError" class="text-danger error-Login"
+                                      style="font-size: 0.875rem;"></span>
+                            </div>
+                            <div class="col-6 mt-3">
+                                <input type="email" class="form-control border-1 border-dark" id="emailSignUp"
+                                       placeholder="Nhập Email" style="border-radius: 10px;" />
+                                <span id="emailSignUpError" class="text-danger error-Login"
+                                      style="font-size: 0.875rem;"></span>
+                            </div>
+                            <div class="col-6 mt-3">
+                                <input type="email" class="form-control border-1 border-dark" id="sanBongNameSignUp"
+                                       placeholder="Nhập tên sân bóng" style="border-radius: 10px;" />
+                                <span id="sanBongNameSignUpError" class="text-danger error-Login"
+                                      style="font-size: 0.875rem;"></span>
+                            </div>
+                            <div class="col-6 mt-3">
+                                <input type="password" class="form-control border-1 border-dark" id="passWordSignUp"
+                                       placeholder="Nhập mật khẩu" style="border-radius: 10px;" />
+                                <span id="passWordSignUpError" class="text-danger error-Login"
+                                      style="font-size: 0.875rem;"></span>
+                            </div>
+                            <div class="col-6 mt-3">
+                                <input type="password" class="form-control border-1 border-dark" id="passWordSignUp2"
+                                       placeholder="Xác nhận mật khẩu" style="border-radius: 10px;" />
+                                <span id="passWordSignUp2Error" class="text-danger error-Login"
+                                      style="font-size: 0.875rem;"></span>
+                            </div>
+                            <div class="col-6 mt-3 mb-2">
+                                <select id="diaChiTinh" class="select2 form-select border-1 border-dark"
+                                        style="border-radius: 10px;">
+                                    <!-- code vao day -->
+                                </select>
+                                <span id="diaChiTinhError" class="text-danger error-Login"
+                                      style="font-size: 0.875rem;"></span>
+                            </div>
+                            <div class="col-6 mt-3 mb-2">
+                                <select id="diaChiHuyen" class="select2 form-select border-1 border-dark"
+                                        style="border-radius: 10px;">
+                                    <!-- code vao day -->
+                                </select>
+                                <span id="diaChiHuyenError" class="text-danger error-Login"
+                                      style="font-size: 0.875rem;"></span>
+                            </div>
+                            <div class="col-6 mt-3 mb-2">
+                                <select id="diaChiXa" class="select2 form-select border-1 border-dark"
+                                        style="border-radius: 10px;">
+                                    <!-- code vao day -->
+                                </select>
+                                <span id="diaChiXaError" class="text-danger error-Login"
+                                      style="font-size: 0.875rem;"></span>
+                            </div>
+                            <div class="col-6 mt-3 mb-2">
+                                <input type="text" class="form-control border-1 border-dark" id="diaChiCuThe"
+                                       placeholder="Địa chỉ sân cụ thể (tên đường, số nhà)*"
+                                       style="border-radius: 10px;" />
+                                <span id="diaChiCuTheError" class="text-danger error-Login"
+                                      style="font-size: 0.875rem;"></span>
+                            </div>
+                        </div>
+                        <div class="text-danger mt-3">*Đăng ký tài khoản dành cho chủ sân bóng!</div>
+                        <button class="btn w-100 text-light mt-3" onclick="checkDataSignUp()"
+                                style="background-color: rgb(20, 34, 56); border-radius: 10px;">
+                            Đăng Ký
+                        </button>
+                        <div class="mt-3 text-center">
+                            <span>
+                                Bạn đã có tài khoản? <a id="chuyenHuong" href="#"
+                                                        class="fw-medium text-decoration-none" onclick="modalLogin(), modalSignUp()">
+                                    Đăng
+                                    Nhập
+                                </a>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    @RenderBody();
+
+    <!-- Footer -->
+    <footer class="bg-dark py-4">
+        <div class="container">
+            <div class="row gy-3 mx-auto">
+                <div class="col-lg-4 col-sm-6 d-flex text-light gap-2 justify-content-center ">
+                    <i class="bi bi-geo-alt fs-5" style="color: red"></i>
+                    <div>
+                        <h4 class="mb-2">Address</h4>
+                        <p class="mb-0" style="height:25px">A108 Adam Street</p>
+                        <p>New York, NY 535022</p>
+                        <p></p>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-sm-6 d-flex text-light gap-2 justify-content-center ">
+                    <i class="bi bi-telephone fs-5" style="color: red"></i>
+                    <div>
+                        <h4 class="mb-2">Contact</h4>
+                        <p class="mb-0" style="height:25px"><span class="fw-bold">Phone: </span>035436623</p>
+                        <p><span class="fw-bold">Email: </span>4tl@gmail.com</p>
+                        <p></p>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-sm-6 d-flex text-light gap-2 justify-content-center">
+                    <i class="bi bi-clock fs-5" style="color: red"></i>
+                    <div>
+                        <h4 class="mb-2">Opening Hours</h4>
+                        <p class="mb-0" style="height:25px"><span class="fw-bold">Mon-Sat: </span>7AM - 22PM</p>
+                        <p><span class="fw-bold">Sunday: </span>Closed</p>
+                        <p></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <hr class="text-light">
+        <div class="container copyright text-center text-light">
+            <p class="m-0" style="height:30px">
+                © <span>Copyright</span> <strong class="px-1 sitename">3TL</strong>
+                <span>All Rights Reserved</span>
+            </p>
+            <div>
+                Designed by <a href="#" class="text-danger" style="text-decoration: none;">BaoAnh</a> Distributed by <a href="#" class="text-danger" style="text-decoration: none;">3TL_FootBall</a>
+            </div>
+        </div>
+    </footer>
+    <!-- Boottrap js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.0.1/js/bootstrap.min.js"
+            integrity="sha512-EKWWs1ZcA2ZY9lbLISPz8aGR2+L7JVYqBAYTq5AXgBkSjRSuQEGqWx8R1zAX16KdXPaCjOCaKE8MCpU0wcHlHA=="
+            crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+    <!-- Jquery-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"
+            integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g=="
+            crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <!-- own Caroul js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"
+            integrity="sha512-bPs7Ae6pVvhOSiIcyUClR7/q2OAsRiovw4vAkX+zJbw3ShAeeqezq50RIIcIURq7Oa20rW2n2q+fyXBNcU9lrw=="
+            crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <!-- Flatpick -->
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+
+    <!-- select2 de chon tinh, huyen -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
+
+    <!-- Thư viện thông báo đẹp -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/noty/3.1.4/noty.min.js"></script>
+
+    <!-- js file -->
+    <script src="~/js/JsKhachHang/main.js"></script>
+    <script src="~/js/JsKhachHang/danhSachSanBong.js"></script>
+    <script src="~/js/JsKhachHang/Login.js"></script>
+    <script src="~/js/JsKhachHang/SignUp.js"></script>
+    <script src="~/js/JsKhachHang/traCuuDatSan.js"></script>
+    <script src="~/js/JsKhachHang/loctinhhuyen.js"></script>
+</body>
+
+</html>

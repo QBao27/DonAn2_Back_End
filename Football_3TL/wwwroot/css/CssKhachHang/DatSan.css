@@ -1,0 +1,237 @@
+.option::before {
+    content: "|";
+    width: 2px;
+    color: #ddd;
+}
+.Thongtinsan::before {
+    content: "|";
+    width: 4px;
+    color: #FFD88A;
+}
+.form-group {
+    border-radius: 8px;
+    border: 1px solid #142239;
+    background: #FFF;
+    height: 48px;
+    font-size: 16px;
+}
+.form-control:focus {
+    color: #212529;
+    background-color: #fff;
+    outline: 0;
+    border-color: black;
+    box-shadow: 0 0 0 rgba(0, 0, 0, 0);
+}
+.form-control{
+    border-color: black;
+    font-size: 16px;
+    height: 48px;
+}
+
+.input::placeholder{
+    font-size: 16px;
+    color: black !important;
+}
+.giodat {
+    border-radius: 10px;
+    border: 1px solid #93B4FD ;
+    background-color: #DBE6FE;
+}
+.button-hour{
+    width: 82px; display: flex;
+    height: 40px; 
+    background-color: #142239;
+    border-radius: 10px;
+    justify-content: center;
+    flex-wrap: wrap;
+    align-content: center;
+}
+.hower-giodat :hover{
+background-color: white;
+}
+
+.nav-tabs .nav-link.active {
+    color: black; /* Màu chữ khi được chọn */
+    background-color: #FAFAFA !important; /* Màu nền khi được chọn */
+}
+.nav-link {
+    color: black !important;
+}
+
+.size-gg{
+    font-size: large;
+}
+
+#toast-container {
+    position: fixed;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 9999;
+    display: flex;
+    flex-direction: column-reverse; 
+    gap: 10px;
+    align-items: center;
+}
+
+.toast {
+    padding: 15px;
+    border-radius: 5px;
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    animation: fadeInOut 3s ease-in-out;
+}
+
+.toast-success {
+    background-color: #4CAF50;
+}
+
+.toast-error {
+    background-color: #F44336;
+}
+
+@keyframes fadeInOut {
+    0% { opacity: 0; transform: translateY(-50px); } /* Bắt đầu từ trên cao hơn */
+    20% { opacity: 1; transform: translateY(0); } /* Xuống đúng vị trí */
+    80% { opacity: 1; }
+    100% { opacity: 0; transform: translateY(-50px); } /* Di chuyển lên trên khi biến mất */
+}
+
+navbar {
+    background-color: #fff ;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    
+}
+
+.navbar-brand img {
+    height: 40px;
+}
+
+.search-box {
+position: relative;
+max-width: 450px;
+width: 100%;
+overflow: hidden;
+}
+
+.search-text {
+position: absolute;
+top: 50%;
+left: 15px;
+transform: translateY(-50%);
+font-size: 16px;
+font-weight: 500;
+color: gray;
+white-space: nowrap;
+}
+
+.search-box input {
+    border-radius: 20px;
+    padding-right: 40px;
+}
+
+.search-box .search-icon {
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: gray;
+    cursor: pointer;
+   
+}
+
+.icon-box {
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+}
+
+.icon-box i {
+    font-size: 20px;
+    color: #333;
+}
+
+.icon-box span {
+    font-size: 12px;
+    font-weight: 500;
+    display: block;
+}
+
+.icon-box:hover i,
+.icon-box:hover span {
+    color: #d9534f;
+}
+
+@media (max-width: 768px) {
+    .icon-box span {
+        display: none;
+    }
+}
+.search-container {
+    width: 100%;      /* Đảm bảo full chiều ngang */
+    max-width: 100%;  /* Giữ cho nó không bị thu nhỏ */
+    margin: 20px 0;
+
+}
+
+.search-container form {
+    width: 100%; /* Đảm bảo form bên trong cũng mở rộng tối đa */
+    border-radius: 10px !important;/* Bo góc toàn bộ form */
+    overflow: hidden; /* Đảm bảo bo góc hiển thị đúng */
+}
+.banner {
+    position: relative;
+    width: 100%;
+    border-radius: 10px;
+    overflow: hidden;
+    margin: 20px 0; /* Thêm margin trên và dưới để tạo khoảng cách */
+    transition: transform 0.3s ease-in-out; /* Hiệu ứng hover */
+   
+}
+
+.banner img {
+    width: 100%;
+    height: auto;
+    border-radius: 10px;
+    display: block;
+}
+
+.banner .text-content {
+    position: absolute;
+    top: 50%; /* Căn giữa theo chiều dọc */
+    left: 5%; /* Đẩy chữ về bên trái */
+    transform: translateY(-50%); /* Căn giữa chữ theo chiều dọc */
+    color: #d81b1b; /* Đổi màu chữ đỏ để nổi bật */
+    text-align: left;
+    font-weight: bold; /* Làm đậm chữ để nổi bật */
+    font-size: 1.5rem; /* Tăng kích thước chữ */
+}
+
+.banner:hover {
+    transform: scale(1.05); /* Phóng to nhẹ khi hover */
+}
+
+.highlight {
+    color: red;
+    font-weight: bold;
+}
+
+.btn-custom {
+    background-color: red;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+} 
+.dropdown-toggle::after {
+    display: none !important;
+}
+
+
+
+
+
+
+

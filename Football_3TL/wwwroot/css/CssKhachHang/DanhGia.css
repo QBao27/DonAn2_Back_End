@@ -1,0 +1,37 @@
+/* Chuc nang danh gia */
+/* ngôi sao khi được chọn */
+.star-rating {
+    direction: rtl;
+    display: inline-block;
+    font-size: 1.5em;
+    color: #f39c12;
+}
+
+/* Ẩn nút chọn radio */
+.star-rating input {
+    display: none;
+}
+
+/* Ngôi sao khi chưa chọn */
+.star-rating label {
+    color: #ccc;
+    cursor: pointer;
+}
+
+/* Ngôi sao ở ngoài trung bình*/
+.saoTrungBinh{
+    cursor: pointer;
+    color: #ccc; /* Màu xám cho sao chưa chọn */
+    font-size: 20px; /* Kích thước sao */
+}
+
+.star-rating input:checked ~ label,
+.star-rating input:checked ~ label ~ label {
+    color: #f39c12;
+    /* Màu c?a sao ?ã ch?n */
+}
+
+/* thống kê đánh giá */
+.thongKeDanhGia{
+    border-radius: 5px;
+}
