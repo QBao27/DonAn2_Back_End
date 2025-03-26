@@ -22,7 +22,6 @@
     <Folder Include="Areas\ChuSan\Data\" />
     <Folder Include="Areas\ChuSan\Models\" />
     <Folder Include="Areas\KhachHang\Data\" />
-    <Folder Include="Areas\KhachHang\Models\" />
     <Folder Include="wwwroot\css\CssKhachHang\" />
     <Folder Include="wwwroot\js\JsKhachHang\" />
   </ItemGroup>
