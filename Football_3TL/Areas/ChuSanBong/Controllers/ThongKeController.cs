@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 
-namespace Football_3TL.Areas.ChuSan.Controllers
+namespace Football_3TL.Areas.ChuSanBong.Controllers
 {
-    [Area("ChuSan")]
+    [Area("ChuSanBong")]
     public class ThongKeController : Controller
     {
         public IActionResult Index()

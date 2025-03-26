@@ -1,9 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 
-namespace Football_3TL.Areas.ChuSan.Controllers
+namespace Football_3TL.Areas.ChuSanBong.Controllers
 {
-    [Area("ChuSan")]
-    public class QuanLyDatSanController : Controller
+    [Area("ChuSanBong")]
+    public class HoaDonController : Controller
     {
         public IActionResult Index()
         {

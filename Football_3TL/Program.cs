@@ -1,4 +1,4 @@
-﻿using Football_3TL.Controllers.Data;
+﻿using Football_3TL.Data;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);

@@ -1,8 +1,11 @@
 ﻿using Football_3TL.Areas.KhachHang.Models;
-using Football_3TL.Controllers.Data;
+using Football_3TL.Data;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.CodeAnalysis.Scripting;
 using Microsoft.DotNet.Scaffolding.Shared.Messaging;
 using Microsoft.IdentityModel.Tokens;
+using BCrypt.Net;
+
 
 namespace Football_3TL.Areas.KhachHang.Controllers
 {
@@ -27,20 +30,41 @@ namespace Football_3TL.Areas.KhachHang.Controllers
         {
             try
             {
+                //kiểm tra dữ liệu 
                 if (model == null || !ModelState.IsValid)
                 {
-                    return Json(new { success = false, message = "Dữ liệu không hợp lệ" });
+                    return Json(new { success = false, message = "Dữ liệu không hợp lệ!" });
                 }
 
-                if(string.IsNullOrEmpty(model.FullName) || string.IsNullOrEmpty(model.Email) || string.IsNullOrEmpty(model.Phone) || string.IsNullOrEmpty(model.))
+                if (string.IsNullOrEmpty(model.FullName) || string.IsNullOrEmpty(model.Email) || string.IsNullOrEmpty(model.Phone) || string.IsNullOrEmpty(model.Password) || string.IsNullOrEmpty(model.ConfirmPassword) || string.IsNullOrEmpty(model.Communes) || string.IsNullOrEmpty(model.Province) || string.IsNullOrEmpty(model.PecificAddress))
+                {
+                    return Json(new { success = false, message = "Dữ liệu bị thiếu!" });
+                }
+
+                if (_db.ChuSans.Any(u => u.Email == model.Email || u.SoDienThoai == model.Phone))
+                {
+                    return Json(new { success = false, startLogin = true, message = "Tài khoản đã tồn tại!" });
+                }
                 
+                //mã hóa mật khẩu
+                string password = HashPassword(model.Password);
+                var chuSan = new ChuSan
+                {
+
+                };
+
+                return Ok();
             }
             catch (Exception)
             {
-
+                return Ok();
             }
         }
 
-        
+        //hàm mã hóa mật khẩu
+        private string HashPassword(string password)
+        {
+            return BCrypt.Net.BCrypt.HashPassword(password);
+        }
     }
 }
