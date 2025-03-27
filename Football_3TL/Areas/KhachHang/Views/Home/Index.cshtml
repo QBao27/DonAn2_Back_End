@@ -1,0 +1,363 @@
+﻿    <!-- Thanh tìm kiếm -->
+<div class="mx-5 mt-5"
+     style="box-shadow: 0px 0px 15px 10px rgba(113, 111, 111, 0.1) !important; border-radius: 30px;">
+    <div class="search-container">
+        <form class="py-4 bg-white rounded shadow-sm">
+            <div class="row g-2 px-4">
+                <div class="col-md-4">
+                    <select id="diaChiTinhTimKiem" class="form-select"
+                            style="font-size: large;border-radius: 10px;">
+                        <!-- code js vao day -->
+                    </select>
+                </div>
+                <div class="col-md-4">
+                    <select id="diaChiHuyenTimKiem" class="form-select"
+                            style="font-size: large;border-radius: 10px;">
+                        <!-- code js vao day -->
+                    </select>
+                </div>
+                <div class="col-md-2">
+                    <select id="fieldType" class="form-select" style="font-size: large;border-radius: 10px;">
+                        <option value="">Loại sân</option>
+                        <option value="5">Sân 5</option>
+                        <option value="7">Sân 7</option>
+                    </select>
+                </div>
+                <div class="col-md-2 d-flex">
+                    <button class="btn btn-dark w-100" style="border-radius: 10px;">Tìm sân</button>
+                    <button class="btn btn-outline-dark ms-2" style="border-radius: 10px;">
+                        <i class="bi bi-arrow-clockwise"></i>
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<div class="mx-5 mb-4">
+    <div class="row g-3">
+        <!-- Banner 1 -->
+        <div class="col-md-6">
+            <div class="banner">
+                <div class="text-content">
+                    <h3><span class="highlight">Có 7.350 sân thể thao</span></h3>
+                    <button class="btn btn-custom">Đăng ký ngay</button>
+                </div>
+                <img src="https://img.thegioithethao.vn/media/banner/banner_gio_vang.png" alt="Sân thể thao">
+            </div>
+        </div>
+        <!-- Banner 2 -->
+        <div class="col-md-6">
+            <div class="banner">
+                <div class="text-content">
+                    <h5>BÁO GIÁ THI CÔNG</h5>
+                    <h3 class="highlight">SÂN BÓNG ĐÁ NHÂN TẠO</h3>
+                    <button class="btn btn-custom">Nhận báo giá</button>
+                </div>
+                <img src="https://img.thegioithethao.vn/media/banner/thi-cong-cai-tao.png" alt="Sân bóng nhân tạo">
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Danh sách sân-->
+<section id="danhSachSanBong">
+    <div class="m-5">
+        <div class="row">
+            <div class="col">
+                <div class="pb-3">
+                    <h3 class=" fw-bolder">Danh sách sân</h3>
+                </div>
+                <div class="row d-flex" id="listSanBong">
+                    <!-- danh sách sân bóng bên js sẽ vào đây -->
+                </div>
+                <!-- Phân trang -->
+                <nav class="mt-4">
+                    <ul class="pagination justify-content-center" id="pagination">
+                        <!-- Nút chuyển trang sẽ được tạo động -->
+                    </ul>
+                </nav>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+<!-- Tra cứu lịch sử đặt sân -->
+<section id="traCuuDatSan" class="min-vh-100 d-flex text-center align-items-center" style="background-image: url('https://soccerplayer.net/wp-content/uploads/2021/11/pexels-photo-14815970.jpeg'); background-position: center;
+background-size: cover; margin-bottom: 0px; padding-top: 100px ">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <h1 class="text-light pb-3">TRA CỨU ĐẶT SÂN</h1>
+            </div>
+            <div class="col-12 d-flex justify-content-center">
+                <div class="input-group mb-3" style="width: 600px;">
+                    <input id="SoDienThoaiTraCuu" type="text" class="form-control" placeholder="Nhập số điện thoại"
+                           aria-label="Recipient's username" aria-describedby="basic-addon2">
+                    <a class="btn btn-primary text-center" onclick="validatePhoneNumber()" id="btnTraCuu"
+                       style="background-color: #0e2238;border-color: #0e2238;">
+                        <i class="fa-solid fa-magnifying-glass pt-1"></i>
+                    </a>
+                </div>
+            </div>
+
+        </div>
+        <!-- modal otp -->
+        <!-- <div class="modal fade" id="OTPTraCuu" tabindex="-1" aria-labelledby="Lichsu" aria-hidden="true"
+            onclick="clearOtpInputs()">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content" style="border-radius: 20px;">
+
+                    <div class="modal-header d-flex justify-content-center">
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+
+                    <div class=" modal-body bg-body-tertiary d-block">
+                        <div class="row justify-content-center m-5">
+                            <div class="col-12 col-md-6 col-lg-4" style="min-width: 500px;">
+                                <div class="card bg-white border-0"
+                                    style="box-shadow: 0 12px 15px rgba(0, 0, 0, 0.02);">
+                                    <div class="card-body text-center">
+                                        <h4>Xác Nhận OTP</h4>
+                                        <p>Mã OTP sẽ được gửi qua số điện thoại của bạn</p>
+                                        <div class="otp-field mb-2">
+                                            <input type="number" maxlength="1" class="otp-input" />
+                                            <input type="number" maxlength="1" class="otp-input" />
+                                            <input type="number" maxlength="1" class="otp-input" />
+                                            <input type="number" maxlength="1" class="otp-input" />
+                                            <input type="number" maxlength="1" class="otp-input" />
+                                            <input type="number" maxlength="1" class="otp-input" />
+                                        </div>
+                                        <div id="otpError" class="text-danger pb-2"></div>
+                                        <a class="btn btn-warning text-light mb-3" onclick="checkOTPTraCuu()">
+                                            Xác
+                                            Nhận
+                                        </a>
+                                        <p class="resend text-muted mb-0">
+                                            Didn't receive code? <a href="" class="text-warning">
+                                                Request
+                                                again
+                                            </a>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div> -->
+    </div>
+    <!-- modal hien thi lich su dat phong -->
+    <div class="modal fade" id="LichSuDatSan">
+        <div class="modal-dialog modal-xl">
+            <div class="modal-content" style="border-radius: 20px;">
+                <!-- header -->
+                <div class="modal-header d-flex justify-content-center">
+                    <div>
+                        <h5>Lịch Sử Đặt Sân</h5>
+                    </div>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <!-- Cot tieu de -->
+                <!--Dành cho kích thước màn hình lớn -->
+                <div class="modal-body d-none d-lg-block">
+                    <div class="container" style="background: #fdf9c9;border-radius: 20px; font-weight: 600 ">
+                        <div class="row">
+                            <div class="col-4 col-md-2" style="padding: 15px 0 15px 15px;">Thời Gian Đặt</div>
+                            <div class="col-4 col-md-2" style="padding: 15px 0 15px 0;">Tên Người Đặt</div>
+                            <div class="col-4 col-md-2" style="padding: 15px 0 15px 0;">Tên Sân</div>
+                            <div class="col-4 col-md-1" style="padding: 15px 0 15px 0;">Thời Lượng</div>
+                            <div class="col-4 col-md-2" style="padding: 15px 0 15px 0;">Trạng Thái</div>
+                            <div class="col-4 col-md-2" style="padding: 15px 0 15px 0;">Tổng Thanh Toán</div>
+                            <div class="col-4 col-md-1" style="padding: 15px 0 15px 0;"> </div>
+
+                        </div>
+                    </div>
+                    <!-- Container header -->
+                    <div class="container mt-2 d-flex pt-2">
+                        <span style="font-weight: 700; font-size: 16px;">
+                            Thông tin
+                            đặt sân:
+                        </span>
+                    </div>
+                    <!-- Container body -->
+                    <!-- du lieu dat phong -->
+                    <div id="tblBodyLichSuDatPhong" class="mb-5">
+                        <div class="pt-2">
+                            <div class="container mt-2 shadow div-hover"
+                                 style="background:white;border-radius: 20px; font-weight: 600 ">
+                                <div class="row">
+                                    <div class="col-4 col-md-2 thongTinLichSuDatSan"
+                                         style="padding: 15px 10px 15px 15px;">
+                                        <span>
+                                            12h : 50p
+                                        </span>
+                                    </div>
+                                    <div class="col-4 col-md-2 thongTinLichSuDatSan"
+                                         style="padding: 15px 10px 15px 0;">
+                                        <span>Bảo Anh</span>
+                                    </div>
+                                    <div class="col-4 col-md-2 thongTinLichSuDatSan"
+                                         style="padding: 15px 0 15px 0;">
+                                        <span>Sân An Khánh / Sân 1</span>
+                                    </div>
+                                    <div class="col-2 col-md-1 thongTinLichSuDaSan"
+                                         style="padding: 15px 10px 15px 10px;">
+                                        <span>1.5 giờ</span>
+                                    </div>
+                                    <div class="col-4 col-md-2 thongTinLichSuDaSan"
+                                         style="padding: 15px 10px 15px 0;">
+                                        <span>Chưa thanh toán</span>
+                                    </div>
+                                    <div class="col-4 col-md-2 thongTinLichSuDaSan" style="padding: 15px 0 15px 0;">
+                                        <span><b>250.000</b></span>
+                                        <b>VND</b>
+                                    </div>
+                                    <div class="col-2 col-md-1 thongTinLichSuDatSan"
+                                         style="padding: 15px 0 15px 15px;">
+                                        <button class="btn btn-danger btn-sm">Hủy</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- dành cho kích thước màn hình nhỏ -->
+                <div class="modal-body d-lg-none">
+                    <h6 class="fw-bold text-center mb-3">Thông tin đặt sân</h6>
+                    <div class="card mb-3 shadow-lg" style="border-radius: 15px;">
+                        <div class="card-body">
+                            <h6 class="card-title text-primary">Bảo Anh - Sân An Khánh / Sân 1</h6>
+                            <p class="mb-1"><b>Thời gian đặt:</b> 12h : 50p</p>
+                            <p class="mb-1"><b>Thời lượng:</b> 1.5 giờ</p>
+                            <p class="mb-1"><b>Trạng thái:</b> <span class="text-success">Đã thanh toán</span></p>
+                            <p class="mb-1"><b>Tổng thanh toán:</b> 250.000 VND</p>
+                            <button class="btn btn-danger btn-sm mt-2">Hủy</button>
+                        </div>
+                    </div>
+
+                    <div class="card mb-3 shadow-lg" style="border-radius: 15px;">
+                        <div class="card-body">
+                            <h6 class="card-title text-primary">Ngọc Linh - Sân Mỹ Đình / Sân 2</h6>
+                            <p class="mb-1"><b>Thời gian đặt:</b> 14h : 30p</p>
+                            <p class="mb-1"><b>Thời lượng:</b> 2 giờ</p>
+                            <p class="mb-1"><b>Trạng thái:</b> <span class="text-warning">Chưa thanh toán</span></p>
+                            <p class="mb-1"><b>Tổng thanh toán:</b> 300.000 VND</p>
+                            <button class="btn btn-danger btn-sm mt-2">Hủy</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Phần gg map -->
+<div class="container-fluid my-5" style="background-color: white;">
+    <div class="mx-5 py-4">
+        <div class="row">
+            <!-- Phần thông tin -->
+            <div class="col-12 col-md-6">
+                <div style="font-size: xX-large; font-weight: 700"> Kết nối với thế giới thể thao </div>
+                <div class="container mt-4">
+                    <ul class="nav nav-tabs" id="locationTabs" style="font-size: large; font-weight: 600;">
+                        <li class="nav-item">
+                            <a class="nav-link active" data-bs-toggle="tab" href="#cantho">Cần Thơ</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" data-bs-toggle="tab" href="#hochiminh">Hồ Chí Minh</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" data-bs-toggle="tab" href="#kienggiang">Kiên Giang</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" data-bs-toggle="tab" href="#soctrang">Sóc Trăng</a>
+                        </li>
+                    </ul>
+
+                    <div class="tab-content pt-3" style="background-color: #FAFAFA;">
+                        <div class="tab-pane fade show active px-3 pb-3" id="cantho">
+                            <h5><b>Cần Thơ</b></h5>
+                            <p class="size-gg">
+                                <i class="fa-solid fa-map-location-dot me-2"></i> 197 Trần Bạch Đằng
+                                - An Khánh - Ninh Kiều - Cần Thơ (<a href="#" class="text-danger">
+                                    Google
+                                    Map
+                                </a>)
+                            </p>
+                            <p class="size-gg">
+                                <i class="fa-solid fa-phone me-2"></i> Điện thoại: <span class="text-danger">0904.79.5885</span>
+                            </p>
+                            <p class="size-gg">
+                                <i class="fa-solid fa-envelope me-2"></i> Mail: <a href="mailto:phamtan@thegioithethao.vn"
+                                                                                   class="text-danger">huynhquocbao@gmail.com</a>
+                            </p>
+                            <p class="size-gg">
+                                <i class="fa-solid fa-phone-volume me-2"></i> Hotline (Zalo): <span class="text-danger">0904.795.885</span>
+                            </p>
+                        </div>
+                        <div class="tab-pane fade px-3 pb-3" id="hochiminh">
+                            <h5><b>Hồ Chí Minh</b></h5>
+                            <p class="size-gg">
+                                <i class="fa-solid fa-map-location-dot me-2"></i> Địa chỉ Hồ Chí Minh
+                                (<a href="#" class="text-danger">Google Map</a>)
+                            </p>
+                            <p class="size-gg">
+                                <i class="fa-solid fa-phone me-2"></i> Điện thoại: <span class="text-danger">0123.45.6789</span>
+                            </p>
+                            <p class="size-gg">
+                                <i class="fa-solid fa-envelope me-2"></i> Mail: <a href="mailto:hcm@thegioithethao.vn"
+                                                                                   class="text-danger">hcm@thegioithethao.vn</a>
+                            </p>
+                            <p class="size-gg">
+                                <i class="fa-solid fa-phone-volume me-2"></i> Hotline (Zalo): <span class="text-danger">0123.456.789</span>
+                            </p>
+                        </div>
+                        <div class="tab-pane fade px-3 pb-3" id="kienggiang">
+                            <h5><b>Kiên Giang</b></h5>
+                            <p class="size-gg">
+                                <i class="fa-solid fa-map-location-dot me-2"></i> Địa chỉ Kiên Giang
+                                (<a href="#" class="text-danger">Google Map</a>)
+                            </p>
+                            <p class="size-gg">
+                                <i class="fa-solid fa-phone me-2"></i> Điện thoại: <span class="text-danger">0987.65.4321</span>
+                            </p>
+                            <p class="size-gg">
+                                <i class="fa-solid fa-envelope me-2"></i> Mail: <a href="mailto:danang@thegioithethao.vn"
+                                                                                   class="text-danger">danang@thegioithethao.vn</a>
+                            </p>
+                            <p class="size-gg">
+                                <i class="fa-solid fa-phone-volume me-2"></i> Hotline (Zalo): <span class="text-danger">0987.654.321</span>
+                            </p>
+                        </div>
+                        <div class="tab-pane fade px-3 pb-3" id="soctrang">
+                            <h5><b>Sóc Trăng</b></h5>
+                            <p class="size-gg">
+                                <i class="fa-solid fa-map-location-dot me-2"></i> Địa chỉ Sóc Trăng
+                                (<a href="#" class="text-danger">Google Map</a>)
+                            </p>
+                            <p class="size-gg">
+                                <i class="fa-solid fa-phone me-2"></i> Điện thoại: <span class="text-danger">0912.34.5678</span>
+                            </p>
+                            <p class="size-gg">
+                                <i class="fa-solid fa-envelope me-2"></i> Mail: <a href="mailto:haiduong@thegioithethao.vn"
+                                                                                   class="text-danger">haiduong@thegioithethao.vn</a>
+                            </p>
+                            <p class="size-gg">
+                                <i class="fa-solid fa-phone-volume me-2"></i> Hotline (Zalo): <span class="text-danger">0912.345.678</span>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Google Map -->
+            <div class="col-12 col-md-6">
+                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3734.344990240496!2d105.74941417479414!3d10.038667390068717!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31a089a99a606f21%3A0xa73db9e3a500c454!2zU8OibiBCw7NuZyDEkOG6oWkgSOG7jWMgWSBExrDhu6Nj!5e1!3m2!1svi!2s!4v1741789239904!5m2!1svi!2s"
+                        width="100%" height="350px" style="border:0;border-radius: 10px;" allowfullscreen=""
+                        loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+            </div>
+        </div>
+    </div>
+</div>

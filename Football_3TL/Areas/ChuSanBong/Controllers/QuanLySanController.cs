@@ -3,9 +3,9 @@ using Football_3TL.Data;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
-namespace Football_3TL.Areas.ChuSan.Controllers
+namespace Football_3TL.Areas.ChuSanBong.Controllers
 {
-    [Area("ChuSan")]
+    [Area("ChuSanBong")]
     public class QuanLySanController : Controller
     {
         private readonly Football3tlContext dbContext;

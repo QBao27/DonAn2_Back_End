@@ -1,0 +1,25 @@
+/* Hover shadow danh sách sân */
+.card-hover:hover {
+    box-shadow: 0px 0px 4px 5px rgba(0, 0, 0, 0.2) !important;
+    transition: all 0.3s ease-in-out;
+}
+
+/* Hover ảnh nhỏ lại */
+.img-hover {
+    transition: transform 0.3s ease-in-out;
+}
+.img-hover:hover {
+    transform: scale(0.98);
+}
+
+.input-error {
+    border: 1px solid red !important;
+    background-color: #ffcccc !important; /* Màu nền đỏ nhạt */
+    transition: all 0.3s ease-in-out;
+}
+
+.input-error:focus {
+    outline: none; /* Xóa viền xanh mặc định khi focus */
+    background-color: #ffdddd !important; /* Đổi màu nhẹ hơn khi focus */
+}
+

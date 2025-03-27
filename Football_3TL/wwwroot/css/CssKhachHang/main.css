@@ -1,0 +1,189 @@
+.otp-field input {
+    height: 45px;
+    width: 42px;
+    border-radius: 6px;
+    outline: none;
+    font-size: 1.125rem;
+    text-align: center;
+    border: 1px solid #ddd;
+}
+
+    .otp-field input:focus {
+        box-shadow: 0 1px 0 rgba(0, 0, 0, 0.1);
+    }
+
+    .otp-field input::-webkit-inner-spin-button,
+    .otp-field input::-webkit-outer-spin-button {
+        display: none;
+    }
+
+.resend {
+font-size: 12px;
+}
+
+body {
+    padding-top: 80px; /* Đảm bảo nội dung không bị che bởi header */
+    
+    background-color: #F6F6F6 
+
+}
+
+.navbar {
+    background: #fff;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    
+}
+
+.navbar-brand img {
+    height: 40px;
+}
+
+.search-box {
+position: relative;
+max-width: 450px;
+width: 100%;
+overflow: hidden;
+}
+
+.search-text {
+position: absolute;
+top: 50%;
+left: 15px;
+transform: translateY(-50%);
+font-size: 16px;
+font-weight: 500;
+color: gray;
+white-space: nowrap;
+}
+
+.search-box input {
+    border-radius: 20px;
+    padding-right: 40px;
+}
+
+.search-box .search-icon {
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: gray;
+    cursor: pointer;
+   
+}
+
+.icon-box {
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+}
+
+.icon-box i {
+    font-size: 20px;
+    color: #333;
+}
+
+.icon-box span {
+    font-size: 12px;
+    font-weight: 500;
+    display: block;
+}
+
+.icon-box:hover i,
+.icon-box:hover span {
+    color: #d9534f;
+}
+
+@media (max-width: 768px) {
+    .icon-box span {
+        display: none;
+    }
+}
+.search-container {
+    width: 100%;      /* Đảm bảo full chiều ngang */
+    max-width: 100%;  /* Giữ cho nó không bị thu nhỏ */
+    margin: 20px 0;
+
+}
+
+.search-container form {
+    width: 100%; /* Đảm bảo form bên trong cũng mở rộng tối đa */
+    border-radius: 10px !important;/* Bo góc toàn bộ form */
+    overflow: hidden; /* Đảm bảo bo góc hiển thị đúng */
+}
+.banner {
+    position: relative;
+    width: 100%;
+    border-radius: 10px;
+    overflow: hidden;
+    margin: 20px 0; /* Thêm margin trên và dưới để tạo khoảng cách */
+    transition: transform 0.3s ease-in-out; /* Hiệu ứng hover */
+   
+}
+
+.banner img {
+    width: 100%;
+    height: auto;
+    border-radius: 10px;
+    display: block;
+}
+
+.banner .text-content {
+    position: absolute;
+    top: 50%; /* Căn giữa theo chiều dọc */
+    left: 5%; /* Đẩy chữ về bên trái */
+    transform: translateY(-50%); /* Căn giữa chữ theo chiều dọc */
+    color: #d81b1b; /* Đổi màu chữ đỏ để nổi bật */
+    text-align: left;
+    font-weight: bold; /* Làm đậm chữ để nổi bật */
+    font-size: 1.5rem; /* Tăng kích thước chữ */
+}
+
+.banner:hover {
+    transform: scale(1.05); /* Phóng to nhẹ khi hover */
+}
+
+
+
+
+.highlight {
+    color: red;
+    font-weight: bold;
+}
+
+.btn-custom {
+    background-color: red;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+}
+.custom-swal {
+    border-radius: 30px !important; /* Điều chỉnh độ bo tròn */
+}
+.dropdown-toggle::after {
+    display: none !important;
+}
+
+.form-control:focus {
+    color: #212529;
+    background-color: #fff;
+    border-color:black;
+    outline: 0;
+    box-shadow: 0 0 0 .25rem rgba(231, 238, 249, 0.25);
+}
+.btn-dark {
+    color: #fff;
+    background-color: #0e2238;
+    border-color: #212529;
+}
+
+.nav-tabs .nav-link.active {
+    color: black; /* Màu chữ khi được chọn */
+    background-color: #FAFAFA !important; /* Màu nền khi được chọn */
+}
+.nav-link {
+    color: black !important;
+}
+.size-gg{
+    font-size: large;
+}
