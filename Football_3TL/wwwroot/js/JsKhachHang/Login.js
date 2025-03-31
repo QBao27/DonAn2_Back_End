@@ -23,8 +23,9 @@ function checkDataLogin() {
     }
 
     if (isValid) {
-        return isValid;
+        Login();
     }
+
     return isValid;
 }
 
@@ -57,3 +58,58 @@ $(document).ready(function () {
         $("#" + this.id + "Error").text(''); // Xóa thông báo lỗi
     });
 })
+
+//Hàm đăng nhập
+function Login() {
+    let account = $('#taiKhoanDangNhap').val().trim();
+    let password = $('#matKhauDangNhap').val().trim();
+
+    //Vô hiệu hóa nút đăng nhập
+    $('#btnLogin').prop("disabled", true).text("Đang đăng nhập...");
+
+    $.ajax({
+        url: "/KhachHang/Account/Login",
+        type: "POST",
+        contentType: "application/json",
+        data: JSON.stringify({
+            TaiKhoan: account,
+            MatKhau: password
+        }),
+        success: function (response) {
+            if (response.success) {
+                window.location.href = response.redirectUrl;
+                modalLogin();
+            }
+            else {
+                if (response.checkPassword == false) {
+                    toastr.error(response.message, "", {
+                        timeOut: 2000 // Giới hạn thời gian hiển thị là 1 giây
+                    });
+                    $('#matKhauDangNhap').val("");
+                }
+                else {
+                    toastr.error(response.message, "", {
+                        timeOut: 2000 // Giới hạn thời gian hiển thị là 1 giây
+                    });
+                    resetDataLogin();
+                }
+            }
+        },
+        error: function(xhr){
+            Swal.fire({
+                icon: "error",
+                title: "Lỗi đăng nhập",
+                text: "không thể kết nối với máy chủ, vui lòng thử lại sau!",
+                confirmButtonText: "OK",
+                timer: 2000,
+                customClass: {
+                    popup: 'custom-swal'
+                }
+            });
+        },
+        complete: function () {
+            $('#btnLogin').prop("disabled", false).text("Đăng Nhập");
+        }
+
+    });
+}

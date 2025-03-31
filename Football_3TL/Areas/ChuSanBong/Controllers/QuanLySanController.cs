@@ -1,4 +1,4 @@
-﻿using Football_3TL.Areas.ChuSan.Models;
+﻿using Football_3TL.Areas.ChuSan1.Models;
 using Football_3TL.Data;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;

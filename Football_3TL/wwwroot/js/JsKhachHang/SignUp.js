@@ -234,10 +234,20 @@ function SignUp() {
                 modalSignUp(); // Ẩn modal đăng ký
                 modalLogin(); // Hiển thị modal đăng nhập
             } else {
-                toastr.error(response.message, "", {
-                    timeOut: 2000 // Giới hạn thời gian hiển thị là 1 giây
-                });
-                resetDataSignUp();
+                if (response.startLogin) {
+                    toastr.warning(response.message, "", {
+                        timeOut: 2000 // Giới hạn thời gian hiển thị là 1 giây
+                    });
+                    modalSignUp(); // Ẩn modal đăng ký
+                    modalLogin(); // Hiển thị modal đăng nhập
+                    $('#taiKhoanDangNhap').val(response.emailLogin)
+                }
+                else {
+                    toastr.error(response.message, "", {
+                        timeOut: 2000 // Giới hạn thời gian hiển thị là 1 giây
+                    });
+                    resetDataSignUp();
+                }
             }
         },
         error: function (e) {

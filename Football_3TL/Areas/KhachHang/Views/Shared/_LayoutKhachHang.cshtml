@@ -111,7 +111,7 @@
     </nav>
   
     <!-- Modal đăng nhập -->
-    <div class="modal fade" id="modalDangNhap" tabindex="-1">
+    <div class="modal fade" id="modalDangNhap">
         <div class="modal-dialog">
             <div class="modal-content" style="border-radius: 10px;">
                 <div class="modal-body">
@@ -136,7 +136,7 @@
                                   style="font-size: 0.875rem;"></span>
                         </div>
                         <div class="text-danger mt-3">*Đăng nhập vào trang quản lý sân bóng!</div>
-                        <button class="btn w-100 text-light mt-3" onclick="checkDataLogin()"
+                        <button class="btn w-100 text-light mt-3" id="btnLogin" onclick="checkDataLogin()"
                                 style="background-color: rgb(20, 34, 56); border-radius: 10px;">
                             Đăng Nhập
                         </button>
@@ -155,7 +155,7 @@
         </div>
     </div>
     <!-- Modal đăng ký -->
-    <div class="modal fade" id="modalDangKy" tabindex="-1">
+    <div class="modal fade" id="modalDangKy">
         <div class="modal-dialog modal-lg">
             <div class="modal-content" style="border-radius: 10px;">
                 <div class="modal-body">
