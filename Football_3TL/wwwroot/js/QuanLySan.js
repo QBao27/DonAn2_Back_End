@@ -5,7 +5,7 @@ let itemsPerPage = 8; // Số lượng sân hiển thị mỗi trang
 
 function LoadSanBong() {
     $.ajax({
-        url: '/ChuSan/QuanLySan/GetSanBong',
+        url: '/ChuSanBong/QuanLySan/GetSanBong',
         type: 'GET',
         dataType: 'json',
         success: function (data) {
@@ -38,7 +38,7 @@ function renderTable() {
                         <th scope="row">${startIndex + index + 1}</th>
                         <td><input type="hidden" class="maSan" value="${san.maSan}">${san.tenSan}</td>
                         <td>${san.loaiSan}</td>
-                        <td>${san.gia}k/giờ</td>
+                        <td>${san.gia} VND/giờ</td>
                         <td class="d-flex justify-content-end">
                             <button type="button" class="btn btn-warning me-2" data-bs-toggle="modal"
                                     data-bs-target="#sua" data-bs-dismiss="modal" onclick="HienThiModalSua(${san.maSan})">
@@ -145,7 +145,7 @@ function KiemTraLoi() {
 
 function ThemSanBong(tenSan, gia, loaiSan) {
     $.ajax({
-        url: '/ChuSan/QuanLySan/ThemSanBong',
+        url: '/ChuSanBong/QuanLySan/ThemSanBong',
         type: 'POST',
         contentType: 'application/json',
         data: JSON.stringify({
@@ -223,7 +223,7 @@ function KiemTraLoiSua() {
 
 function SuaSanBong(maSan, tenSan, gia, loaiSan) {
     $.ajax({
-        url: '/ChuSan/QuanLySan/SuaSanBong',
+        url: '/ChuSanBong/QuanLySan/SuaSanBong',
         type: 'POST',
         contentType: 'application/json',
         data: JSON.stringify({
@@ -260,7 +260,7 @@ function SuaSanBong(maSan, tenSan, gia, loaiSan) {
 
 function HienThiModalSua(maSan) {
     $.ajax({
-        url: `/ChuSan/QuanLySan/ChiTietSanBong/${maSan}`,
+        url: `/ChuSanBong/QuanLySan/ChiTietSanBong/${maSan}`,
         type: 'GET',
         dataType: 'json',
         success: function (san) {
@@ -297,7 +297,7 @@ function HienThiThongBaoXoa(maSan) {
     }).then((result) => {
         if (result.isConfirmed) {
             $.ajax({
-                url: "/ChuSan/QuanLySan/XoaSanBong",
+                url: "/ChuSanBong/QuanLySan/XoaSanBong",
                 type: "POST",
                 data: { maSan: maSan },
                 success: function (response) {

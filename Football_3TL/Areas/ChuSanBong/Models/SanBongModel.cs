@@ -1,4 +1,4 @@
-﻿namespace Football_3TL.Areas.ChuSan.Models
+﻿namespace Football_3TL.Areas.ChuSanBong.Models
 {
     public class SanBongModel
     {

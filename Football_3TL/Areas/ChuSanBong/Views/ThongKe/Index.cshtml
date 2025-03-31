@@ -1,4 +1,4 @@
-﻿<div class="main" class="" id="content">
+﻿<div class="main" id="content">
     <nav class="navbar navbar-expand px-4 py-3">
         <div class="navbar-collapse collapse">
             <ul class="navbar-nav justify-content-between" style="width: 1380px;">
@@ -32,7 +32,7 @@
                             <h5 class="fw-bolder">Tổng doanh thu </h5>
                         </div>
                         <div class="d-flex justify-content-center">
-                            <h5 style="color: blue;"> 30.000.000 VND </h5>
+                            <h5 style="color: blue;" id="TongGiaTriDatSan"> 30.000.000 VND </h5>
                         </div>
                     </div>
                 </div>
@@ -42,7 +42,7 @@
                             <h5 class="fw-bolder">Tổng hóa đơn </h5>
                         </div>
                         <div class="d-flex justify-content-center">
-                            <h5 style="color: blue;"> 30 </h5>
+                            <h5 style="color: blue;" id="SoLuongHoaDon"> </h5>
                         </div>
                     </div>
                 </div>
@@ -52,7 +52,7 @@
                             <h5 class="fw-bolder"> Số sân </h5>
                         </div>
                         <div class="d-flex justify-content-center">
-                            <h5 style="color: blue;"> 6 </h5>
+                            <h5 style="color: blue;" id="SoLuongSanThonKe"> </h5>
                         </div>
                     </div>
                 </div>
@@ -62,7 +62,7 @@
                             <h5 class="fw-bolder">Đánh giá </h5>
                         </div>
                         <div class="d-flex justify-content-center">
-                            <h5 style="color: blue;"> 41 </h5>
+                            <h5 style="color: blue;" id="SoLuongDanhGia"> </h5>
                         </div>
                     </div>
                 </div>
@@ -79,59 +79,5 @@
         </div>
     </main>
     <script src="https://code.highcharts.com/highcharts.js"></script>
-    <!-- Biểu đồ đường -->
-    <script>
-        Highcharts.chart('bieudoduong', {
-            title: { text: 'Biểu đồ doanh thu của các sân' },
-            xAxis: { categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'] },
-            yAxis: {
-                title: { text: 'Temperature (°C)' }
-            },
-            series: [
-                {
-                    name: 'Tokyo',
-                    data: [5, 7, 10, 14.5, 18, 22, 26, 27, 23, 18, 13, 8],
-                    color: 'blue'
-                },
-                {
-                    name: 'London',
-                    data: [3, 4, 6, 8.5, 12, 15, 17, 16, 14, 10, 7, 4],
-                    color: 'black'
-                }
-            ]
-        });
-
-    </script>
-
-    <!-- Biểu đồ cột -->
-    <script>
-        Highcharts.chart('bieudocot', {
-            chart: { type: 'column' },  // Loại biểu đồ cột
-            title: { text: 'Biểu đồ doanh thu' },
-            xAxis: {
-                categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
-                crosshair: true
-            },
-            yAxis: {
-                title: { text: 'Temperature (°C)' }
-            },
-            tooltip: {
-                shared: true,
-                valueSuffix: '°C'
-            },
-            series: [
-                {
-                    name: 'Tokyo',
-                    data: [5, 7, 10, 14.5, 18, 22, 26, 27, 23, 18, 13, 8],
-                    color: 'blue'
-                },
-                {
-                    name: 'London',
-                    data: [3, 4, 6, 8.5, 12, 15, 17, 16, 14, 10, 7, 4],
-                    color: 'black'
-                }
-            ]
-        });
-
-    </script>
+    <script src="~/js/ThongKe.js"></script>
 </div>

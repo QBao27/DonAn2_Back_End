@@ -6,7 +6,7 @@
 
     function LoadDanhSachHoaDon(page, size) {
         $.ajax({
-            url: 'ChuSan/HoaDon/DanhSachHoaDon',
+            url: '/ChuSanBong/HoaDon/DanhSachHoaDon',
             type: 'GET',
             dataType: 'json',
             success: function (data) {
@@ -28,11 +28,11 @@
                 $.each(paginatedData, function (index, hoaDon) {
                     let row = `<tr>
                         <th scope="row">${startIndex + index + 1}</th>
-                        <td>${hoaDon.MaHoaDon}</td>
-                        <td>${hoaDon.TenSan}</td>
-                        <td>${hoaDon.TenKhachHang}</td>
-                        <td>${hoaDon.ThoiGian}</td>
-                        <td>${hoaDon.TongGiaTri}</td>
+                        <td>${hoaDon.maHoaDon}</td>
+                        <td>${hoaDon.tenSan}</td>
+                        <td>${hoaDon.tenKhachHang}</td>
+                        <td>${hoaDon.thoiGian}</td>
+                        <td>${hoaDon.tongGiaTri}</td>
                     </tr>`;
                     tableBody.append(row);
                 });
