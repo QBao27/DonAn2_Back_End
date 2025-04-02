@@ -57,7 +57,7 @@ $(document).ready(function () {
 });
 
 
-//ham kiem tra thong tin dang nhap
+//ham kiem tra thong tin dang Ký
 function checkDataSignUp() {
     let fullName = $('#fullNameSignUp').val().trim();
     let phone = $('#phoneSignUp').val().trim();
@@ -157,6 +157,10 @@ function checkDataSignUp() {
         });
     }
 
+    if (isValid) {
+        SignUp();
+    }
+
     return isValid;
 }
 
@@ -186,3 +190,72 @@ $(document).ready(function () {
         $("#" + this.id + "Error").text('');
     });
 })
+
+// Hàm post thông tin đăng ký
+function SignUp() {
+    let fullName = $('#fullNameSignUp').val().trim();
+    let phone = $('#phoneSignUp').val().trim();
+    let email = $('#emailSignUp').val().trim();
+    let sanBong = $('#sanBongNameSignUp').val().trim();
+    let password = $('#passWordSignUp').val().trim();
+    let confirmPassword = $('#passWordSignUp2').val().trim();
+    let tinh = $('#diaChiTinh option:selected').text().trim();
+    let huyen = $('#diaChiHuyen option:selected').text().trim();
+    let xa = $('#diaChiXa option:selected').text().trim();
+    let diaChiCuThe = $('#diaChiCuThe').val().trim();
+
+    let requestData = {
+        FullName: fullName,
+        Phone: phone,
+        Email: email,
+        NameSanBong: sanBong,
+        Password: password,
+        ConfirmPassword: confirmPassword,
+        Province: tinh,
+        District: huyen,
+        Communes: xa,
+        PecificAddress: diaChiCuThe
+    };
+
+    // Vô hiệu hóa nút đăng ký
+    $('#btnSignUp').prop("disabled", true).text("Đang đăng ký...");
+
+    $.ajax({
+        url: "/KhachHang/Account/SignUp",
+        type: "POST",
+        contentType: "application/json",
+        headers: { "Accept": "application/json" },
+        data: JSON.stringify(requestData),
+        success: function (response) {
+            if (response.success) {
+                toastr.success(response.message, "", {
+                    timeOut: 2000 // Giới hạn thời gian hiển thị là 1 giây
+                });
+                modalSignUp(); // Ẩn modal đăng ký
+                modalLogin(); // Hiển thị modal đăng nhập
+            } else {
+                if (response.startLogin) {
+                    toastr.warning(response.message, "", {
+                        timeOut: 2000 // Giới hạn thời gian hiển thị là 1 giây
+                    });
+                    modalSignUp(); // Ẩn modal đăng ký
+                    modalLogin(); // Hiển thị modal đăng nhập
+                    $('#taiKhoanDangNhap').val(response.emailLogin)
+                }
+                else {
+                    toastr.error(response.message, "", {
+                        timeOut: 2000 // Giới hạn thời gian hiển thị là 1 giây
+                    });
+                    resetDataSignUp();
+                }
+            }
+        },
+        error: function (e) {
+            console.error("Lỗi:", e.status);
+        },
+        complete: function () {
+            // Kích hoạt lại nút đăng ký sau khi xử lý xong
+            $('#btnSignUp').prop("disabled", false).text("Đăng ký");
+        }
+    });
+}
