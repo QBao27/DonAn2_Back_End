@@ -6,7 +6,7 @@
 
     function LoadDanhSachDatSan(page, size) {
         $.ajax({
-            url: '/ChuSan/QuanLyKhachHang/DanhSachKhachHang',
+            url: '/ChuSanBong/QuanLyKhachHang/DanhSachKhachHang',
             type: 'GET',
             dataType: 'json',
             success: function (data) {

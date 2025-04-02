@@ -30,18 +30,18 @@
                     <div class="row">
                         <div class="col-md-7 col-sm-12">
                             <div class="bg-img">
-                                <input type="file" id="file1" accept="image/*" onchange="previewImage(event, 'img1')"
+                                <input type="file" id="file1" class="file-upload" accept="image/*" onchange="previewImage(event, 'img1')"
                                        hidden>
                                 <label for="file1">
-                                    <img id="img1" src="Img/anh 1.webp" alt="" class="img-fluid"
+                                    <img id="img1" src="~/Img/1d5378ea-076f-477d-b2de-6bfb6e01419e_Screenshot 2024-10-08 175138.png" alt="" class="img-fluid"
                                          style="width: 454px; height: 251px; object-fit: cover; border-radius: 10px; cursor: pointer;">
                                 </label>
                             </div>
                             <div class="mt-3 bg-img">
-                                <input type="file" id="file2" accept="image/*" onchange="previewImage(event, 'img2')"
+                                <input type="file" id="file2" class="file-upload" accept="image/*" onchange="previewImage(event, 'img2')"
                                        hidden>
                                 <label for="file2">
-                                    <img id="img2" src="Img/anh 2.webp" alt="" class="img-fluid"
+                                    <img id="img2" src="" alt="" class="img-fluid"
                                          style="width: 454px; height: 151px; object-fit: cover; border-radius: 10px; cursor: pointer;">
                                 </label>
                             </div>
@@ -49,18 +49,18 @@
 
                         <div class="col-md-5 col-sm-12 mt-3 mt-md-0">
                             <div class="bg-img">
-                                <input type="file" id="file3" accept="image/*" onchange="previewImage(event, 'img3')"
+                                <input type="file" id="file3" class="file-upload" accept="image/*" onchange="previewImage(event, 'img3')"
                                        hidden>
                                 <label for="file3">
-                                    <img id="img3" src="Img/anh 3.webp" alt="" class="img-fluid"
+                                    <img id="img3" src="" alt="" class="img-fluid"
                                          style="width: 318px;height: 140px; object-fit: cover; border-radius: 10px; cursor: pointer;">
                                 </label>
                             </div>
                             <div class="mt-3 bg-img">
-                                <input type="file" id="file4" accept="image/*" onchange="previewImage(event, 'img4')"
+                                <input type="file" id="file4" class="file-upload" accept="image/*" onchange="previewImage(event, 'img4')"
                                        hidden>
                                 <label for="file4">
-                                    <img id="img4" src="Img/anh 4.webp" alt="" class="img-fluid"
+                                    <img id="img4" src="" alt="" class="img-fluid"
                                          style="width: 318px; height: 263px; object-fit: cover; border-radius: 10px; cursor: pointer;">
                                 </label>
                             </div>
@@ -107,7 +107,7 @@
                         </div>
                     </div>
                     <div class="d-flex justify-content-end pb-3">
-                        <button type="button" class="btn btn-success" style="width: 150px; font-size: small;" onclick="showSweetAlert()">Đồng ý</button>
+                        <button type="button" class="btn btn-success" style="width: 150px; font-size: small;" id="BtnDongY" onclick="showSweetAlert()">Đồng ý</button>
                     </div>
                 </div>
             </div>

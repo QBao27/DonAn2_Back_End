@@ -1,4 +1,4 @@
-﻿using Football_3TL.Areas.ChuSan1.Models;
+﻿using Football_3TL.Areas.ChuSanBong.Models;
 using Football_3TL.Data;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -22,7 +22,7 @@ namespace Football_3TL.Areas.ChuSanBong.Controllers
         public async Task<IActionResult> GetSanBong()
         {
             // Lấy MaChuSan từ Session
-            //int? maChuSan = HttpContext.Session.GetInt32("MaChuSan");
+            // int? maChuSan = HttpContext.Session.GetInt32("MaChuSan");
             int maChuSan = 1;
             if (maChuSan == null)
             {
@@ -31,18 +31,19 @@ namespace Football_3TL.Areas.ChuSanBong.Controllers
 
             // Lấy danh sách sân bóng của chủ sân hiện tại
             var sanBongList = await dbContext.SanBongs
-                .Where(s => s.MaChuSan == maChuSan) // Lọc theo MaChuSan trong session
+                .Where(s => s.MaChuSan == maChuSan)
                 .Select(s => new
                 {
                     s.MaSan,
                     s.TenSan,
                     s.LoaiSan,
-                    s.Gia,
+                    Gia = s.Gia.HasValue ? s.Gia.Value.ToString("#,##0") : "0"
                 })
                 .ToListAsync();
-            Console.WriteLine(sanBongList);
+
             return Json(sanBongList);
         }
+
 
 
         [HttpPost]

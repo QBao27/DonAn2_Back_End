@@ -23,6 +23,7 @@
     <Folder Include="Areas\KhachHang\Data\" />
     <Folder Include="wwwroot\css\CssKhachHang\" />
     <Folder Include="wwwroot\js\JsKhachHang\" />
+    <Folder Include="wwwroot\Img\" />
   </ItemGroup>
 
 </Project>
