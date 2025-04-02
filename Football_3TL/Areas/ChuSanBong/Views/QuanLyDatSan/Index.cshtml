@@ -1,4 +1,6 @@
-﻿<div class="main" id="content">
+﻿@model IEnumerable<Football_3TL.Areas.ChuSanBong.Models.modelQuanLyDatSan>
+
+<div class="main" id="content">
     <nav class="navbar navbar-expand px-4 py-3">
         <div class="navbar-collapse collapse">
             <ul class="navbar-nav justify-content-between" style="width: 1380px;">
@@ -28,39 +30,37 @@
             <div>
                 <div class="row g-2">
                     <!-- Ô tìm kiếm sân -->
-                    <div class="col-md-3">
+                    <div class="col-md-2 me-2">
                         <div class="input-group border rounded-2">
                             <span class="input-group-text bg-white border-0">
                                 <i class="fa-solid fa-magnifying-glass"></i>
                             </span>
-                            <input type="text" class="form-control border-0" placeholder="Thông tin sân">
+                            <input type="text" class="form-control border-0" id="searchQuanLyDatSan" placeholder="Thông tin sân" style="border-radius: 10px; background-color: white;">
                         </div>
                     </div>
                     <!-- Ô chọn ngày -->
-                    <div class="col-md-3">
-                        <input class="form-control" id="myID" style="border-radius: 10px; background-color: white;"
+                    <div class="col-md-2 me-2">
+                        <input class="form-control" id="myIDQLDS" style="border-radius: 10px; background-color: white;"
                                placeholder="Ngày Nhận">
                     </div>
                     <!-- Ô chọn thời lượng -->
-                    <div class="col-md-3">
+                    <div class="col-md-3 me-2">
                         <select class="form-select" id="selectThoiLuong" style="border-radius: 10px; background-color: white;">
                             <option selected>Chọn thời lượng</option>
                             <option value="1h">1 giờ</option>
                             <option value="1.5h">1.5 giờ</option>
-                            <option value="2h">2 giờ</option>
                         </select>
                     </div>
                     <!-- Ô chọn giờ nhận sân -->
-                    <div class="col-md-3">
+                    <div class="col-md-3 me-2">
                         <select class="form-select" id="selectGio" style="border-radius: 10px; background-color: white;">
-                            <option selected>Chọn giờ nhận</option>
-                            <option value="08:00">08:00</option>
-                            <option value="10:00">10:00</option>
-                            <option value="12:00">12:00</option>
-                            <option value="14:00">14:00</option>
-                            <option value="16:00">16:00</option>
-                            <option value="18:00">18:00</option>
+                            <!--code js vào đây-->
                         </select>
+                    </div>
+                    <div class="col-md-1">
+                        <button class="btn btn-secondary" id="btnResetSearchQLDS" style="border-radius: 10px;">
+                          Reset
+                        </button>
                     </div>
                 </div>
 
@@ -78,52 +78,78 @@
                                     <th scope="col" class="col-2"></th>
                                 </tr>
                             </thead>
-                            <tbody>
-                                <tr>
-                                    <th scope="row">1</th>
-                                    <td class="me-2">Sân A</td>
-                                    <td>Sân 5</td>
-                                    <td class="text-center">250.000 / 1h</td>
-                                    <td>Trống</td>
-                                    <td class="text-secondary">Chưa thanh toán</td>
-                                    <td>
-                                        <button type="button" class="btn btn-secondary btn-sm w-100"
-                                                style="border-radius: 10px;" data-bs-toggle="modal"
-                                                data-bs-target="#modalDatSan">
-                                            Đặt sân bóng
-                                        </button>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th scope="row">1</th>
-                                    <td class="me-2">Sân A</td>
-                                    <td>Sân 5</td>
-                                    <td class="text-center">250.000 / 1h</td>
-                                    <td>Đã đặt</td>
-                                    <td class="text-success">Đã thanh toán</td>
-                                    <td>
-                                        <button type="button" class="btn btn-warning btn-sm w-100"
-                                                style="border-radius: 10px;" data-bs-toggle="modal"
-                                                data-bs-target="#modalXemThongTin">
-                                            Xem thông tin
-                                        </button>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th scope="row">1</th>
-                                    <td class="me-2">Sân A</td>
-                                    <td>Sân 5</td>
-                                    <td class="text-center">250.000 / 1h</td>
-                                    <td>Hoạt động</td>
-                                    <td class="text-warning">Chưa thanh toán</td>
-                                    <td>
-                                        <button type="button" class="btn btn-success btn-sm w-100"
-                                                style="border-radius: 10px;" data-bs-toggle="modal"
-                                                data-bs-target="#modalXemThongTin">
-                                            Thanh toán
-                                        </button>
-                                    </td>
-                                </tr>
+                            <tbody id="danhSachSanQLDS">
+                                @{
+                                    int soThuTu = 1;
+                                }
+                                @if (Model != null && Model.Count() > 0)
+                                {
+                                    @foreach (var i in Model)
+                                    {
+                                        if (i.TrangThaiThanhToan == "Sân chưa đặt")
+                                        {
+                                            <tr>
+                                                <th scope="row">@soThuTu</th>
+                                                <td class="me-2">@i.TenSan</td>
+                                                <td>Sân 5</td>
+                                                <td class="text-center">@i.GiaSan / 1h</td>
+                                                <td>@i.TrangThai</td>
+                                                <td class="text-secondary">@i.TrangThaiThanhToan</td>
+                                                <td>
+                                                    <button type="button" class="btn btn-secondary btn-sm w-100"
+                                                            style="border-radius: 10px;" data-bs-toggle="modal"
+                                                            data-bs-target="#modalDatSan">
+                                                        Đặt sân bóng
+                                                    </button>
+                                                </td>
+                                            </tr>
+                                        }
+                                        else if (i.TrangThaiThanhToan == "Đã thanh toán")
+                                        {
+                                            <tr>
+                                                <th scope="row">@soThuTu</th>
+                                                <td class="me-2">@i.TenSan</td>
+                                                <td>Sân 5</td>
+                                                <td class="text-center">@i.GiaSan / 1h</td>
+                                                <td>@i.TrangThai</td>
+                                                <td class="text-secondary">@i.TrangThaiThanhToan</td>
+                                                <td>
+                                                    <button type="button" class="btn btn-warning btn-sm w-100"
+                                                            style="border-radius: 10px;" data-bs-toggle="modal"
+                                                            data-bs-target="#modalXemThongTin">
+                                                        Xem thông tin
+                                                    </button>
+                                                </td>
+                                            </tr>
+                                        }
+                                        else
+                                        {
+                                            <tr>
+                                                <th scope="row">@soThuTu</th>
+                                                <td class="me-2">@i.TenSan</td>
+                                                <td>Sân 5</td>
+                                                <td class="text-center">@i.GiaSan / 1h</td>
+                                                <td>@i.TrangThai</td>
+                                                <td class="text-secondary">@i.TrangThaiThanhToan</td>
+                                                <td>
+                                                    <button type="button" class="btn btn-success btn-sm w-100"
+                                                            style="border-radius: 10px;" data-bs-toggle="modal"
+                                                            data-bs-target="#modalXemThongTin">
+                                                        Thanh toán
+                                                    </button>
+                                                </td>
+                                            </tr>
+                                        }
+                                        soThuTu++;
+                                    }
+                                }
+                                else
+                                {
+                                    <tr>
+                                        <td colspan="7" class="text-center text-danger">Không có danh sách sân</td>
+                                    </tr>
+                                }
+
                             </tbody>
                         </table>
                     </div>
@@ -261,7 +287,12 @@
 </div>
 <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
 <script>
-    flatpickr("#myID", {
+    flatpickr("#myIDQLDS", {
         dateFormat: "d-m-Y",
+        minDate: "today",
+        onChange: function (selectedDates, dateStr, instance) {
+            // Sau khi chọn ngày, cập nhật lại trạng thái của giờ nhận
+            updateTimeOptionsForToday();
+        }
     });
 </script>
