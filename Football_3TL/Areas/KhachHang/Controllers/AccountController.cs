@@ -109,7 +109,7 @@ namespace Football_3TL.Areas.KhachHang.Controllers
         {
             try
             {
-                _log.LogInformation("Bắt đầu quá trình đăng ký với tài khoản: {0}", model?.TaiKhoan);
+                _log.LogInformation("Bắt đầu quá trình đăng nhập với tài khoản: {0}", model?.TaiKhoan);
                 if (model == null || string.IsNullOrWhiteSpace(model.TaiKhoan) || string.IsNullOrWhiteSpace(model.MatKhau))
                 {
                     _log.LogWarning("Đăng nhập thất bại: Dữ liệu không hợp lệ");

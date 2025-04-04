@@ -46,20 +46,21 @@
                     <!-- Ô chọn thời lượng -->
                     <div class="col-md-3 me-2">
                         <select class="form-select" id="selectThoiLuong" style="border-radius: 10px; background-color: white;">
-                            <option selected>Chọn thời lượng</option>
-                            <option value="1h">1 giờ</option>
-                            <option value="1.5h">1.5 giờ</option>
+                            <option selected value="">Chọn thời lượng</option>
+                            <option value="1">1 giờ</option>
+                            <option value="1.5">1.5 giờ</option>
                         </select>
                     </div>
                     <!-- Ô chọn giờ nhận sân -->
                     <div class="col-md-3 me-2">
                         <select class="form-select" id="selectGio" style="border-radius: 10px; background-color: white;">
+                            <option selected value="">Chọn khung giờ</option>
                             <!--code js vào đây-->
                         </select>
                     </div>
                     <div class="col-md-1">
                         <button class="btn btn-secondary" id="btnResetSearchQLDS" style="border-radius: 10px;">
-                          Reset
+                            Reset
                         </button>
                     </div>
                 </div>
@@ -91,7 +92,7 @@
                                             <tr>
                                                 <th scope="row">@soThuTu</th>
                                                 <td class="me-2">@i.TenSan</td>
-                                                <td>Sân 5</td>
+                                                <td>@i.LoaiSan</td>
                                                 <td class="text-center">@i.GiaSan / 1h</td>
                                                 <td>@i.TrangThai</td>
                                                 <td class="text-secondary">@i.TrangThaiThanhToan</td>
@@ -109,7 +110,7 @@
                                             <tr>
                                                 <th scope="row">@soThuTu</th>
                                                 <td class="me-2">@i.TenSan</td>
-                                                <td>Sân 5</td>
+                                                <td>@i.LoaiSan</td>
                                                 <td class="text-center">@i.GiaSan / 1h</td>
                                                 <td>@i.TrangThai</td>
                                                 <td class="text-secondary">@i.TrangThaiThanhToan</td>
@@ -127,7 +128,7 @@
                                             <tr>
                                                 <th scope="row">@soThuTu</th>
                                                 <td class="me-2">@i.TenSan</td>
-                                                <td>Sân 5</td>
+                                                <td>@i.LoaiSan</td>
                                                 <td class="text-center">@i.GiaSan / 1h</td>
                                                 <td>@i.TrangThai</td>
                                                 <td class="text-secondary">@i.TrangThaiThanhToan</td>
@@ -288,7 +289,7 @@
 <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
 <script>
     flatpickr("#myIDQLDS", {
-        dateFormat: "d-m-Y",
+        dateFormat: "m-d-Y",
         minDate: "today",
         onChange: function (selectedDates, dateStr, instance) {
             // Sau khi chọn ngày, cập nhật lại trạng thái của giờ nhận

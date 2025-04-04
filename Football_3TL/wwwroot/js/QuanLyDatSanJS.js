@@ -1,7 +1,7 @@
 ﻿// Hàm tạo danh sách giờ dựa theo khoảng thời gian
 function loadTimeOptions(interval) {
     let select = $("#selectGio");
-    select.empty().append('<option selected>Chọn khung giờ</option>'); // Xóa options cũ
+    select.empty().append('<option selected value="">Chọn khung giờ</option>'); // Xóa options cũ
 
     if (interval === 1) {
         // Khi thời lượng là 1 giờ: 08:00 - 09:00, 09:00 - 10:00, ..., 23:00 - 24:00
@@ -70,10 +70,6 @@ function updateTimeOptionsForToday() {
 }
 
 $(document).ready(function () {
-    // Giả sử giá trị mặc định của thời lượng là 1 giờ
-    let defaultInterval = 1;
-    loadTimeOptions(defaultInterval);
-
     // Giả sử bạn có một <select id="selectThoiLuong"> để chọn khoảng thời gian (1 hoặc 1.5)
     $("#selectThoiLuong").change(function () {
         let interval = parseFloat($(this).val());
@@ -87,5 +83,106 @@ $(document).ready(function () {
         $('#myIDQLDS').val('');
         $('#selectThoiLuong').val('').prop('selectedIndex', 0);;
         $('#selectGio').val('').prop('selectedIndex', 0);;
+        LoadThongTinSanBong();
+    });
+
+    $("#myIDQLDS").change(function () {
+        $('#selectGio').val('').prop('selectedIndex', 0);
+        LoadThongTinSanBong();
+    });
+
+    $("#selectGio").change(function () {
+        LoadThongTinSanBong();
     });
 });
+
+//Hàm load sân bóng
+function LoadThongTinSanBong() {
+    let ngayNhan = $('#myIDQLDS').val() || null;
+    let khungGio = $('#selectGio').val() || null;
+    let thoiLuong = $('#selectThoiLuong').val() || null;
+
+    let thoiLuongGui = thoiLuong;
+
+    if (thoiLuong == null) {
+        thoiLuongGui = "0"
+    }
+    else if (thoiLuong == 1) {
+        thoiLuongGui = "60"
+    }
+    else if (thoiLuong == 1.5) {
+        thoiLuongGui = "90";
+    }
+
+
+    $.ajax({
+        url: "/ChuSanBong/QuanLyDatSan/LoadSanBong",
+        type: "GET",
+        data: {
+            NgayNhan: ngayNhan,
+            KhungGio: khungGio,
+            ThoiLuong: thoiLuongGui
+        },
+        success: function (response) {
+            if (response.success) {
+                let tbody = $("#danhSachSanQLDS");
+                tbody.empty(); // Xóa danh sách cũ
+
+                if (response.data.length > 0) {
+                    let soThuTu = 1;
+                    response.data.forEach(function (i) {
+                        let buttonClass = "btn-success";
+                        let buttonText = "Thanh toán";
+                        let modalTarget = "#modalXemThongTin";
+
+                        if (i.trangThaiThanhToan === "Sân chưa đặt") {
+                            buttonClass = "btn-secondary";
+                            buttonText = "Đặt sân bóng";
+                            modalTarget = "#modalDatSan";
+                        } else if (i.trangThaiThanhToan === "Đã thanh toán") {
+                            buttonClass = "btn-warning";
+                            buttonText = "Xem thông tin";
+                            modalTarget = "#modalXemThongTin";
+                        }
+
+                        let row = `
+                        <tr>
+                            <th scope="row">${soThuTu}</th>
+                            <td class="me-2">${i.tenSan}</td>
+                            <td>${i.loaiSan}</td>
+                            <td class="text-center">${i.giaSan} / 1h</td>
+                            <td>${i.trangThai}</td>
+                            <td class="text-secondary">${i.trangThaiThanhToan}</td>
+                            <td>
+                                <button type="button" class="btn ${buttonClass} btn-sm w-100"
+                                        style="border-radius: 10px;" data-bs-toggle="modal"
+                                        data-bs-target="${modalTarget}">
+                                    ${buttonText}
+                                </button>
+                            </td>
+                        </tr>
+                    `;
+
+                        tbody.append(row);
+                        soThuTu++;
+                    });
+                } else {
+                    // Nếu không có dữ liệu, hiển thị thông báo
+                    tbody.append('<tr><td colspan="7" class="text-center text-danger">Không có danh sách sân</td></tr>');
+                }
+            } else {
+                console.log("Lỗi: " + response.message);
+            }
+        },
+        error: function () {
+            Swal.fire({
+                icon: "error",
+                title: "Lỗi kết nối",
+                text: "Không thể kết nối với máy chủ!",
+                confirmButtonText: "OK",
+                timer: 2000
+            });
+        }
+    });
+
+}
