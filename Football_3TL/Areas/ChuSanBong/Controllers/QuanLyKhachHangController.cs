@@ -20,7 +20,9 @@ namespace Football_3TL.Areas.ChuSanBong.Controllers
         public IActionResult DanhSachKhachHang()
         {
             // Lấy MaChuSan từ Session
-            int maChuSan = 1;
+            var maChuSan = HttpContext.Session.GetInt32("maChuSan");
+
+            //int maChuSan = 1;
             if (maChuSan == null)
             {
                 return Unauthorized(); // Nếu chưa đăng nhập, trả về lỗi 401

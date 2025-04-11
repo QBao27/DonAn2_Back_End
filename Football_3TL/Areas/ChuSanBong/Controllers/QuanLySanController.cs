@@ -23,7 +23,9 @@ namespace Football_3TL.Areas.ChuSanBong.Controllers
         {
             // Lấy MaChuSan từ Session
             // int? maChuSan = HttpContext.Session.GetInt32("MaChuSan");
-            int maChuSan = 1;
+            var maChuSan = HttpContext.Session.GetInt32("maChuSan");
+
+            //int maChuSan = 1;
             if (maChuSan == null)
             {
                 return Json(new { error = "Chưa đăng nhập hoặc không có quyền truy cập." });
@@ -54,7 +56,8 @@ namespace Football_3TL.Areas.ChuSanBong.Controllers
                 return Json(new { success = false, message = "Vui lòng nhập đầy đủ thông tin." });
             }
 
-            int maChuSan = 1; // Sau này lấy từ Session
+            //int maChuSan = 1; // Sau này lấy từ Session
+            var maChuSan = HttpContext.Session.GetInt32("maChuSan");
 
             // Kiểm tra sân đã tồn tại chưa
             var sanBongTonTai = await dbContext.SanBongs

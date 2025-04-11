@@ -22,7 +22,9 @@ namespace Football_3TL.Areas.ChuSanBong.Controllers
         {
             // Lấy MaChuSan từ session (giá trị cứng hiện tại là 1)
             //int? maChuSan = HttpContext.Session.GetInt32("MaChuSan") ?? 1;
-            int maChuSan = 1;
+            //int maChuSan = 1;
+            var maChuSan = HttpContext.Session.GetInt32("maChuSan");
+
 
             if (maChuSan == null)
             {
@@ -41,7 +43,8 @@ namespace Football_3TL.Areas.ChuSanBong.Controllers
         {
             // Lấy MaChuSan từ session (giá trị cứng hiện tại là 1)
             //int? maChuSan = HttpContext.Session.GetInt32("MaChuSan") ?? 1;
-            int maChuSan = 1;
+            //int maChuSan = 1;
+            var maChuSan = HttpContext.Session.GetInt32("maChuSan");
 
             if (maChuSan==null)
             {
@@ -60,7 +63,8 @@ namespace Football_3TL.Areas.ChuSanBong.Controllers
             // Lấy MaChuSan từ session (ở đây đang gán cứng là 1)
             //int maChuSan = HttpContext.Session.GetInt32("MaChuSan") ?? 1;
 
-            int maChuSan = 1;
+            //int maChuSan = 1;
+            var maChuSan = HttpContext.Session.GetInt32("maChuSan");
 
             if (maChuSan == null)
             {
@@ -79,7 +83,8 @@ namespace Football_3TL.Areas.ChuSanBong.Controllers
             // Lấy MaChuSan từ session (hoặc gán cứng nếu cần)
             //int maChuSan = HttpContext.Session.GetInt32("MaChuSan") ?? 1;
 
-            int maChuSan = 1;
+            //int maChuSan = 1;
+            var maChuSan = HttpContext.Session.GetInt32("maChuSan");
 
             if (maChuSan == null)
             {
@@ -98,7 +103,8 @@ namespace Football_3TL.Areas.ChuSanBong.Controllers
         [HttpGet]
         public IActionResult DoanhThuSan()
         {
-            int maChuSan = 1;
+            //int maChuSan = 1;
+            var maChuSan = HttpContext.Session.GetInt32("maChuSan");
 
             if (maChuSan == null)
             {
@@ -123,7 +129,8 @@ namespace Football_3TL.Areas.ChuSanBong.Controllers
         [HttpGet]
         public IActionResult DoanhThuTheoThang()
         {
-            int maChuSan = 1; // Giả sử lấy từ session
+            //int maChuSan = 1; // Giả sử lấy từ session
+            var maChuSan = HttpContext.Session.GetInt32("maChuSan");
 
             var doanhThuTheoThang = dbContext.ThongTinDatSans
            .Include(ds => ds.MaSanNavigation) // Nạp dữ liệu bảng liên quan

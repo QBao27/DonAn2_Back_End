@@ -12,11 +12,11 @@
                     <div class="dropdown-menu dropdown-menu-end rounded" style="width: 180px;">
                         <div class="row">
                             <h4 style="font-weight: 600; font-size: larger;" class="ms-2">
-                                Huỳnh Quốc Bảo
+                                @Context.Session.GetString("tenChuSan")
                             </h4>
                         </div>
                         <div class="d-flex">
-                            <a class="ms-2 cusor" style="color: red;">Đăng xuất</a>
+                            <a class="ms-2 cusor" style="color: red;" href="/KhachHang/Account/Logout">Đăng xuất</a>
                         </div>
                     </div>
                 </li>
