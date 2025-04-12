@@ -158,7 +158,7 @@ namespace Football_3TL.Areas.KhachHang.Controllers
                 }
                 else if(taiKhoan.Quyen == 2)
                 {
-                    return Json(new { success = true, redirectUrl = Url.Action("Index", "QuanLyDatSan", new { area = "Admin" }) });
+                    return Json(new { success = true, redirectUrl = Url.Action("Index", "QuanLyTaiKhoan", new { area = "Admin" }) });
                 }
                 else
                 {

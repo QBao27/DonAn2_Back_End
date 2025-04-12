@@ -20,10 +20,9 @@ namespace Football_3TL.Areas.ChuSanBong.Controllers
         [HttpGet]
         public IActionResult DanhSachHoaDon()
         {
-            // Lấy MaChuSan từ session
-            //var maChuSan = HttpContext.Session.GetInt32("MaChuSan");
 
-            var maChuSan = 1;
+            var maChuSan = HttpContext.Session.GetInt32("maChuSan");
+
 
             if (maChuSan == null)
             {
