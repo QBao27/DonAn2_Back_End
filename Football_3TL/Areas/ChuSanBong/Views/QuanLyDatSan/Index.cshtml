@@ -9,7 +9,7 @@
                 </li>
                 <li class="nav-item dropdown">
                     <a href="#" data-bs-toggle="dropdown" class="nav-icon pe-md-0">
-                        <img src="~images/account.png" class="avatar img-fluid" alt="">
+                        <img src="" class="avatar img-fluid" alt="">
                     </a>
                     <div class="dropdown-menu dropdown-menu-end rounded" style="width: 180px;">
                         <div class="row">
@@ -93,13 +93,12 @@
                                                 <th scope="row">@soThuTu</th>
                                                 <td class="me-2">@i.TenSan</td>
                                                 <td>@i.LoaiSan</td>
-                                                <td class="text-center">@i.GiaSan / 1h</td>
+                                                <td class="text-center"><span id="giaSanDat">@i.GiaSan</span> / 1h</td>
                                                 <td>@i.TrangThai</td>
                                                 <td class="text-secondary">@i.TrangThaiThanhToan</td>
                                                 <td>
                                                     <button type="button" class="btn btn-secondary btn-sm w-100"
-                                                            style="border-radius: 10px;" data-bs-toggle="modal"
-                                                            data-bs-target="#modalDatSan">
+                                                            style="border-radius: 10px;" onclick="modalDatSanTrong(this)" data-giasan="@i.GiaSan">
                                                         Đặt sân bóng
                                                     </button>
                                                 </td>
@@ -116,8 +115,7 @@
                                                 <td class="text-secondary">@i.TrangThaiThanhToan</td>
                                                 <td>
                                                     <button type="button" class="btn btn-warning btn-sm w-100"
-                                                            style="border-radius: 10px;" data-bs-toggle="modal"
-                                                            data-bs-target="#modalXemThongTin">
+                                                            style="border-radius: 10px;" onclick="getDataDatSan(@i.MaDatSan), modalXemThongTin()">
                                                         Xem thông tin
                                                     </button>
                                                 </td>
@@ -134,8 +132,7 @@
                                                 <td class="text-secondary">@i.TrangThaiThanhToan</td>
                                                 <td>
                                                     <button type="button" class="btn btn-success btn-sm w-100"
-                                                            style="border-radius: 10px;" data-bs-toggle="modal"
-                                                            data-bs-target="#modalXemThongTin">
+                                                            style="border-radius: 10px;" onclick="getDataDatSan(@i.MaDatSan), modalThanhToan()">
                                                         Thanh toán
                                                     </button>
                                                 </td>
@@ -161,12 +158,12 @@
 </div>
 
 <!-- Modal cho nút chọn sân -->
-<div class="modal fade" id="modalDatSan" tabindex="-1" aria-labelledby="modalDatSanLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg" id="modalDatSanDialog">
-        <div class="modal-content" style="border-radius: 20px" id="modalDatSanContent">
+<div class="modal fade" id="modalDatSanTrong">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content" style="border-radius: 20px">
             <div class="modal-header d-flex justify-content-center">
                 <div>
-                    <h5 style="font-weight: bolder;">Thông tin sân</h5>
+                    <h5 style="font-weight: bolder;">Thông tin đặt sân</h5>
                 </div>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
@@ -178,43 +175,43 @@
                                 <div class="row mt-2">
                                     <div class="col-4">
                                         <h6><span style="font-weight: 600;">Họ tên:</span></h6>
-                                        <input type="text" class="form-control" id="hovatenDatSan">
-                                        <span class="error text-danger" id="hovatenDatSanError"></span>
+                                        <input type="text" class="form-control" id="hotenDatSan" placeholder="Nhập họ và tên">
+                                        <span class="error text-danger" id="hotenDatSanError"></span>
                                     </div>
                                     <div class="col-4">
                                         <h6><span style="font-weight: 600;">Số điện thoại:</span></h6>
-                                        <input type="number" class="form-control" id="SoDienThoaiDatSan">
-                                        <span class="error text-danger" id="SoDienThoaiDatSanError"></span>
+                                        <input type="number" class="form-control" id="soDienThoaiDatSan" placeholder="Nhập số điện thoại">
+                                        <span class="error text-danger" id="soDienThoaiDatSanError"></span>
                                     </div>
                                     <div class="col-4">
                                         <h6><span style="font-weight: 600;">Ngày nhận:</span></h6>
-                                        <input type="text" class="form-control" id="NgayDatSan" readonly>
-                                        <span class="error text-danger" id="NgayDatSanError"></span>
+                                        <input type="text" class="form-control" id="ngayNhanDatSan" readonly>
+                                        <span class="error text-danger" id="ngayNhanDatSanError"></span>
                                     </div>
                                 </div>
                                 <div class="row mt-3">
                                     <div class="col-4">
-                                        <h6><span style="font-weight: 600;">Giờ nhận:</span></h6>
-                                        <input type="text" class="form-control" id="GioDatSan" readonly>
-                                        <span class="error text-danger" id="GioDatSanError"></span>
+                                        <h6><span style="font-weight: 600;">Khung giờ:</span></h6>
+                                        <input type="text" class="form-control" id="khungGioDatSan" readonly>
+                                        <span class="error text-danger" id="khungGioDatSanError"></span>
                                     </div>
                                     <div class="col-4">
                                         <h6><span style="font-weight: 600;">Thời lượng</span></h6>
-                                        <select type="number" class="form-select" id="ThoiLuongDatSan">
-                                            <option value="1">1 giờ</option>
-                                            <option value="2">1.5 giờ</option>
-                                            <option value="3">2 giờ</option>
-                                        </select>
-                                        <span class="error text-danger" id="ThoiLuongDatSanError"></span>
+                                        <input type="text" class="form-control" id="thoiLuongDatSan" readonly>
+                                        <span class="error text-danger" id="thoiLuongDatSanError"></span>
                                     </div>
                                     <div class="col-4">
                                         <h6><span style="font-weight: 600;">Thanh toán:</span></h6>
-                                        <input type="text" class="form-control" id="thanhToanTrong" readonly>
-                                        <span class="error text-danger" id="thanhToanError"></span>
+                                        <input type="text" class="form-control" id="tongthanhToanDatSan" readonly>
+                                        <span class="error text-danger" id="tongthanhToanDatSanError"></span>
                                     </div>
                                 </div>
-                                <div class="row d-flex justify-content-center mt-4 mb-2">
-                                    <button type="button" class="btn btn-success w-50" id="btnDatSanTrong" onclick="KiemTraLoiDatSan()">
+                                <div class="row mt-3 mx-1">
+                                    <h6 style="padding: 0px"><span style="font-weight: 600;">Yêu cầu:</span></h6>
+                                    <textarea class="form-control" id="yeuCauDatSan" placeholder="Nhập yêu cầu thêm (nếu có)"></textarea>
+                                </div>
+                                <div class="row d-flex justify-content-end mt-4 mb-2 me-1">
+                                    <button type="button" class="btn btn-success w-25" id="btnDatSanTrong">
                                         Đặt
                                         sân
                                     </button>
@@ -227,14 +224,74 @@
         </div>
     </div>
 </div>
-</div>
 <!-- Modal xem thông tin  -->
-<div class="modal fade" id="modalXemThongTin" tabindex="-1" aria-labelledby="modalXemThongTinLabel" aria-hidden="true">
+<div class="modal fade" id="modalXemThongTin">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content" style="border-radius: 20px">
+            <div class="modal-header d-flex justify-content-center">
+                <div>
+                    <h5 style="font-weight: bolder;">Thông tin đặt sân</h5>
+                </div>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="container">
+                    <div class="row mb-3">
+                        <div class="col-12 px-0">
+                            <div class="container">
+                                <div class="row mt-2">
+                                    <div class="col-4">
+                                        <h6><span style="font-weight: 600;">Họ tên:</span></h6>
+                                        <input type="text" class="form-control" id="hoTenDaDat" readonly>
+                                        <span class="error text-danger" id="hoTenDaDatError"></span>
+                                    </div>
+                                    <div class="col-4">
+                                        <h6><span style="font-weight: 600;">Số điện thoại:</span></h6>
+                                        <input type="number" class="form-control" id="soDienThoaiDaDat" readonly>
+                                        <span class="error text-danger" id="soDienThoaiDaDatError"></span>
+                                    </div>
+                                    <div class="col-4">
+                                        <h6><span style="font-weight: 600;">Ngày nhận:</span></h6>
+                                        <input type="text" class="form-control" id="ngayNhanDaDat" readonly>
+                                        <span class="error text-danger" id="ngayNhanDaDatError"></span>
+                                    </div>
+                                </div>
+                                <div class="row mt-3 mb-4">
+                                    <div class="col-4">
+                                        <h6><span style="font-weight: 600;">Giờ nhận:</span></h6>
+                                        <input type="text" class="form-control" id="khungGioDaDat" readonly>
+                                        <span class="error text-danger" id="khungGioDaDatError"></span>
+                                    </div>
+                                    <div class="col-4">
+                                        <h6><span style="font-weight: 600;">Thời lượng:</span></h6>
+                                        <input type="text" class="form-control" id="thoiLuongDaDat" readonly>
+                                        <span class="error text-danger" id="thoiLuongDaDatError"></span>
+                                    </div>
+                                    <div class="col-4">
+                                        <h6><span style="font-weight: 600;">Thanh toán:</span></h6>
+                                        <input type="text" class="form-control" id="tongThanhToanDaDat" readonly>
+                                        <span class="error text-danger" id="tongThanhToanDaDatError"></span>
+                                    </div>
+                                </div>
+                                <div class="row mt-3 mx-1">
+                                    <h6 style="padding: 0px"><span style="font-weight: 600;">Yêu cầu:</span></h6>
+                                    <textarea class="moTaDatSan form-control" id="yeuCauDaDat" readonly></textarea>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal thanh toan -->
+<div class="modal fade" id="modalThanhToanSan">
     <div class="modal-dialog modal-lg" id="modalDatSanDialog">
         <div class="modal-content" style="border-radius: 20px" id="modalDatSanContent">
             <div class="modal-header d-flex justify-content-center">
                 <div>
-                    <h5 style="font-weight: bolder;">Thông tin sân</h5>
+                    <h5 style="font-weight: bolder;">Thông tin đặt sân</h5>
                 </div>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
@@ -246,37 +303,45 @@
                                 <div class="row mt-2">
                                     <div class="col-4">
                                         <h6><span style="font-weight: 600;">Họ tên:</span></h6>
-                                        <input type="text" class="form-control" id="tenNguoiDatDaDat" readonly>
-                                        <span class="error text-danger" id="tenNguoiDatDaDatError"></span>
+                                        <input type="text" class="form-control" id="hoTenTT" readonly>
+                                        <span class="error text-danger" id="hoTenTTError"></span>
                                     </div>
                                     <div class="col-4">
                                         <h6><span style="font-weight: 600;">Số điện thoại:</span></h6>
-                                        <input type="number" class="form-control" id="soDienThoaiDaDat" readonly>
-                                        <span class="error text-danger" id="soDienThoaiDaDatError"></span>
+                                        <input type="number" class="form-control" id="soDienThoaiTT" readonly>
+                                        <span class="error text-danger" id="soDienThoaiTTError"></span>
                                     </div>
                                     <div class="col-4">
                                         <h6><span style="font-weight: 600;">Ngày nhận:</span></h6>
-                                        <input type="text" class="form-control" readonly>
-                                        <span class="error text-danger" id="ngayNhanDaDatError"></span>
+                                        <input type="text" class="form-control" id="ngayNhanTT" readonly>
+                                        <span class="error text-danger" id="ngayNhanTTError"></span>
                                     </div>
                                 </div>
                                 <div class="row mt-3 mb-4">
                                     <div class="col-4">
                                         <h6><span style="font-weight: 600;">Giờ nhận:</span></h6>
-                                        <input type="text" class="form-control" id="ngayNhanDaDat" readonly>
-                                        <span class="error text-danger" id="ngayNhanDaDatError"></span>
+                                        <input type="text" class="form-control" id="khungGioTT" readonly>
+                                        <span class="error text-danger" id="khungGioTTtError"></span>
                                     </div>
                                     <div class="col-4">
                                         <h6><span style="font-weight: 600;">Thời lượng:</span></h6>
-                                        <input type="text" class="form-control" id="thoiLuongDaDat" readonly>
-                                        <span class="error text-danger" id="thoiLuongDaDatError"></span>
-                                        <span class="error text-danger" id="thoiLuongDaDatError"></span>
+                                        <input type="text" class="form-control" id="thoiLuongTT" readonly>
+                                        <span class="error text-danger" id="thoiLuongTTError"></span>
                                     </div>
                                     <div class="col-4">
                                         <h6><span style="font-weight: 600;">Thanh toán:</span></h6>
-                                        <input type="text" class="form-control" id="thanhToanDaDat" readonly>
-                                        <span class="error text-danger" id="thanhToanDaDatError"></span>
+                                        <input type="text" class="form-control" id="tongThanhToanTT" readonly>
+                                        <span class="error text-danger" id="tongThanhToanTTError"></span>
                                     </div>
+                                </div>
+                                <div class="row mt-3 mx-1">
+                                    <h6 style="padding: 0px"><span style="font-weight: 600;">Yêu cầu:</span></h6>
+                                    <textarea class="moTaDatSan form-control" id="yeuCauTT" readonly></textarea>
+                                </div>
+                                <div class="row d-flex justify-content-end mt-4 mb-2 me-1">
+                                    <button type="button" class="btn btn-success w-25">
+                                        Thanh Toán
+                                    </button>
                                 </div>
                             </div>
                         </div>
@@ -289,7 +354,7 @@
 <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
 <script>
     flatpickr("#myIDQLDS", {
-        dateFormat: "m-d-Y",
+        dateFormat: "d-m-Y",
         minDate: "today",
         onChange: function (selectedDates, dateStr, instance) {
             // Sau khi chọn ngày, cập nhật lại trạng thái của giờ nhận

@@ -61,7 +61,7 @@ namespace Football_3TL.Areas.ChuSanBong.Controllers
                         .FirstOrDefault(t => t.NgayDat == today
                             && t.GioDat.HasValue
                             && currentTime >= t.GioDat.Value
-                            && currentTime <= t.GioDat.Value.AddMinutes(t.ThoiLuong ?? 0));
+                            && currentTime < t.GioDat.Value.AddMinutes(t.ThoiLuong ?? 0));
 
                         return new modelQuanLyDatSan
                         {
@@ -69,7 +69,8 @@ namespace Football_3TL.Areas.ChuSanBong.Controllers
                             LoaiSan = s.LoaiSan,
                             GiaSan = s.Gia,
                             TrangThai = thongTin?.TrangThaiSan ?? "Trống",
-                            TrangThaiThanhToan = thongTin?.TrangThaiThanhToan ?? "Sân chưa đặt"
+                            TrangThaiThanhToan = thongTin?.TrangThaiThanhToan ?? "Sân chưa đặt",
+                            MaDatSan = thongTin?.MaDatSan ?? 0
                         };
                     })
                     .ToList();
@@ -83,6 +84,7 @@ namespace Football_3TL.Areas.ChuSanBong.Controllers
             }
         }
 
+        //load thông tin theo tìm kiếm 
         [HttpGet]
         public async Task<IActionResult> LoadSanBong([FromQuery] ModelThongTinTimKiem model)
         {
@@ -106,7 +108,7 @@ namespace Football_3TL.Areas.ChuSanBong.Controllers
                     .Where(s => s.MaChuSan == maChuSan)
                     .Include(db => db.ThongTinDatSans)
                     .Select(s => new
-                    {
+                    {   s.MaSan,
                         s.TenSan,
                         s.LoaiSan,
                         s.Gia,
@@ -127,7 +129,7 @@ namespace Football_3TL.Areas.ChuSanBong.Controllers
                         .FirstOrDefault(t => t.NgayDat == today
                             && t.GioDat.HasValue
                             && currentTime >= t.GioDat.Value
-                            && currentTime <= t.GioDat.Value.AddMinutes(t.ThoiLuong ?? 0));
+                            && currentTime < t.GioDat.Value.AddMinutes(t.ThoiLuong ?? 0));
                         
                         return new modelQuanLyDatSan
                         {
@@ -135,7 +137,8 @@ namespace Football_3TL.Areas.ChuSanBong.Controllers
                             LoaiSan = s.LoaiSan,
                             GiaSan = s.Gia,
                             TrangThai = thongTin?.TrangThaiSan ?? "Trống",
-                            TrangThaiThanhToan = thongTin?.TrangThaiThanhToan ?? "Sân chưa đặt"
+                            TrangThaiThanhToan = thongTin?.TrangThaiThanhToan ?? "Sân chưa đặt",
+                            MaDatSan = thongTin?.MaDatSan ?? 0
                         };
                     })
                     .ToList();
@@ -156,7 +159,8 @@ namespace Football_3TL.Areas.ChuSanBong.Controllers
                              LoaiSan = s.LoaiSan,
                              GiaSan = s.Gia,
                              TrangThai = thongTin?.TrangThaiSan ?? "Trống",
-                             TrangThaiThanhToan = thongTin?.TrangThaiThanhToan ?? "Sân chưa đặt"
+                             TrangThaiThanhToan = thongTin?.TrangThaiThanhToan ?? "Sân chưa đặt",
+                             MaDatSan = thongTin?.MaDatSan ?? 0
                          };
                      })
                      .ToList();
@@ -189,7 +193,8 @@ namespace Football_3TL.Areas.ChuSanBong.Controllers
                              LoaiSan = s.LoaiSan,
                              GiaSan = s.Gia,
                              TrangThai = thongTin?.TrangThaiSan ?? "Trống",
-                             TrangThaiThanhToan = thongTin?.TrangThaiThanhToan ?? "Sân chưa đặt"
+                             TrangThaiThanhToan = thongTin?.TrangThaiThanhToan ?? "Sân chưa đặt",
+                             MaDatSan = thongTin?.MaDatSan ?? 0
                          };
                      })
                      .ToList();
@@ -203,8 +208,44 @@ namespace Football_3TL.Areas.ChuSanBong.Controllers
             }
         }
 
+        //Lấy thông tin hiện lên modal 
+        [HttpGet]
+        public async Task<IActionResult> getThongTinDatSan(int maDatSan)
+        {
+            try
+            {
+                var maChuSan = HttpContext.Session.GetInt32("maChuSan");
+                if (!maChuSan.HasValue)
+                {
+                    _log.LogError("maChuSan is null. Session might not be set.");
+                    return View(new List<modelQuanLyDatSan>());
+                }
+                var thongTin = await _db.ThongTinDatSans.Include(kh => kh.MaKhachHangNavigation).Include(sb => sb.MaSanNavigation).FirstOrDefaultAsync(t => t.MaDatSan == maDatSan && t.MaChuSan == maChuSan);
 
+                if (thongTin == null)
+                {
+                    return Json(new { success = false, message = "Không tìm thấy thông tin đặt sân." });
+                }
 
+                var dataGet = new
+                {
+                    thongTin.MaKhachHangNavigation?.HoVaTen,
+                    thongTin.MaKhachHangNavigation?.SoDienThoai,
+                    thongTin.NgayDat,
+                    thongTin.GioDat, 
+                    thongTin.ThoiLuong,
+                    thongTin.GhiChu, 
+                    thongTin.MaSanNavigation?.Gia
+                };
 
+                return Json(new { success = true, data = dataGet });
+
+            }
+            catch (Exception)
+            {
+
+                return Json(new { success = false, message = "Lỗi sever, vui lòng thử lại sau!" });
+            }
+        }
     }
 }
