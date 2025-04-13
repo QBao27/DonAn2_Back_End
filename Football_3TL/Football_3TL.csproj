@@ -20,7 +20,7 @@
   <ItemGroup>
     <Folder Include="Areas\Admin\Data\" />
     <Folder Include="Areas\Admin\Models\" />
-    <Folder Include="Areas\KhachHang\Data\" />
+    <Folder Include="Areas\Customer\Data\" />
     <Folder Include="wwwroot\css\CssKhachHang\" />
     <Folder Include="wwwroot\js\JsKhachHang\" />
     <Folder Include="wwwroot\Img\" />

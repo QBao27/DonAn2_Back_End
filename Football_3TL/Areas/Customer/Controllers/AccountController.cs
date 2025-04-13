@@ -1,4 +1,4 @@
-﻿using Football_3TL.Areas.KhachHang.Models;
+﻿using Football_3TL.Areas.Customer.Models;
 using Football_3TL.Data;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.CodeAnalysis.Scripting;
@@ -8,9 +8,9 @@ using BCrypt.Net;
 using Microsoft.EntityFrameworkCore;
 
 
-namespace Football_3TL.Areas.KhachHang.Controllers
+namespace Football_3TL.Areas.Customer.Controllers
 {
-    [Area("KhachHang")]
+    [Area("Customer")]
     public class AccountController : Controller
     {
         //thay thế cho database
@@ -48,7 +48,7 @@ namespace Football_3TL.Areas.KhachHang.Controllers
                 if (_db.ChuSans.Any(u => u.Email == model.Email || u.SoDienThoai == model.Phone))
                 {
                     _log.LogWarning("Đăng ký thất bại do dữ liệu không hợp lệ.");
-                    return Json(new { success = false, startLogin = true, emailLogin = model.Email,  message = "Tài khoản đã tồn tại!" });
+                    return Json(new { success = false,  message = "Tài khoản đã tồn tại!" });
                 }
 
                 if (model.Password != model.ConfirmPassword)
@@ -162,7 +162,7 @@ namespace Football_3TL.Areas.KhachHang.Controllers
                 }
                 else
                 {
-                    return Json(new { success = true, redirectUrl = Url.Action("Index", "Home", new { area = "KhachHang" }) });
+                    return Json(new { success = true, redirectUrl = Url.Action("Index", "Home", new { area = "Customer" }) });
                 }
             }
             catch (Exception)
@@ -185,7 +185,7 @@ namespace Football_3TL.Areas.KhachHang.Controllers
         public IActionResult Logout()
         {
             HttpContext.Session.Clear(); // Xóa toàn bộ session của người dùng
-            return RedirectToAction("Index", "Home", new { area = "KhachHang" }); // Chuyển hướng về Customer/Home/Index
+            return RedirectToAction("Index", "Home", new { area = "Customer" }); // Chuyển hướng về Customer/Home/Index
         }
 
     }

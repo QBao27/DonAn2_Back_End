@@ -18,7 +18,7 @@
                             </h4>
                         </div>
                         <div class="d-flex">
-                            <a class="ms-2 cusor" style="color: red;" href="/KhachHang/Account/Logout">Đăng xuất</a>
+                            <a class="ms-2 cusor" style="color: red;" href="/Customer/Account/Logout">Đăng xuất</a>
                         </div>
                     </div>
                 </li>
@@ -132,7 +132,7 @@
                                                 <td class="text-secondary">@i.TrangThaiThanhToan</td>
                                                 <td>
                                                     <button type="button" class="btn btn-success btn-sm w-100"
-                                                            style="border-radius: 10px;" onclick="getDataDatSan(@i.MaDatSan), modalThanhToan()">
+                                                                        style="border-radius: 10px;" onclick="getDataDatSan(@i.MaDatSan), modalThanhToan()">
                                                         Thanh toán
                                                     </button>
                                                 </td>
@@ -339,7 +339,7 @@
                                     <textarea class="moTaDatSan form-control" id="yeuCauTT" readonly></textarea>
                                 </div>
                                 <div class="row d-flex justify-content-end mt-4 mb-2 me-1">
-                                    <button type="button" class="btn btn-success w-25">
+                                    <button type="button" class="btn btn-success w-25" id="btnThanhToanDatSan">
                                         Thanh Toán
                                     </button>
                                 </div>

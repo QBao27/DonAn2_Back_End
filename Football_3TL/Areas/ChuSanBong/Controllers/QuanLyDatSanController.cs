@@ -1,9 +1,10 @@
 ﻿using Football_3TL.Areas.ChuSanBong.Models;
-using Football_3TL.Areas.KhachHang.Controllers;
+using Football_3TL.Areas.Customer.Controllers;
 using Football_3TL.Data;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
+using NuGet.Versioning;
 
 namespace Football_3TL.Areas.ChuSanBong.Controllers
 {
@@ -21,6 +22,7 @@ namespace Football_3TL.Areas.ChuSanBong.Controllers
             _db = db;
             _log = log;
         }
+
         // Hiển thị thông tin sân bóng tại thời điểm hiện tại
         public IActionResult Index()
         {
@@ -36,7 +38,7 @@ namespace Football_3TL.Areas.ChuSanBong.Controllers
                 if (!maChuSan.HasValue)
                 {
                     _log.LogError("maChuSan is null. Session might not be set.");
-                    return View(new List<modelQuanLyDatSan>());
+                    return Json(new { success = false, message = "Bạn chưa đăng nhập!" });
                 }
 
                 // Bước 1: Lấy dữ liệu từ SanBong và ThongTinDatSans
@@ -84,7 +86,7 @@ namespace Football_3TL.Areas.ChuSanBong.Controllers
             }
         }
 
-        //load thông tin theo tìm kiếm 
+        //API load thông tin theo tìm kiếm 
         [HttpGet]
         public async Task<IActionResult> LoadSanBong([FromQuery] ModelThongTinTimKiem model)
         {
@@ -208,7 +210,7 @@ namespace Football_3TL.Areas.ChuSanBong.Controllers
             }
         }
 
-        //Lấy thông tin hiện lên modal 
+        //API Lấy thông tin hiện lên modal 
         [HttpGet]
         public async Task<IActionResult> getThongTinDatSan(int maDatSan)
         {
@@ -218,7 +220,7 @@ namespace Football_3TL.Areas.ChuSanBong.Controllers
                 if (!maChuSan.HasValue)
                 {
                     _log.LogError("maChuSan is null. Session might not be set.");
-                    return View(new List<modelQuanLyDatSan>());
+                    return Json(new { success = false, message = "Bạn chưa đăng nhập!" });
                 }
                 var thongTin = await _db.ThongTinDatSans.Include(kh => kh.MaKhachHangNavigation).Include(sb => sb.MaSanNavigation).FirstOrDefaultAsync(t => t.MaDatSan == maDatSan && t.MaChuSan == maChuSan);
 
@@ -235,7 +237,8 @@ namespace Football_3TL.Areas.ChuSanBong.Controllers
                     thongTin.GioDat, 
                     thongTin.ThoiLuong,
                     thongTin.GhiChu, 
-                    thongTin.MaSanNavigation?.Gia
+                    thongTin.MaSanNavigation?.Gia,
+                    thongTin.MaDatSan
                 };
 
                 return Json(new { success = true, data = dataGet });
@@ -245,6 +248,109 @@ namespace Football_3TL.Areas.ChuSanBong.Controllers
             {
 
                 return Json(new { success = false, message = "Lỗi sever, vui lòng thử lại sau!" });
+            }
+        }
+
+        //API cập nhật trạng thái thanh toán
+        public async Task<IActionResult> UpdateTrangThaiTT(int? id)
+        {
+            try
+            {
+                var maChuSan = HttpContext.Session.GetInt32("maChuSan");
+                if (!maChuSan.HasValue)
+                {
+                    _log.LogError("maChuSan is null. Session might not be set.");
+                    return Json(new { success = false, message = "Bạn chưa đăng nhập!" });
+                }
+
+                if (id == null)
+                {
+                    return Json(new { success = false, message = "Mã đặt sân không hợp lệ!" });
+                }
+
+                var thongTin = await _db.ThongTinDatSans
+                    .Where(tt => tt.MaChuSan == maChuSan && tt.MaDatSan == id)
+                    .FirstOrDefaultAsync();
+
+                if (thongTin == null)
+                {
+                    return Json(new { success = false, message = "Không tìm thấy thông tin đặt sân!" });
+                }
+
+                // Cập nhật trạng thái thanh toán
+                thongTin.TrangThaiThanhToan = "Đã thanh toán"; // hoặc true nếu là kiểu bool
+
+                _db.ThongTinDatSans.Update(thongTin);
+                await _db.SaveChangesAsync();
+                // lưu thông tin vào bảng hóa đơn
+                var hoaDon = new HoaDon
+                {
+                    MaDatSan = thongTin.MaDatSan
+                };
+
+                _db.HoaDons.Add(hoaDon);
+                await _db.SaveChangesAsync();
+
+                return Json(new { success = true, message = "Cập nhật trạng thái thanh toán thành công!" });
+            }
+            catch (Exception ex)
+            {
+                _log.LogError(ex, "Lỗi khi cập nhật trạng thái thanh toán.");
+                return Json(new { success = false, message = "Lỗi server, vui lòng thử lại sau!" });
+            }
+        }
+
+        //API đặt sân trống
+        [HttpPost]
+        public async Task<IActionResult> datSanTrong([FromBody] modelThongTinDatSan model)
+        {
+            try
+            {
+                var maChuSan = HttpContext.Session.GetInt32("maChuSan");
+                if (!maChuSan.HasValue)
+                {
+                    _log.LogError("maChuSan is null. Session might not be set.");
+                    return Json(new { success = false, message = "Bạn chưa đăng nhập!" });
+                }
+
+                if (model == null)
+                {
+                    _log.LogError("Thông tin đặt sân không hợp lệ!");
+                    return Json(new { success = false, message = "Thông tin đặt sân không hợp lệ!" });
+                }
+
+                var khachHang = new KhachHang
+                {
+                    HoVaTen = model.hoTenKH,
+                    SoDienThoai = model.soDienThoaiKH,
+                };
+                await _db.KhachHangs.AddAsync(khachHang);
+                await _db.SaveChangesAsync();
+
+                var thongTinDatSan = new ThongTinDatSan
+                {
+                    MaChuSan = maChuSan.Value,
+                    MaKhachHang = khachHang.MaKhachHang, // Lấy từ khách hàng vừa insert
+                    ThoiGianDat = DateOnly.FromDateTime(DateTime.Now),
+                    NgayDat = model.NgayDat,
+                    GioDat = model.GioDat,
+                    ThoiLuong = model.ThoiLuong,
+                    GhiChu = model.GhiChu,
+                    MaSan = model.MaSan,
+                    TenSan = model.TenSan,
+                    TrangThaiThanhToan = "Chưa thanh toán",
+                    TrangThaiSan = "Đã đặt"
+                };
+
+                await _db.ThongTinDatSans.AddAsync(thongTinDatSan);
+                await _db.SaveChangesAsync();
+
+                return Json(new { success = true, message = "Đặt sân thành công!" });
+            }
+            catch (Exception ex)
+            {
+                _log.LogError(ex, "Lỗi khi đặt sân trống.");
+                return Json(new { success = false, message = "Lỗi server, vui lòng thử lại sau!" });
             }
         }
     }

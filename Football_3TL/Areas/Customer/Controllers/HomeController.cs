@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 
-namespace Football_3TL.Areas.KhachHang.Controllers
+namespace Football_3TL.Areas.Customer.Controllers
 {
-    [Area("KhachHang")]
+    [Area("Customer")]
     public class HomeController : Controller
     {
         public IActionResult Index()

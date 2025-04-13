@@ -221,7 +221,7 @@ function SignUp() {
     $('#btnSignUp').prop("disabled", true).text("Đang đăng ký...");
 
     $.ajax({
-        url: "/KhachHang/Account/SignUp",
+        url: "/Customer/Account/SignUp",
         type: "POST",
         contentType: "application/json",
         headers: { "Accept": "application/json" },
@@ -234,21 +234,11 @@ function SignUp() {
                 modalSignUp(); // Ẩn modal đăng ký
                 modalLogin(); // Hiển thị modal đăng nhập
             } else {
-                if (response.startLogin) {
-                    toastr.warning(response.message, "", {
-                        timeOut: 2000 // Giới hạn thời gian hiển thị là 1 giây
-                    });
-                    modalSignUp(); // Ẩn modal đăng ký
-                    modalLogin(); // Hiển thị modal đăng nhập
-                    $('#taiKhoanDangNhap').val(response.emailLogin)
-                }
-                else {
                     toastr.error(response.message, "", {
                         timeOut: 2000 // Giới hạn thời gian hiển thị là 1 giây
                     });
                     resetDataSignUp();
                 }
-            }
         },
         error: function (e) {
             console.error("Lỗi:", e.status);

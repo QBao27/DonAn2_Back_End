@@ -1,4 +1,4 @@
-﻿namespace Football_3TL.Areas.KhachHang.Models
+﻿namespace Football_3TL.Areas.Customer.Models
 {
     public class modelSignUp
     {

@@ -234,7 +234,10 @@ function convertToMDY(dateStr) {
 //kiểm tra dữ liệu đặt sân trống
 function checkDataDatSanTrong() {
     let hoTen = $('#hotenDatSan').val().trim();
-    let soDienThoai= $('#soDienThoaiDatSan').val().trim();
+    let soDienThoai = $('#soDienThoaiDatSan').val().trim();
+    let ngayNhan = $('#ngayNhanDatSan').val().trim();
+    let khungGio = $('#khungGioDatSan').val().trim();
+    let thoiLuong = $('#thoiLuongDatSan').val().trim();
 
     let isValid = true;
 
@@ -253,6 +256,20 @@ function checkDataDatSanTrong() {
         isValid = false;
     }
 
+    if (ngayNhan === "Chưa chọn ngày") { 
+        $("#ngayNhanDatSanError").text("Bạn chưa chọn ngày nhận!");
+        isValid = false;
+    }
+
+    if (khungGio === "Chọn khung giờ") {
+        $("#khungGioDatSanError").text("Bạn chưa chọn khung giờ!");
+            isValid = false;
+    }
+
+    if (thoiLuong === "0 Phút") {
+        $("#thoiLuongDatSanError").text("Bạn chưa chọn thời lượng!");
+            isValid = false; 
+    }
 
     if (!isValid) {
         toastr.warning("Bạn chưa nhập thông tin!", "", {
@@ -270,8 +287,7 @@ function resetDataDatSan() {
 
 //reset thông báo lỗi 
 function resetErrorDatSan() {
-    $("#hotenDatSanError").text('');
-    $("#soDienThoaiDatSanError").text('');
+    $("#hotenDatSanError, #soDienThoaiDatSanError, #ngayNhanDatSanError, #khungGioDatSanError, #thoiLuongDatSanError").text('');
 }
 
 //Đóng mở modal đặt sân
@@ -352,6 +368,10 @@ function getDataDatSan(id) {
                 $("#thoiLuongTT").val(response.data.thoiLuong);
                 $("#yeuCauTT").val(response.data.ghiChu);
                 $("#tongThanhToanTT").val(tongThanhToan + " VND"); 
+
+                $("#btnThanhToanDatSan").off("click").on("click", function () {
+                    thanhToanDatSan(response.data.maDatSan);
+                });
             }
             else {
                 toastr.error(response.message, "", {
@@ -373,4 +393,66 @@ function getDataDatSan(id) {
         }
     });
 }
+
+// Hàm xử lý nút thanh toán
+function thanhToanDatSan(id) {
+    if (id == null) {
+        console.log("Mã đặt sân không hợp lệ!");
+        return;
+    }
+
+    Swal.fire({
+        title: "Xác nhận thanh toán",
+        text: "Bạn có chắc chắn muốn thanh toán?",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonText: "Có, thanh toán!",
+        cancelButtonText: "Hủy",
+        reverseButtons: true,
+        customClass: {
+            popup: 'custom-swal'
+        }
+    }).then((result) => {
+        if (result.isConfirmed) {
+            // Người dùng đã xác nhận
+            $.ajax({
+                url: "/ChuSanBong/QuanLyDatSan/UpdateTrangThaiTT?id=" + id,
+                type: "GET", // hoặc "POST" tùy theo controller bạn xử lý
+                dataType: 'json',
+                success: function (response) {
+                    if (response.success) {
+                        Swal.fire({
+                            icon: "success",
+                            title: "Thành công",
+                            text: response.message,
+                            timer: 2000,
+                            showConfirmButton: false
+                        });
+
+                        // Gọi lại hàm modal hoặc reload nếu cần
+                        modalThanhToan();
+                        LoadThongTinSanBong();
+                    } else {
+                        toastr.error(response.message, "", {
+                            timeOut: 2000
+                        });
+                    }
+                },
+                error: function (xhr) {
+                    Swal.fire({
+                        icon: "error",
+                        title: "Lỗi hệ thống",
+                        text: "Không thể kết nối với máy chủ, vui lòng thử lại sau!",
+                        confirmButtonText: "OK",
+                        timer: 2000,
+                        customClass: {
+                            popup: 'custom-swal'
+                        }
+                    });
+                }
+            });
+        }
+    });
+}
+
 

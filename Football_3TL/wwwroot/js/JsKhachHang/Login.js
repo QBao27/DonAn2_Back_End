@@ -68,7 +68,7 @@ function Login() {
     $('#btnLogin').prop("disabled", true).text("Đang đăng nhập...");
 
     $.ajax({
-        url: "/KhachHang/Account/Login",
+        url: "/Customer/Account/Login",
         type: "POST",
         contentType: "application/json",
         data: JSON.stringify({
