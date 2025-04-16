@@ -39,6 +39,8 @@ function renderChuSanTable() {
                        style="color: darkblue; font-style: italic; text-decoration: underline;">
                         Chi tiết
                     </a>
+                    <button type="button" class="btn btn-warning me-2" data-bs-toggle="modal"
+                                                data-bs-target="#sua" data-bs-dismiss="modal">Mở tài khoản</button>
                 </td>
             </tr>`;
     });
