@@ -13,5 +13,6 @@ public partial class TaiKhoan
 
     public int? Quyen { get; set; }
 
+    public string? TrangThai { get; set; }
     public virtual ChuSan? MaChuSanNavigation { get; set; }
 }
