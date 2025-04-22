@@ -7,6 +7,7 @@ function loadChuSanData() {
         url: '/Admin/QuanLyTaiKhoan/GetAllChuSan',
         type: 'GET',
         success: function (data) {
+            console.log(data)
             chuSanList = data;
             currentPage = 1;
             renderChuSanTable();
@@ -19,6 +20,35 @@ function loadChuSanData() {
     });
 }
 
+//function renderChuSanTable() {
+//    let tableBody = '';
+//    let startIndex = (currentPage - 1) * itemsPerPage;
+//    let endIndex = startIndex + itemsPerPage;
+//    let displayedItems = chuSanList.slice(startIndex, endIndex);
+
+//    $.each(displayedItems, function (index, item) {
+//        tableBody += `
+//            <tr>
+//                <th scope="row">${startIndex + index + 1}</th>
+//                <td>${item.hoVaTen}</td>
+//                <td>${item.tenSanBong}</td>
+//                <td>${item.soDienThoai}</td>
+//                <td>${item.email}</td>
+//                <td class="d-flex justify-content-center">
+//                    <a class="cusor me-2 mt-1 d-flex data-id="${item.maChuSan}" justify-content-end data-bs-toggle="modal"
+//                       data-bs-target="#Thongtin1" onclick="loadChuSanChiTiet(${item.maChuSan})""
+//                       style="color: darkblue; font-style: italic; text-decoration: underline;">
+//                        Chi tiết
+//                    </a>
+//                    <button type="button" class="btn btn-danger ms-2" data-bs-toggle="modal"
+//                                                data-bs-target="#" data-bs-dismiss="modal">Khóa tài khoản</button>
+//                </td>
+//            </tr>`;
+//    });
+
+//    $('#chuSanTableBody').html(tableBody);
+//}
+
 function renderChuSanTable() {
     let tableBody = '';
     let startIndex = (currentPage - 1) * itemsPerPage;
@@ -26,6 +56,20 @@ function renderChuSanTable() {
     let displayedItems = chuSanList.slice(startIndex, endIndex);
 
     $.each(displayedItems, function (index, item) {
+        // kiểm tra trạng thái
+        let buttonAction = '';
+        if (item.trangThai == 'Ðã khóa') {
+            buttonAction = `
+                <button type="button" style="width:143px" class="btn btn-success ms-2" data-id="${item.maChuSan}" onclick="MoTaiKhoan(${item.maChuSan})">
+                    Mở tài khoản
+                </button>`;
+        } else {
+            buttonAction = `
+                <button type="button" class="btn btn-danger ms-2" data-id="${item.maChuSan}" onclick="KhoaTaiKhoan(${item.maChuSan})">
+                    Khóa tài khoản
+                </button>`;
+        }
+
         tableBody += `
             <tr>
                 <th scope="row">${startIndex + index + 1}</th>
@@ -33,18 +77,86 @@ function renderChuSanTable() {
                 <td>${item.tenSanBong}</td>
                 <td>${item.soDienThoai}</td>
                 <td>${item.email}</td>
-                <td>
+                <td class="d-flex justify-content-center">
                     <a class="cusor me-2 mt-1 d-flex data-id="${item.maChuSan}" justify-content-end data-bs-toggle="modal"
-                       data-bs-target="#Thongtin1" onclick="loadChuSanChiTiet(${item.maChuSan})""
+                       data-bs-target="#Thongtin1" onclick="loadChuSanChiTiet(${item.maChuSan})"
                        style="color: darkblue; font-style: italic; text-decoration: underline;">
                         Chi tiết
                     </a>
+                    ${buttonAction}
                 </td>
             </tr>`;
     });
 
     $('#chuSanTableBody').html(tableBody);
 }
+
+function MoTaiKhoan(maChuSan) {
+    Swal.fire({
+        title: "Bạn có chắc chắn muốn mở tài khoản?",
+        text: "Hành động này không thể hoàn tác!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#198754",
+        cancelButtonColor: "#6c757d",
+        confirmButtonText: "Mở",
+        cancelButtonText: "Hủy"
+    }).then((result) => {
+        if (result.isConfirmed) {
+            $.ajax({
+                url: "/Admin/QuanLyTaiKhoan/MoTaiKhoan", // tên hàm controller mới
+                type: "POST",
+                data: { maChuSan: maChuSan },
+                success: function (response) {
+                    if (response.success) {
+                        Swal.fire("Thành công!", response.message, "success");
+                        loadChuSanData(); // Gọi lại load danh sách nếu có
+                    } else {
+                        toastr.error(response.message);
+                    }
+                },
+                error: function () {
+                    toastr.error("Có lỗi xảy ra khi mở tài khoản.");
+                }
+            });
+        }
+    });
+}
+
+
+
+function KhoaTaiKhoan(maChuSan) {
+    Swal.fire({
+        title: "Bạn có chắc chắn muốn khóa tài khoản?",
+        text: "Hành động này không thể hoàn tác!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#d33",
+        cancelButtonColor: "#3085d6",
+        confirmButtonText: "Khóa",
+        cancelButtonText: "Hủy"
+    }).then((result) => {
+        if (result.isConfirmed) {
+            $.ajax({
+                url: "/Admin/QuanLyTaiKhoan/KhoaTaiKhoan", // <- gọi đúng route của controller
+                type: "POST",
+                data: { maChuSan: maChuSan },
+                success: function (response) {
+                    if (response.success) {
+                        Swal.fire("Thành công!", response.message, "success");
+                        loadChuSanData(); // Tải lại danh sách chủ sân
+                    } else {
+                        toastr.error(response.message);
+                    }
+                },
+                error: function () {
+                    toastr.error("Có lỗi xảy ra khi khóa tài khoản.");
+                }
+            });
+        }
+    });
+}
+
 
 function renderChuSanPagination() {
     let totalPages = Math.ceil(chuSanList.length / itemsPerPage);

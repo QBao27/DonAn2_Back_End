@@ -10,6 +10,7 @@
             type: 'GET',
             dataType: 'json',
             success: function (data) {
+                console.log(data)
                 let tableBody = $("#HoaDonTable");
                 tableBody.empty();
 
@@ -29,9 +30,10 @@
                     let row = `<tr>
                         <th scope="row">${startIndex + index + 1}</th>
                         <td>${hoaDon.maHoaDon}</td>
+                        <td>${hoaDon.thoiGianLapHoaDon}</td>
                         <td>${hoaDon.tenSan}</td>
                         <td>${hoaDon.tenKhachHang}</td>
-                        <td>${hoaDon.thoiGian}</td>
+                        <td>${hoaDon.thoiGianDatSan}</td>
                         <td>${hoaDon.tongGiaTri}</td>
                     </tr>`;
                     tableBody.append(row);

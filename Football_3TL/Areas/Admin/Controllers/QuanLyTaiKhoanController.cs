@@ -21,15 +21,16 @@ namespace Football_3TL.Areas.Admin.Controllers
         public IActionResult GetAllChuSan()
         {
             var danhSach = dbContext.ChuSans
-                .Select(cs => new
-                {
-                    cs.MaChuSan,
-                    cs.HoVaTen,
-                    cs.TenSanBong,
-                    cs.SoDienThoai,
-                    cs.Email
-                }).ToList();
-
+            .Select(cs => new
+            {
+               cs.MaChuSan,
+               cs.HoVaTen,
+               cs.TenSanBong,
+               cs.SoDienThoai,
+               cs.Email,
+               TrangThai = cs.TaiKhoans.FirstOrDefault().TrangThai // lấy tài khoản đầu tiên nếu có
+             })
+             .ToList();
             return Json(danhSach);
         }
 
@@ -56,6 +57,41 @@ namespace Football_3TL.Areas.Admin.Controllers
 
             return Json(cs);
         }
+
+        [HttpPost]
+        public IActionResult MoTaiKhoan(int maChuSan)
+        {
+            var taiKhoan = dbContext.TaiKhoans
+                .FirstOrDefault(tk => tk.MaChuSan == maChuSan);
+
+            if (taiKhoan == null)
+            {
+                return Json(new { success = false, message = "Không tìm thấy tài khoản!" });
+            }
+
+            taiKhoan.TrangThai = "Không khóa";
+            dbContext.SaveChanges();
+
+            return Json(new { success = true, message = "Mở tài khoản thành công!" });
+        }
+
+        [HttpPost]
+        public IActionResult KhoaTaiKhoan(int maChuSan)
+        {
+            var taiKhoan = dbContext.TaiKhoans
+                .FirstOrDefault(tk => tk.MaChuSan == maChuSan);
+
+            if (taiKhoan == null)
+            {
+                return Json(new { success = false, message = "Không tìm thấy tài khoản!" });
+            }
+
+            taiKhoan.TrangThai = "Đã khóa";
+            dbContext.SaveChanges();
+
+            return Json(new { success = true, message = "Khóa tài khoản thành công!" });
+        }
+
 
     }
 }

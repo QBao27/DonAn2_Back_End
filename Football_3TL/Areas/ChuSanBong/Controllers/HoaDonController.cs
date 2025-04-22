@@ -20,9 +20,7 @@ namespace Football_3TL.Areas.ChuSanBong.Controllers
         [HttpGet]
         public IActionResult DanhSachHoaDon()
         {
-
             var maChuSan = HttpContext.Session.GetInt32("maChuSan");
-
 
             if (maChuSan == null)
             {
@@ -30,26 +28,41 @@ namespace Football_3TL.Areas.ChuSanBong.Controllers
             }
 
             var danhSachHoaDon = dbContext.HoaDons
-                .Include(hd => hd.MaDatSanNavigation)
-                .ThenInclude(ds => ds.MaKhachHangNavigation) // Lấy thông tin khách hàng
-                .Include(hd => hd.MaDatSanNavigation.MaSanNavigation) // Lấy thông tin sân bóng
-                .Where(hd => hd.MaDatSanNavigation.MaChuSan == maChuSan) // Lọc theo MaChuSan
-                .Select(hd => new
+                .Include(h => h.MaDatSanNavigation)
+                    .ThenInclude(t => t.MaKhachHangNavigation)
+                .Include(h => h.MaDatSanNavigation.MaSanNavigation)
+                .Where(h => h.MaDatSanNavigation.MaChuSan == maChuSan)
+                .Select(h => new
                 {
-                    MaHoaDon = "HD" + hd.MaHoaDon,
-                    TenSan = hd.MaDatSanNavigation.MaSanNavigation != null ? hd.MaDatSanNavigation.MaSanNavigation.TenSan : "Chưa có",
-                    TenKhachHang = hd.MaDatSanNavigation.MaKhachHangNavigation != null ? hd.MaDatSanNavigation.MaKhachHangNavigation.HoVaTen : "Chưa có",
-                    ThoiGian = hd.MaDatSanNavigation.NgayDat.HasValue && hd.MaDatSanNavigation.GioDat.HasValue
-                                ? hd.MaDatSanNavigation.NgayDat.Value.ToString("dd/MM/yyyy") + " - " + hd.MaDatSanNavigation.GioDat.Value.ToString("HH:mm")
+                    MaHoaDon = "HD" + h.MaHoaDon,
+                    TenSan = h.MaDatSanNavigation.MaSanNavigation != null
+                                ? h.MaDatSanNavigation.MaSanNavigation.TenSan
                                 : "Chưa có",
-                    TongGiaTri = (hd.MaDatSanNavigation.MaSanNavigation != null && hd.MaDatSanNavigation.ThoiLuong.HasValue)
-                                ? $"{((double)(hd.MaDatSanNavigation.MaSanNavigation.Gia * (hd.MaDatSanNavigation.ThoiLuong.Value / 60.0))).ToString("N0")} VND"
+                    TenKhachHang = h.MaDatSanNavigation.MaKhachHangNavigation != null
+                                ? h.MaDatSanNavigation.MaKhachHangNavigation.HoVaTen
+                                : "Chưa có",
+                    ThoiGianDatSan = h.MaDatSanNavigation.NgayDat.HasValue && h.MaDatSanNavigation.GioDat.HasValue
+                                ? h.MaDatSanNavigation.NgayDat.Value.ToString("dd/MM/yyyy")
+                                : "Chưa có",
+                    TongGiaTri = (h.MaDatSanNavigation.MaSanNavigation != null && h.MaDatSanNavigation.ThoiLuong.HasValue)
+                                ? $"{((double)(h.MaDatSanNavigation.MaSanNavigation.Gia * (h.MaDatSanNavigation.ThoiLuong.Value / 60.0))).ToString("N0")} VND"
+                                : "Chưa có",
+                    ThoiGianLapHoaDon = h.ThoiGian.HasValue
+                                ? h.ThoiGian.Value.ToString("dd/MM/yyyy")
                                 : "Chưa có"
                 })
                 .ToList();
 
+            // In thông tin ra terminal (Output console)
+            Console.WriteLine("Danh sách hóa đơn:");
+            foreach (var hoaDon in danhSachHoaDon)
+            {
+                Console.WriteLine($"Mã Hóa Đơn: {hoaDon.MaHoaDon}, Tên Sân: {hoaDon.TenSan}, Tên Khách Hàng: {hoaDon.TenKhachHang}, Thời Gian Đặt Sân: {hoaDon.ThoiGianDatSan}, Tổng Giá Trị: {hoaDon.TongGiaTri}, Thời Gian Lập Hóa Đơn: {hoaDon.ThoiGianLapHoaDon}");
+            }
+
             return Json(danhSachHoaDon);
         }
+
 
 
     }

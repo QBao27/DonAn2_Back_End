@@ -1,0 +1,725 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- BootStrap 5 CND -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <!-- Google font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap"
+          rel="stylesheet">
+    <!-- font awsome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
+          integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg=="
+          crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <!-- BootStrap icon -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+
+    <!-- OWN carousel -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css"
+          integrity="sha512-tS3S5qG0BlhnQROyJXvNjeEM4UpMXHrQfTGmbQ1gKmelCxlSEBUaxhRBj/EFTzpbP4RVSrpEikbmdJobCvhE3g=="
+          crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <!-- Flatpick -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <link rel="stylesheet" type="text/css" href="https://npmcdn.com/flatpickr/dist/themes/material_orange.css">
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="~/css/CssKhachHang/DatSan.css">
+    <link rel="stylesheet" href="~/css/CssKhachHang/DanhGia.css">
+    <title>Đặt Sân</title>
+</head>
+
+<body style="background-color: #F6F6F6;">
+    <!-- Hiện thông báo -->
+    <div id="toast-container"></div>
+    <div class="container-fluid">
+        <div class="mx-5 py-4">
+            <!-- reponsive Phần Tên sân bóng + icon -->
+            <div class="row">
+                <h4 class="fw-bold">Sân bóng đá KAKA Sport khu đô thị Hòa Quý</h4>
+                <div class="col-md-6 d-flex align-items-center flex-wrap">
+                    <img src="~/Img/map-pin.svg" alt="" style="width: 24px; height: 27px;">
+                    <div class="ms-2" style="font-size: large;">
+                        Quảng Nam, Phường Hòa Quý, Quận Ngũ Hành Sơn, Đà Nẵng
+                    </div>
+                </div>
+                <div class="col-md-6 d-flex justify-content-md-end justify-content-start align-items-center flex-wrap mt-2 mt-md-0">
+                    <div style="font-size: large;"> Đánh giá: </div>
+                    <div class="ms-2" style="font-size: large;">4/5</div>
+                    <div class="ms-2">
+                        <img src="~/Img/star-svgrepo-com.svg" alt="" style="width: 15px;height: 15px;">
+                    </div>
+                    <div class="ms-2" style="font-size: large;">(1 đánh giá)</div>
+                    <div class="d-flex ms-md-3 ms-0 mt-2 mt-md-0">
+                        <img src="~/Img/bell.svg" alt="" class="ms-2" style="width: 22px; height: 22px;">
+                        <img src="~/Img/heart.svg" alt="" class="ms-2" style="width: 22px; height: 22px;">
+                        <img src="~/Img/alert-triangle.svg" alt="" class="ms-2" style="width: 22px; height: 22px;">
+                    </div>
+                </div>
+            </div>
+            <!-- Phần Hình ảnh + thông tin sân -->
+            <div class="row">
+                <div class="col-lg-8 col-md-12 mt-4">
+                    <div class="row">
+                        <div class="col-md-7 col-sm-12">
+                            <div>
+                                <img src="~/Img/anh 1.webp" alt=""
+                                     class="img-fluid w-100" style="height: 255px; object-fit: cover; border-radius: 10px;">
+                            </div>
+                            <div class="mt-3">
+                                <img src="~/Img/anh 2.webp" alt=""
+                                     class="img-fluid w-100" style="height: 155px; object-fit: cover; border-radius: 10px;">
+                            </div>
+                        </div>
+                        <div class="col-md-5 col-sm-12 mt-3 mt-md-0">
+                            <div>
+                                <img src="~/Img/anh 3.webp" alt=""
+                                     class="img-fluid w-100" style="height: 145px; object-fit: cover; border-radius: 10px;">
+                            </div>
+                            <div class="mt-3">
+                                <img src="~/Img/anh 4.webp" alt=""
+                                     class="img-fluid w-100" style="height: 268px; object-fit: cover; border-radius: 10px;">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-12 mt-4" style="border-radius: 10px; background-color: white;">
+                    <div class="p-3">
+                        <div class="Thongtinsan fs-4 fw-bold">Thông tin sân</div>
+                        <div class="row mt-3">
+                            <div class="col-6 fw-medium fw-bold">Giờ mở cửa: </div>
+                            <div class="col-6 text-end fw-bold">6h - 23h</div>
+                        </div>
+                        <div class="row mt-3">
+                            <div class="col-6 fw-medium fw-bold">Số sân thi đấu: </div>
+                            <div class="col-6 text-end fw-bold">4 sân</div>
+                        </div>
+                        <div class="row mt-3">
+                            <div class="col-6 fw-medium fw-bold">Giá sân: </div>
+                            <div class="col-6 text-end fw-bold">Liên hệ</div>
+                        </div>
+                        <div class="row mt-3">
+                            <div class="col-6 fw-medium fw-bold">Giá sân giờ vàng: </div>
+                            <div class="col-6 text-end fw-bold">Liên hệ</div>
+                        </div>
+                        <div class="p-3 mt-3 bg-light rounded">
+                            <div class="fw-bold">Dịch vụ tiện ích</div>
+                            <div class="row mt-2 fw-medium">
+                                <div class="col-6"><i class="fa-solid fa-wifi me-2"></i>Wifi</div>
+                                <div class="col-6"><i class="fa-solid fa-car me-2"></i> Bãi đỗ xe</div>
+                            </div>
+                            <div class="row mt-2 fw-medium">
+                                <div class="col-6"><i class="fa-solid fa-motorcycle me-2"></i>Bãi đỗ xe máy</div>
+                                <div class="col-6"><i class="fa-solid fa-shop me-2"></i> Căn tin</div>
+                            </div>
+                            <div class="row mt-2 fw-medium">
+                                <div class="col-6"><i class="fa-solid fa-mug-saucer me-2"></i>Trà đá</div>
+                                <div class="col-6"><i class="fa-solid fa-utensils me-2"></i> Đồ ăn</div>
+                            </div>
+                            <div class="row mt-2 fw-medium">
+                                <div class="col-6"><i class="fa-solid fa-truck-medical me-2"></i>Y tế</div>
+                                <div class="col-6"><i class="fa-solid fa-building-shield me-2"></i>An ninh</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Phần đặt sân -->
+            <div class="container-fluid">
+                <div class="row">
+                    <!-- Cột đặt sân -->
+                    <div class="col-sm-12 col-md-6 col-lg-3 p-4 mt-4" style="background-color: white; border-radius: 10px;">
+                        <div class="Thongtinsan" style="font-size: x-large; font-weight: 700;">
+                            Đặt sân theo yêu cầu
+                        </div>
+                        <div>
+                            <input type="text" id="hoten" class="form-control mt-4 p-2" style="border-radius: 10px;"
+                                   placeholder="Họ và tên">
+                            <span id="error-hoten" class="text-error text-danger"></span>
+                        </div>
+                        <div>
+                            <input type="text" id="sdt" class="form-control mt-3 p-2" style="border-radius: 10px;"
+                                   placeholder="Số điện thoại">
+                            <span id="error-sdt" class="text-error text-danger"></span>
+                        </div>
+                        <div>
+                            <input class="form-control p-2 mt-3" id="myID" style="border-radius: 10px; background-color: white;"
+                                   placeholder="Ngày Nhận">
+                            <span id="error-ngaynhan" class="text-error text-danger"></span>
+                        </div>
+                        <div>
+                            <textarea id="moTa" class="form-control p-2 mt-3" style="border-radius: 10px; height: 80px;"
+                                      name="moTa" rows="2" placeholder="Nhập mô tả ở đây..."></textarea>
+                        </div>
+                        <div>
+                            <select id="timeSelect" class="form-select form-control mt-3" style="border-radius: 10px;" required>
+                                <option value="1">1 giờ</option>
+                                <option value="1.5">1.5 giờ</option>
+                            </select>
+                        </div>
+                        <div>
+                            <select class="form-select form-control mt-3" style="border-radius: 10px;" required>
+                                <option value="1">Chưa có sân</option>
+                                <option value="1">Sân 1</option>
+                                <option value="1.5">Sân 2</option>
+                            </select>
+                        </div>
+                        <div class="d-flex flex-wrap mt-2">
+                            <div style="font-weight: 700; font-size: large;"> Giờ đặt: </div>
+                            <div class="ms-2 fw-bold" style="font-size: large;"> 19:00 - 20:00</div>
+                        </div>
+                        <div class="d-flex flex-wrap mt-2">
+                            <div style="font-weight: 700;font-size: large;"> Tổng thanh toán:  </div>
+                            <div class="ms-2 fw-bold" style="font-size: large;"> 300.000 VND</div>
+                        </div>
+                        <div class="d-flex flex-wrap mt-1" style="justify-content: space-between;">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" value="" id="flexCheckIndeterminate">
+                                <label class="form-check-label" for="flexCheckIndeterminate">
+                                    Trực tuyến
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" value="" id="flexCheckIndeterminate">
+                                <label class="form-check-label" for="flexCheckIndeterminate">
+                                    Trực tiếp
+                                </label>
+                            </div>
+                        </div>
+                        <div>
+                            <button type="button" id="btnDatSan" class="btn btn-success w-100 mt-3"
+                                    style="height: 48px; border-radius: 10px;background-color: #0e2238;">
+                                Đặt Sân
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Cột chọn giờ -->
+                    <div class="col-sm-12 col-md-6 col-lg-9 mt-4">
+                        <div class="row ms-3 p-3" style="background-color: white; border-radius: 10px;">
+                            <!-- Phần đặt sân 1 giờ -->
+                            <div class="row hour-section" id="oneHour">
+                                <div class="row p-2 d-flex flex-wrap ">
+                                    <div class="ms-2" style="width: 160px;">
+                                        <select class="form-select form-control" style="border-radius: 10px;height: 40px;" required>
+                                            <option value="1">Loại Sân</option>
+                                            <option value="1">Sân 5</option>
+                                            <option value="1.5">Sân 7</option>
+                                        </select>
+                                    </div>
+                                    <div class="ms-2 button-hour">
+                                        <div style="color: white;"> 1 giờ </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-6 col-md-4 col-lg-3 p-1 hower-giodat">
+                                        <div class="giodat p-2 d-flex flex-column align-items-center">
+                                            <div class="fw-bold">8:00 - 9:00</div>
+                                            <div>300k</div>
+                                        </div>
+                                    </div>
+                                    <div class="col-6 col-md-4 col-lg-3 p-1 hower-giodat">
+                                        <div class="giodat p-2 d-flex flex-column align-items-center">
+                                            <div class="fw-bold">9:00 - 10:00</div>
+                                            <div>300k</div>
+                                        </div>
+                                    </div>
+                                    <div class="col-6 col-md-4 col-lg-3 p-1 hower-giodat">
+                                        <div class="giodat p-2 d-flex flex-column align-items-center">
+                                            <div class="fw-bold">10:00 - 11:00</div>
+                                            <div>300k</div>
+                                        </div>
+                                    </div>
+                                    <div class="col-6 col-md-4 col-lg-3 p-1 hower-giodat">
+                                        <div class="giodat p-2 d-flex flex-column align-items-center">
+                                            <div class="fw-bold">11:00 - 12:00</div>
+                                            <div>300k</div>
+                                        </div>
+                                    </div>
+                                    <div class="col-6 col-md-4 col-lg-3 p-1 hower-giodat">
+                                        <div class="giodat p-2 d-flex flex-column align-items-center">
+                                            <div class="fw-bold">12:00 - 13:00</div>
+                                            <div>300k</div>
+                                        </div>
+                                    </div>
+                                    <div class="col-6 col-md-4 col-lg-3 p-1 hower-giodat">
+                                        <div class="giodat p-2 d-flex flex-column align-items-center">
+                                            <div class="fw-bold">13:00 - 14:00</div>
+                                            <div>300k</div>
+                                        </div>
+                                    </div>
+                                    <div class="col-6 col-md-4 col-lg-3 p-1 hower-giodat">
+                                        <div class="giodat p-2 d-flex flex-column align-items-center">
+                                            <div class="fw-bold">14:00 - 15:00</div>
+                                            <div>300k</div>
+                                        </div>
+                                    </div>
+                                    <div class="col-6 col-md-4 col-lg-3 p-1 hower-giodat">
+                                        <div class="giodat p-2 d-flex flex-column align-items-center">
+                                            <div class="fw-bold">15:00 - 16:00</div>
+                                            <div>300k</div>
+                                        </div>
+                                    </div>
+                                    <div class="col-6 col-md-4 col-lg-3 p-1 hower-giodat">
+                                        <div class="giodat p-2 d-flex flex-column align-items-center">
+                                            <div class="fw-bold">16:00 - 17:00</div>
+                                            <div>300k</div>
+                                        </div>
+                                    </div>
+                                    <div class="col-6 col-md-4 col-lg-3 p-1 hower-giodat">
+                                        <div class="giodat p-2 d-flex flex-column align-items-center">
+                                            <div class="fw-bold">17:00 - 18:00</div>
+                                            <div>300k</div>
+                                        </div>
+                                    </div>
+                                    <div class="col-6 col-md-4 col-lg-3 p-1 hower-giodat">
+                                        <div class="giodat p-2 d-flex flex-column align-items-center">
+                                            <div class="fw-bold">18:00 - 19:00</div>
+                                            <div>300k</div>
+                                        </div>
+                                    </div>
+                                    <div class="col-6 col-md-4 col-lg-3 p-1 hower-giodat">
+                                        <div class="giodat p-2 d-flex flex-column align-items-center">
+                                            <div class="fw-bold">19:00 - 20:00</div>
+                                            <div>300k</div>
+                                        </div>
+                                    </div>
+                                    <div class="col-6 col-md-4 col-lg-3 p-1 hower-giodat">
+                                        <div class="giodat p-2 d-flex flex-column align-items-center">
+                                            <div class="fw-bold">20:00 - 21:00</div>
+                                            <div>300k</div>
+                                        </div>
+                                    </div>
+                                    <div class="col-6 col-md-4 col-lg-3 p-1 hower-giodat">
+                                        <div class="giodat p-2 d-flex flex-column align-items-center">
+                                            <div class="fw-bold">21:00 - 22:00</div>
+                                            <div>300k</div>
+                                        </div>
+                                    </div>
+                                    <div class="col-6 col-md-4 col-lg-3 p-1 hower-giodat">
+                                        <div class="giodat p-2 d-flex flex-column align-items-center">
+                                            <div class="fw-bold">22:00 - 23:00</div>
+                                            <div>300k</div>
+                                        </div>
+                                    </div>
+                                    <div class="col-6 col-md-4 col-lg-3 p-1 hower-giodat">
+                                        <div class="giodat p-2 d-flex flex-column align-items-center">
+                                            <div class="fw-bold">23:00 - 00:00</div>
+                                            <div>300k</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Phần đặt sân 1.5 giờ -->
+                            <div class="row hour-section mt-3" id="onePointFiveHour">
+                                <div class="row p-2 d-flex flex-wrap">
+                                    <div class="ms-2" style="width: 160px;">
+                                        <select class="form-select form-control" style="border-radius: 10px;height: 40px;" required>
+                                            <option value="1">Loại Sân</option>
+                                            <option value="1">Sân 5</option>
+                                            <option value="1.5">Sân 7</option>
+                                        </select>
+                                    </div>
+                                    <div class="ms-2 button-hour">
+                                        <div style="color: white;"> 1.5 giờ </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-6 col-md-4 col-lg-3 p-1 hower-giodat">
+                                        <div class="giodat p-2 d-flex flex-column align-items-center">
+                                            <div class="fw-bold">5:00 - 6:30</div>
+                                            <div>300k</div>
+                                        </div>
+                                    </div>
+                                    <div class="col-6 col-md-4 col-lg-3 p-1 hower-giodat">
+                                        <div class="giodat p-2 d-flex flex-column align-items-center">
+                                            <div class="fw-bold">6:30 - 8:00</div>
+                                            <div>300k</div>
+                                        </div>
+                                    </div>
+                                    <div class="col-6 col-md-4 col-lg-3 p-1 hower-giodat">
+                                        <div class="giodat p-2 d-flex flex-column align-items-center">
+                                            <div class="fw-bold">8:00 - 9:30</div>
+                                            <div>300k</div>
+                                        </div>
+                                    </div>
+                                    <div class="col-6 col-md-4 col-lg-3 p-1 hower-giodat">
+                                        <div class="giodat p-2 d-flex flex-column align-items-center">
+                                            <div class="fw-bold">9:30 - 11:00</div>
+                                            <div>300k</div>
+                                        </div>
+                                    </div>
+                                    <div class="col-6 col-md-4 col-lg-3 p-1 hower-giodat">
+                                        <div class="giodat p-2 d-flex flex-column align-items-center">
+                                            <div class="fw-bold">11:00 - 12:30</div>
+                                            <div>300k</div>
+                                        </div>
+                                    </div>
+                                    <div class="col-6 col-md-4 col-lg-3 p-1 hower-giodat">
+                                        <div class="giodat p-2 d-flex flex-column align-items-center">
+                                            <div class="fw-bold">12:00 - 14:00</div>
+                                            <div>300k</div>
+                                        </div>
+                                    </div>
+                                    <div class="col-6 col-md-4 col-lg-3 p-1 hower-giodat">
+                                        <div class="giodat p-2 d-flex flex-column align-items-center">
+                                            <div class="fw-bold">14:00 - 15:30</div>
+                                            <div>300k</div>
+                                        </div>
+                                    </div>
+                                    <div class="col-6 col-md-4 col-lg-3 p-1 hower-giodat">
+                                        <div class="giodat p-2 d-flex flex-column align-items-center">
+                                            <div class="fw-bold">15:30 - 17:00</div>
+                                            <div>300k</div>
+                                        </div>
+                                    </div>
+                                    <div class="col-6 col-md-4 col-lg-3 p-1 hower-giodat">
+                                        <div class="giodat p-2 d-flex flex-column align-items-center">
+                                            <div class="fw-bold">17:00 - 18:30</div>
+                                            <div>300k</div>
+                                        </div>
+                                    </div>
+                                    <div class="col-6 col-md-4 col-lg-3 p-1 hower-giodat">
+                                        <div class="giodat p-2 d-flex flex-column align-items-center">
+                                            <div class="fw-bold">18:30 - 20:00</div>
+                                            <div>300k</div>
+                                        </div>
+                                    </div>
+                                    <div class="col-6 col-md-4 col-lg-3 p-1 hower-giodat">
+                                        <div class="giodat p-2 d-flex flex-column align-items-center">
+                                            <div class="fw-bold">20:00 - 21:30</div>
+                                            <div>300k</div>
+                                        </div>
+                                    </div>
+                                    <div class="col-6 col-md-4 col-lg-3 p-1 hower-giodat">
+                                        <div class="giodat p-2 d-flex flex-column align-items-center">
+                                            <div class="fw-bold">21:00 - 23:00</div>
+                                            <div>300k</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Đánh giá sân-->
+    <section id="danhGiaSanBong">
+        <div class="m-5 h-100" style="border-radius: 10px; background-color: #FFF;">
+            <div class="text-center pt-3 pb-0">
+                <h2>Đánh Giá Sân Bóng</h2>
+            </div>
+            <hr>
+            <div class="container">
+                <div class="row p-5 pt-2 pb-4">
+                    <div class="col-lg-4 col-12 text-center">
+                        <div>
+                            <h3 class="text-warning"><span id="averageRating">5</span> / 5</h3>
+                        </div>
+                        <div class="star-rating2 mb-1">
+                            <label for="star1"><i class="fas fa-star saoTrungBinh" data-value="1"></i></label>
+                            <label for="star2"><i class="fas fa-star saoTrungBinh" data-value="2"></i></label>
+                            <label for="star3"><i class="fas fa-star saoTrungBinh" data-value="3"></i></label>
+                            <label for="star4"><i class="fas fa-star saoTrungBinh" data-value="4"></i></label>
+                            <label for="star5"><i class="fas fa-star saoTrungBinh" data-value="5"></i></label>
+                        </div>
+                        <div class="mb-3">(<span id="totalReviews">100</span> đánh giá)</div>
+                        <div>
+                            <a class="btn bg-warning text-light" data-bs-toggle="modal"
+                               data-bs-target="#modalDanhGia">Gửi Đánh Giá Của Bạn</a>
+                        </div>
+                    </div>
+                    <div class="col-lg-8 col-12 pt-4">
+                        <div class="row">
+                            <div class="col-md-2 col-6 pb-4">
+                                <span class="p-2 d-block border bg-light thongKeDanhGia">
+                                    Tất cả (<span id="totalReviews2">100</span>)
+                                </span>
+                            </div>
+                            <div class="col-md-2 col-6 pb-4">
+                                <span class="p-2 border d-block bg-light thongKeDanhGia">
+                                    5 Sao
+                                    (<span id="fiveStarCount">80</span>)
+                                </span>
+                            </div>
+                            <div class="col-md-2 col-6 pb-4">
+                                <span class="p-2 border d-block bg-light thongKeDanhGia">
+                                    4 Sao
+                                    (<span id="fourStarCount">10</span>)
+                                </span>
+                            </div>
+                            <div class="col-md-2 col-6 pb-4">
+                                <span class="p-2 border d-block bg-light thongKeDanhGia">
+                                    3 Sao
+                                    (<span id="threeStarCount">7</span>)
+                                </span>
+                            </div>
+                            <div class="col-md-2 col-6 pb-4">
+                                <span class="p-2 border d-block bg-light thongKeDanhGia">
+                                    2 Sao (<span id="twoStarCount">2</span>)
+                                </span>
+                            </div>
+                            <div class="col-md-2 col-6 pb-4">
+                                <span class="p-2 border d-block bg-light thongKeDanhGia">
+                                    1 Sao
+                                    (<span id="oneStarCount">1</span>)
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <hr class="mt-5">
+                    <div class="mt-4 mb-4" id="bodyDanhGia">
+                        <div>
+                            <p>
+                                <b><span>Nguyễn Bảo Anh</span> : </b><b>
+                                    <span class="text-warning">
+                                        <span>5</span>
+                                        sao
+                                    </span>
+                                </b>
+                            </p>
+                            <p class="text-break">
+                                Đánh giá: "<span>Quá tuyệt vời !</span>"
+                            </p>
+                            <p class="text-muted" style="font-size: 0.9rem;">Thời gian: <span>12 : 30</span></p>
+                            <hr style="border: none;border-top: 1px dashed #ccc;">
+                        </div>
+                        <div>
+                            <p>
+                                <b><span>Nguyễn Bảo Anh</span> : </b><b>
+                                    <span class="text-warning">
+                                        <span>5</span>
+                                        sao
+                                    </span>
+                                </b>
+                            </p>
+                            <p class="text-break">
+                                Đánh giá: "<span>
+                                    Quá tuyệt vời Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                                    Laudantium omnis, labore ducimus repellat ipsum enim aliquam magni voluptas hic
+                                    quaerat placeat itaque voluptatibus! Saepe hic porro voluptatem! Animi sapiente
+                                    eaque ipsa, iusto ipsum ex. Iste dicta a ut sunt deserunt cupiditate, maiores
+                                    voluptatum culpa quo atque quia, ipsam esse quidem in iure velit rem architecto
+                                    perspiciatis illo saepe? Esse maiores, quo ut possimus laudantium quos tenetur
+                                    numquam enim ipsum aperiam blanditiis ducimus. Dicta, praesentium dolores quidem
+                                    accusantium obcaecati itaque provident qui expedita consequatur vero perspiciatis
+                                    non ipsa unde architecto quas culpa nesciunt modi pariatur. Consequatur atque
+                                    asperiores voluptatibus doloremque earum. !
+                                </span>"
+                            </p>
+                            <p class="text-muted" style="font-size: 0.9rem;">Thời gian: <span>12 : 30</span></p>
+                            <hr style="border: none;border-top: 1px dashed #ccc;">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- modal danh gia -->
+        <div class="modal fade" id="modalDanhGia">
+            <div class="modal-dialog">
+                <div class="modal-content p-3 pb-0">
+                    <!-- Nội dung của modal -->
+                    <!-- modal headder -->
+                    <div class="modal-header d-flex justify-content-center">
+                        <div>
+                            <h5>Đánh Giá Sân Bóng <span>3TL</span></h5>
+                        </div>
+                        <button type="button" class="btn-close" onclick="clearDataAssessInput(), clearStarAssess(), resetError()"
+                                data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <!-- modal body -->
+                    <div class="modal-body">
+                        <div class="mb-3">
+                            <label for="fullNameAssess" class="form-label">Họ Và Tên</label>
+                            <input type="text" id="fullNameAssess" class="form-control Assess"
+                                   placeholder="Nhập họ tên của bạn" aria-label="Full name" required>
+                            <div id="fullNameError" class="text-danger" style="font-size: 0.875rem;"></div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="PhoneNumberAssess" class="form-label">Số Điện Thoại</label>
+                            <input type="tel" class="form-control Assess" id="PhoneNumberAssess"
+                                   aria-describedby="phoneNumber" placeholder="Nhập số điện thoại đã đặt sân"
+                                   pattern="[0-9]{10}" title="Số điện thoại gồm 10 chữ số" required>
+                            <div id="phoneNumberError" class="text-danger" style="font-size: 0.875rem;"></div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="ContentAssess" class="form-label">Nội Dung Đánh Giá</label>
+                            <textarea class="form-control Assess" id="ContentAssess" rows="3"
+                                      placeholder="Nội dung đánh giá của bạn về sân bóng"></textarea>
+                        </div>
+                        <label for="" class="form-label">Đánh Giá Của Bạn Về Sân Bóng <span>3TL</span>:</label>
+                        <div class="star-rating mb-3">
+                            <input type="radio" class="star" id="star5" name="rating" value="5" required />
+                            <label for="star5" title="5 stars"><i class="fas fa-star"></i></label>
+                            <input type="radio" class="star" id="star4" name="rating" value="4" />
+                            <label for="star4" title="4 stars"><i class="fas fa-star"></i></label>
+                            <input type="radio" class="star" id="star3" name="rating" value="3" />
+                            <label for="star3" title="3 stars"><i class="fas fa-star"></i></label>
+                            <input type="radio" class="star" id="star2" name="rating" value="2" />
+                            <label for="star2" title="2 stars"><i class="fas fa-star"></i></label>
+                            <input type="radio" class="star" id="star1" name="rating" value="1" />
+                            <label for="star1" title="1 star"><i class="fas fa-star"></i></label>
+                        </div>
+                        <div id="starRatingError" class="text-danger" style="font-size: 0.875rem;"></div>
+                    </div>
+                    <!-- modal footer -->
+                    <div class="modal-footer">
+                        <a class="btn btn-warning text-light" onclick="validateAssessmentForm()">Gửi Đánh Giá</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Phần gg map -->
+    <div class="container-fluid" style="background-color: white;">
+        <div class="mx-5 py-4">
+            <div class="row">
+                <!-- Phần thông tin -->
+                <div class="col-12 col-md-6">
+                    <div style="font-size: xX-large; font-weight: 700"> Kết nối với thế giới thể thao </div>
+                    <div class="container mt-4">
+                        <ul class="nav nav-tabs" id="locationTabs" style="font-size: large; font-weight: 600;">
+                            <li class="nav-item">
+                                <a class="nav-link active" data-bs-toggle="tab" href="#cantho">Cần Thơ</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" data-bs-toggle="tab" href="#hochiminh">Hồ Chí Minh</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" data-bs-toggle="tab" href="#kienggiang">Kiên Giang</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" data-bs-toggle="tab" href="#soctrang">Sóc Trăng</a>
+                            </li>
+                        </ul>
+
+                        <div class="tab-content pt-3" style="background-color: #FAFAFA;">
+                            <div class="tab-pane fade show active px-3 pb-3" id="cantho">
+                                <h5><b>Cần Thơ</b></h5>
+                                <p class="size-gg">
+                                    <i class="fa-solid fa-map-location-dot me-2"></i> 197 Trần Bạch Đằng
+                                    - An Khánh - Ninh Kiều - Cần Thơ (<a href="#" class="text-danger">
+                                        Google
+                                        Map
+                                    </a>)
+                                </p>
+                                <p class="size-gg">
+                                    <i class="fa-solid fa-phone me-2"></i> Điện thoại: <span class="text-danger">0904.79.5885</span>
+                                </p>
+                                <p class="size-gg">
+                                    <i class="fa-solid fa-envelope me-2"></i> Mail: <a href="mailto:phamtan@thegioithethao.vn"
+                                                                                       class="text-danger">huynhquocbao@gmail.com</a>
+                                </p>
+                                <p class="size-gg">
+                                    <i class="fa-solid fa-phone-volume me-2"></i> Hotline (Zalo): <span class="text-danger">0904.795.885</span>
+                                </p>
+                            </div>
+                            <div class="tab-pane fade px-3 pb-3" id="hochiminh">
+                                <h5><b>Hồ Chí Minh</b></h5>
+                                <p class="size-gg">
+                                    <i class="fa-solid fa-map-location-dot me-2"></i> Địa chỉ Hồ Chí Minh
+                                    (<a href="#" class="text-danger">Google Map</a>)
+                                </p>
+                                <p class="size-gg">
+                                    <i class="fa-solid fa-phone me-2"></i> Điện thoại: <span class="text-danger">0123.45.6789</span>
+                                </p>
+                                <p class="size-gg">
+                                    <i class="fa-solid fa-envelope me-2"></i> Mail: <a href="mailto:hcm@thegioithethao.vn"
+                                                                                       class="text-danger">hcm@thegioithethao.vn</a>
+                                </p>
+                                <p class="size-gg">
+                                    <i class="fa-solid fa-phone-volume me-2"></i> Hotline (Zalo): <span class="text-danger">0123.456.789</span>
+                                </p>
+                            </div>
+                            <div class="tab-pane fade px-3 pb-3" id="kienggiang">
+                                <h5><b>Kiên Giang</b></h5>
+                                <p class="size-gg">
+                                    <i class="fa-solid fa-map-location-dot me-2"></i> Địa chỉ Kiên Giang (<a href="#" class="text-danger">Google Map</a>)
+                                </p>
+                                <p class="size-gg">
+                                    <i class="fa-solid fa-phone me-2"></i> Điện thoại: <span class="text-danger">0987.65.4321</span>
+                                </p>
+                                <p class="size-gg">
+                                    <i class="fa-solid fa-envelope me-2"></i> Mail: <a href="mailto:danang@thegioithethao.vn"
+                                                                                       class="text-danger">danang@thegioithethao.vn</a>
+                                </p>
+                                <p class="size-gg">
+                                    <i class="fa-solid fa-phone-volume me-2"></i> Hotline (Zalo): <span class="text-danger">0987.654.321</span>
+                                </p>
+                            </div>
+                            <div class="tab-pane fade px-3 pb-3" id="soctrang">
+                                <h5><b>Sóc Trăng</b></h5>
+                                <p class="size-gg">
+                                    <i class="fa-solid fa-map-location-dot me-2"></i> Địa chỉ Sóc Trăng
+                                    (<a href="#" class="text-danger">Google Map</a>)
+                                </p>
+                                <p class="size-gg">
+                                    <i class="fa-solid fa-phone me-2"></i> Điện thoại: <span class="text-danger">0912.34.5678</span>
+                                </p>
+                                <p class="size-gg">
+                                    <i class="fa-solid fa-envelope me-2"></i> Mail: <a href="mailto:haiduong@thegioithethao.vn"
+                                                                                       class="text-danger">haiduong@thegioithethao.vn</a>
+                                </p>
+                                <p class="size-gg">
+                                    <i class="fa-solid fa-phone-volume me-2"></i> Hotline (Zalo): <span class="text-danger">0912.345.678</span>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Google Map -->
+                <div class="col-12 col-md-6">
+                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3734.344990240496!2d105.74941417479414!3d10.038667390068717!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31a089a99a606f21%3A0xa73db9e3a500c454!2zU8OibiBCw7NuZyDEkOG6oWkgSOG7jWMgWSBExrDhu6Nj!5e1!3m2!1svi!2s!4v1741789239904!5m2!1svi!2s"
+                            width="100%" height="350px" style="border:0;border-radius: 10px;" allowfullscreen=""
+                            loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Boottrap js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.11.6/umd/popper.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.0.1/js/bootstrap.min.js"
+            integrity="sha512-EKWWs1ZcA2ZY9lbLISPz8aGR2+L7JVYqBAYTq5AXgBkSjRSuQEGqWx8R1zAX16KdXPaCjOCaKE8MCpU0wcHlHA=="
+            crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <!-- js file -->
+
+    <script src="~/js/JsKhachHang/DanhGia.js"></script>
+
+    <!-- <script src="js/main.js"></script> -->
+    <script src="~/js/JsKhachHang/DatSan.js"></script>
+
+    <!-- Thư viện thông báo đẹp -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+    <!-- Jquery-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"
+            integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g=="
+            crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <!-- own Caroul js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"
+            integrity="sha512-bPs7Ae6pVvhOSiIcyUClR7/q2OAsRiovw4vAkX+zJbw3ShAeeqezq50RIIcIURq7Oa20rW2n2q+fyXBNcU9lrw=="
+            crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <!-- Flatpick -->
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <script>
+        flatpickr("#myID", {
+            dateFormat: "d-m-Y",
+        });
+    </script>
+</body>
+
+</html>
