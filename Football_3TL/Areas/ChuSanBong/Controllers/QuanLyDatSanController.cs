@@ -290,7 +290,8 @@ namespace Football_3TL.Areas.ChuSanBong.Controllers
                 // lưu thông tin vào bảng hóa đơn
                 var hoaDon = new HoaDon
                 {
-                    MaDatSan = thongTin.MaDatSan
+                    MaDatSan = thongTin.MaDatSan,
+                    ThoiGian = DateOnly.FromDateTime(DateTime.Now)
                 };
 
                 _db.HoaDons.Add(hoaDon);

@@ -69,6 +69,20 @@ function updateTimeOptionsForToday() {
     }
 }
 
+//hàm tìm kiếm 
+function TimKiemThongTinSanQLDS() {
+    let keyword = $("#searchQuanLyDatSan").val().toLowerCase();
+
+    $("#danhSachSanQLDS tr").each(function () {
+        let rowText = $(this).text().toLowerCase(); // Lấy toàn bộ nội dung hàng
+        if (rowText.includes(keyword)) {
+            $(this).show();
+        } else {
+            $(this).hide();
+        }
+    });
+}
+
 $(document).ready(function () {
     // Giả sử bạn có một <select id="selectThoiLuong"> để chọn khoảng thời gian (1 hoặc 1.5)
     $("#selectThoiLuong").change(function () {
@@ -93,6 +107,15 @@ $(document).ready(function () {
 
     $("#selectGio").change(function () {
         LoadThongTinSanBong();
+    });
+
+    //gọi hàm tìm kiếm 
+    $('#searchQuanLyDatSan').keyup(function () {
+        TimKiemThongTinSanQLDS();
+    });
+
+    $('#searchThanhToan').keyup(function () {
+        TimKiemThongTinSanTT();
     });
 });
 
@@ -646,6 +669,21 @@ function loadThongTinThanhToan() {
                     popup: 'custom-swal'
                 }
             });
+        }
+    });
+}
+
+//Hàm tìm kiếm bên thanh toán
+//hàm tìm kiếm 
+function TimKiemThongTinSanTT() {
+    let keyword = $("#searchThanhToan").val().toLowerCase();
+
+    $("#danhSachSanThanhToan tr").each(function () {
+        let rowText = $(this).text().toLowerCase(); // Lấy toàn bộ nội dung hàng
+        if (rowText.includes(keyword)) {
+            $(this).show();
+        } else {
+            $(this).hide();
         }
     });
 }

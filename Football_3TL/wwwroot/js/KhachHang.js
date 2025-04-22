@@ -75,4 +75,22 @@
             LoadDanhSachDatSan(currentPage, pageSize);
         }
     });
+
+    //hàm tìm kiếm 
+    function TimKiemKhachHang() {
+        let keyword = $("#searchKhachHang").val().toLowerCase();
+
+        $("#danhSachDatSanTable tr").each(function () {
+            let rowText = $(this).text().toLowerCase(); // Lấy toàn bộ nội dung hàng
+            if (rowText.includes(keyword)) {
+                $(this).show();
+            } else {
+                $(this).hide();
+            }
+        });
+    }
+
+    $('#searchKhachHang').keyup(function () {
+        TimKiemKhachHang();
+    });
 });

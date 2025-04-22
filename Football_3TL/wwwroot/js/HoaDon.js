@@ -76,4 +76,22 @@
             LoadDanhSachHoaDon(currentPage, pageSize);
         }
     });
+
+    //hàm tìm kiếm 
+    function TimKiemThongTinHD() {
+        let keyword = $("#searchHoaDon").val().toLowerCase();
+
+        $("#HoaDonTable tr").each(function () {
+            let rowText = $(this).text().toLowerCase(); // Lấy toàn bộ nội dung hàng
+            if (rowText.includes(keyword)) {
+                $(this).show();
+            } else {
+                $(this).hide();
+            }
+        });
+    }
+
+    $('#searchHoaDon').keyup(function () {
+        TimKiemThongTinHD();
+    });
 });

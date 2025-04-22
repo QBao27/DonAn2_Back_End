@@ -123,7 +123,8 @@ namespace Football_3TL.Areas.ChuSanBong.Controllers
                     baiDang = new ThongTinBaiDang
                     {
                         MaBaiDang = maBaiDang,
-                        GioMoCua = "07:00 - 23:00",
+                        //chưa xong chổ này
+                        GioMoCua = 7,
                         MaChuSan = maChuSan.Value
                     };
 
