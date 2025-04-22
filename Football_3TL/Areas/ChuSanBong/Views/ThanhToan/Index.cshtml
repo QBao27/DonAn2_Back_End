@@ -1,11 +1,9 @@
-﻿@model IEnumerable<Football_3TL.Areas.ChuSanBong.Models.modelQuanLyDatSan>
-
-<div class="main" id="content">
+﻿<div class="main" id="contentThanhToan">
     <nav class="navbar navbar-expand px-4 py-3">
         <div class="navbar-collapse collapse">
             <ul class="navbar-nav justify-content-between" style="width: 1380px;">
                 <li>
-                    <h2 style="font-weight: bolder;">Quản lý đặt sân</h2>
+                    <h2 style="font-weight: bolder;">Thanh Toán</h2>
                 </li>
                 <li class="nav-item dropdown">
                     <a href="#" data-bs-toggle="dropdown" class="nav-icon pe-md-0">
@@ -28,43 +26,17 @@
     <main class="content px-3 py-3">
         <div class="container-fluid">
             <div>
-                <div class="row g-2">
-                     <!-- Ô tìm kiếm sân -->
-                     <div class="col-md-2 me-2">
-                         <div class="input-group border rounded-2">
-                             <span class="input-group-text bg-white border-0">
-                                 <i class="fa-solid fa-magnifying-glass"></i>
-                             </span>
-                             <input type="text" class="form-control border-0" id="searchQuanLyDatSan" placeholder="Thông tin sân" style="border-radius: 10px; background-color: white;">
-                         </div>
-                     </div>
-                    <!-- Ô chọn ngày -->
-                    <div class="col-md-2 me-2">
-                        <input class="form-control" id="myIDQLDS" style="border-radius: 10px; background-color: white;"
-                               placeholder="Ngày Nhận">
+                <div class="row justify-content-between">
+                    <div class="col-md-3">
+                        <div class="input-group border rounded-2">
+                            <span class="input-group-text bg-white border-0">
+                                <i class="fa-solid fa-magnifying-glass"></i>
+                            </span>
+                            <input type="text" class="form-control border-0" id="searchThanhToan" placeholder="Thông tin sân" style="border-radius: 10px; background-color: white;">
+                        </div>
                     </div>
-                    <!-- Ô chọn thời lượng -->
-                    <div class="col-md-2 me-2">
-                        <select class="form-select" id="selectThoiLuong" style="border-radius: 10px; background-color: white;">
-                            <option selected value="">Chọn thời lượng</option>
-                            <option value="1">1 giờ</option>
-                            <option value="1.5">1.5 giờ</option>
-                        </select>
-                    </div>
-                    <!-- Ô chọn giờ nhận sân -->
-                    <div class="col-md-2 me-2">
-                        <select class="form-select" id="selectGio" style="border-radius: 10px; background-color: white;">
-                            <option selected value="">Chọn khung giờ</option>
-                            <!--code js vào đây-->
-                        </select>
-                    </div>
-                    <div class="col-md-1 me-2 ms-4">
-                        <button class="btn btn-secondary" id="btnResetSearchQLDS" style="border-radius: 10px;">
-                            Reset
-                        </button>
-                    </div>
-                    <div class="col-md-2 d-flex justify-content-end">
-                        <a class="btn btn-primary w-100" onclick="loadThongTinThanhToan()" asp-controller="ThanhToan" asp-action="Index">Thanh Toán Tiền Sân</a>
+                    <div class="col-md-2">
+                        <a class="btn btn-primary" asp-controller="QuanLyDatSan" asp-action="Index">Quản lý đặt sân</a>
                     </div>
                 </div>
 
@@ -82,75 +54,8 @@
                                     <th scope="col" class="col-2"></th>
                                 </tr>
                             </thead>
-                            <tbody id="danhSachSanQLDS">
-                                @{
-                                    int soThuTu = 1;
-                                }
-                                @if (Model != null && Model.Count() > 0)
-                                {
-                                    @foreach (var i in Model)
-                                    {
-                                        if (i.TrangThaiThanhToan == "Sân chưa đặt")
-                                        {
-                                            <tr>
-                                                <th scope="row">@soThuTu</th>
-                                                <td class="me-2">@i.TenSan</td>
-                                                <td>@i.LoaiSan</td>
-                                                <td class="text-center"><span id="giaSanDat">@i.GiaSan</span> / 1h</td>
-                                                <td>@i.TrangThai</td>
-                                                <td class="text-secondary">@i.TrangThaiThanhToan</td>
-                                                <td>
-                                                    <button type="button" class="btn btn-secondary btn-sm w-100"
-                                                            style="border-radius: 10px;" onclick="modalDatSanTrong(this)" data-giasan="@i.GiaSan" data-tensan="@Html.Raw(i.TenSan)" data-masan="@i.MaSan">
-                                                        Đặt sân bóng
-                                                    </button>
-                                                </td>
-                                            </tr>
-                                        }
-                                        else if (i.TrangThaiThanhToan == "Đã thanh toán")
-                                        {
-                                            <tr>
-                                                <th scope="row">@soThuTu</th>
-                                                <td class="me-2">@i.TenSan</td>
-                                                <td>@i.LoaiSan</td>
-                                                <td class="text-center">@i.GiaSan / 1h</td>
-                                                <td>@i.TrangThai</td>
-                                                <td class="text-secondary">@i.TrangThaiThanhToan</td>
-                                                <td>
-                                                    <button type="button" class="btn btn-warning btn-sm w-100"
-                                                            style="border-radius: 10px;" onclick="getDataDatSan(@i.MaDatSan), modalXemThongTin()">
-                                                        Xem thông tin
-                                                    </button>
-                                                </td>
-                                            </tr>
-                                        }
-                                        else
-                                        {
-                                            <tr>
-                                                <th scope="row">@soThuTu</th>
-                                                <td class="me-2">@i.TenSan</td>
-                                                <td>@i.LoaiSan</td>
-                                                <td class="text-center">@i.GiaSan / 1h</td>
-                                                <td>@i.TrangThai</td>
-                                                <td class="text-secondary">@i.TrangThaiThanhToan</td>
-                                                <td>
-                                                    <button type="button" class="btn btn-success btn-sm w-100"
-                                                                        style="border-radius: 10px;" onclick="getDataDatSan(@i.MaDatSan), modalThanhToan()">
-                                                        Thanh toán
-                                                    </button>
-                                                </td>
-                                            </tr>
-                                        }
-                                        soThuTu++;
-                                    }
-                                }
-                                else
-                                {
-                                    <tr>
-                                        <td colspan="7" class="text-center text-danger">Không có danh sách sân</td>
-                                    </tr>
-                                }
-
+                            <tbody id="danhSachSanThanhToan">
+                                <!--Code js vao đây-->
                             </tbody>
                         </table>
                     </div>

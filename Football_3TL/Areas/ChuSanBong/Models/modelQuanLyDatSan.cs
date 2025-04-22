@@ -7,5 +7,7 @@
         public double? GiaSan { get; set; }
         public string? TrangThai { get; set; }
         public string? TrangThaiThanhToan { get; set; }
-        public int?    MaDatSan { get; set; }       }
+        public int?    MaDatSan { get; set; }
+        public int? MaSan { get; set; }
+    }
 }

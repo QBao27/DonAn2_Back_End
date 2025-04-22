@@ -141,7 +141,7 @@ function LoadThongTinSanBong() {
                         if (i.trangThaiThanhToan === "Chưa thanh toán") {
                             row = `
                         <tr>
-                            <th scope="row">${soThuTu++}</th>
+                            <th scope="row">${soThuTu}</th>
                             <td class="me-2">${i.tenSan}</td>
                             <td>${i.loaiSan}</td>
                             <td class="text-center"><span class="giaSanDat">${i.giaSan}</span> / 1h</td>
@@ -161,7 +161,7 @@ function LoadThongTinSanBong() {
                         else if (i.trangThaiThanhToan === "Đã thanh toán") {
                             row = `
                         <tr>
-                            <th scope="row">${soThuTu++}</th>
+                            <th scope="row">${soThuTu}</th>
                             <td class="me-2">${i.tenSan}</td>
                             <td>${i.loaiSan}</td>
                             <td class="text-center"><span class="giaSanDat">${i.giaSan}</span> / 1h</td>
@@ -181,7 +181,7 @@ function LoadThongTinSanBong() {
                         else {
                             row = `
                         <tr>
-                            <th scope="row">${soThuTu++}</th>
+                            <th scope="row">${soThuTu}</th>
                             <td class="me-2">${i.tenSan}</td>
                             <td>${i.loaiSan}</td>
                             <td class="text-center"><span class="giaSanDat">${i.giaSan}</span> / 1h</td>
@@ -191,13 +191,12 @@ function LoadThongTinSanBong() {
                                 <button type="button" class="btn btn-secondary btn-sm w-100"
                                         style="border-radius: 10px;"
                                         onclick="modalDatSanTrong(this)"
-                                        data-giasan="${i.giaSan}">
+                                        data-giasan="${i.giaSan}"  data-tensan="${i.tenSan}" data-masan="${i.maSan}">
                                     Đặt sân bóng
                                 </button>
                             </td>
                         </tr>`
                         }
-
                         tbody.append(row);
                         soThuTu++;
                     });
@@ -276,6 +275,10 @@ function checkDataDatSanTrong() {
             timeOut: 1000 // Giới hạn thời gian hiển thị là 1 giây
         });
     }
+    else {
+        datSanTrong();
+    }
+   
     return isValid;
 }
 
@@ -298,6 +301,11 @@ function modalDatSanTrong(btn) {
     let thoiLuong = $('#selectThoiLuong').val().trim() || null;
     let khungGio = $('#selectGio option:selected').text().trim() || null;
     let giaSan = Number($(btn).data('giasan'));
+
+    // Lấy dữ liệu sân từ nút gọi modal
+    let maSan = $(btn).data('masan');
+    let tenSan = $(btn).data('tensan');
+
     let soPhut = 0;
 
     if (thoiLuong === "1") {
@@ -313,6 +321,11 @@ function modalDatSanTrong(btn) {
     $('#thoiLuongDatSan').val(soPhut + " Phút");
     $('#khungGioDatSan').val(khungGio || "Chưa chọn khung giờ");
     $('#tongthanhToanDatSan').val(giaSan * Number(thoiLuong) + " VND");
+
+    // Gán maSan & tenSan vào nút "Đặt sân" trong modal
+    $('#btnDatSanTrong').data('masan', maSan);
+    $('#btnDatSanTrong').data('tensan', tenSan);
+
     resetDataDatSan();
 }
 
@@ -335,6 +348,10 @@ $(document).ready(function () {
     $('#btnDatSanTrong').click(function () {
         checkDataDatSanTrong();
     });
+
+    updateTrangThaiSan();
+
+    loadThongTinThanhToan();
 });
 
 //ham hiển thị thông tin lên modal
@@ -432,6 +449,7 @@ function thanhToanDatSan(id) {
                         // Gọi lại hàm modal hoặc reload nếu cần
                         modalThanhToan();
                         LoadThongTinSanBong();
+                        loadThongTinThanhToan();
                     } else {
                         toastr.error(response.message, "", {
                             timeOut: 2000
@@ -449,6 +467,183 @@ function thanhToanDatSan(id) {
                             popup: 'custom-swal'
                         }
                     });
+                }
+            });
+        }
+    });
+}
+
+//Hàm xử lý đặt sân trống
+function datSanTrong() {
+    let hoTenKhachHang = $('#hotenDatSan').val().trim();
+    let soDienThoaiKhachHang = $('#soDienThoaiDatSan').val().trim();
+    let ngayNhan = $('#myIDQLDS').val() || null;
+    let gioNhan = $('#selectGio').val() || null;
+    let gioNhanGui = gioNhan ? gioNhan + ':00' : null;
+    let thoiLuong = parseFloat($('#selectThoiLuong').val().trim()) || 0;
+    let ghiChu = $('#ghiChuDatSan').val().trim() || "Không có";
+
+    let btn = $('#btnDatSanTrong');
+    let tenSan = btn.data('tensan');
+    let maSan = btn.data('masan');
+
+    let ngayNhanGui = ngayNhan;
+    if (ngayNhan != null) {
+        ngayNhanGui = convertToYMD(ngayNhan);
+    }
+    let thoiLuongGui = thoiLuong * 60;
+
+    const model = {
+        hoTenKH: hoTenKhachHang,
+        soDienThoaiKH: soDienThoaiKhachHang,
+        NgayDat: ngayNhanGui,
+        GioDat: gioNhanGui,
+        ThoiLuong: thoiLuongGui,
+        GhiChu: ghiChu,
+        MaSan: maSan,
+        TenSan: tenSan
+    };
+    console.log(model);
+
+    Swal.fire({
+        title: "Xác nhận đặt sân",
+        text: "Bạn có chắc chắn muốn đặt sân?",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonText: "Có, đặt ngay!",
+        cancelButtonText: "Hủy",
+        reverseButtons: true,
+        customClass: {
+            popup: 'custom-swal'
+        }
+    }).then((result) => {
+        if (result.isConfirmed) {
+            // Người dùng đã xác nhận
+            $.ajax({
+                url: "/ChuSanBong/QuanLyDatSan/datSanTrong",
+                type: "POST",
+                contentType: "application/json",
+                headers: { "Accept": "application/json" },
+                data: JSON.stringify(model),
+                success: function (response) {
+                    if (response.success) {
+                        Swal.fire({
+                            icon: "success",
+                            title: "Thành công",
+                            text: response.message,
+                            timer: 2000,
+                            showConfirmButton: false
+                        });
+                        $('#modalDatSanTrong').modal('toggle');
+                        LoadThongTinSanBong();
+                    } else {
+                        toastr.error(response.message, "", {
+                            timeOut: 2000
+                        });
+                    }
+                },
+                error: function (xhr) {
+                    Swal.fire({
+                        icon: "error",
+                        title: "Lỗi hệ thống",
+                        text: "Không thể kết nối với máy chủ, vui lòng thử lại sau!",
+                        confirmButtonText: "OK",
+                        timer: 2000,
+                        customClass: {
+                            popup: 'custom-swal'
+                        }
+                    });
+                }
+            });
+        }
+    });
+
+    //Hàm chỉnh lại định dạng ngày theo dateOnly
+    function convertToYMD(dateStr) {
+        const parts = dateStr.split("-");
+        const d = parts[0];
+        const m = parts[1];
+        const y = parts[2];
+        return `${y}-${m}-${d}`; // mm-dd-yyyy
+    }
+   
+}
+
+//hàm cập nhật trạng thái sân
+function updateTrangThaiSan() {
+    $.ajax({
+        url: '/ChuSanBong/QuanLyDatSan/UpdateTrangThaiSan', // Đường dẫn API của bạn
+        type: 'POST',
+        success: function (response) {
+            LoadThongTinSanBong();
+        },
+        error: function (xhr, error) {
+            console.error('Lỗi khi cập nhật trạng thái sân:', error);
+        }
+    });
+}
+
+//5 phút gọi hàm 1 lần 
+setInterval(updateTrangThaiSan, 300000);
+
+//Hàm hiển thị danh sách thông tin đặt sân chưa thanh toán
+function loadThongTinThanhToan() {
+    $.ajax({
+        url: '/ChuSanBong/ThanhToan/getThongTinDatSanTT', // Đường dẫn API của bạn
+        type: 'GET', // Vì API sử dụng [HttpGet]
+        dataType: 'json', // Dữ liệu trả về dạng JSON
+        success: function (response) {
+            if (response.success) {
+                var tbody = $("#danhSachSanThanhToan");
+                tbody.empty(); // Xóa nội dung cũ nếu có
+                if (response.data.length > 0) {
+                    $.each(response.data, function (index, item) {
+                        // Xây dựng chuỗi HTML cho từng dòng
+                        var row = `<tr>
+                        <th scope="row">${index + 1}</th>
+                        <td class="me-2">${item.tenSan}</td>
+                        <td>${item.loaiSan}</td>
+                        <td class="text-center">${item.giaSan} / 1h</td>
+                        <td>${item.trangThaiSan}</td>
+                        <td class="text-secondary">${item.trangThaiThanhToan}</td>
+                        <td>
+                            <button type="button" class="btn btn-success btn-sm w-100" style="border-radius: 10px;" onclick="getDataDatSan(${item.maDatSan}); modalThanhToan();">
+                                Thanh toán
+                            </button>
+                        </td>
+                    </tr>`;
+
+                        tbody.append(row);
+                    });
+                }
+                else {
+                    // Nếu không có dữ liệu, hiển thị thông báo
+                    tbody.append('<tr><td colspan="7" class="text-center text-danger">Không có danh sách sân</td></tr>');
+                }
+                // Duyệt qua từng phần tử trong mảng data
+                
+            } else {
+                Swal.fire({
+                    icon: "error",
+                    title: "Lỗi hệ thống",
+                    text: response.message,
+                    confirmButtonText: "OK",
+                    timer: 2000,
+                    customClass: {
+                        popup: 'custom-swal'
+                    }
+                });
+            }
+        },
+        error: function (xhr, status, error) {
+            Swal.fire({
+                icon: "error",
+                title: "Lỗi hệ thống",
+                text: "Không thể kết nối với máy chủ, vui lòng thử lại sau!",
+                confirmButtonText: "OK",
+                timer: 2000,
+                customClass: {
+                    popup: 'custom-swal'
                 }
             });
         }
