@@ -3,35 +3,42 @@ function loadTimeOptions(interval) {
     let select = $("#selectGio");
     select.empty().append('<option selected value="">Chọn khung giờ</option>'); // Xóa options cũ
 
-    if (interval === 1) {
-        // Khi thời lượng là 1 giờ: 08:00 - 09:00, 09:00 - 10:00, ..., 23:00 - 24:00
-        for (let i = 8; i < 23; i++) {
-            let startHour = i.toString().padStart(2, '0');
-            let endHour = (i + 1).toString().padStart(2, '0');
-            select.append(`<option value="${startHour}:00">${startHour}:00 - ${endHour}:00</option>`);
+    $.ajax({
+        url: "/ChuSanBong/DangThongTinSan/GetThongTinBaiDangSan",
+        type: 'GET',
+        success: function (response) {
+            if (response.success) {
+                let data = response.data;
+                let gioBatDau = data.gioMoCua;
+                let gioKetThuc = data.gioDongCua;
+
+                let durationInMin = interval * 60;      // Thời lượng 1 giờ hoặc 1.5 giờ -> phút
+                let stepInMin = 30;                     // Nhảy từng 30 phút
+                let startTime = gioBatDau * 60;         // Đổi giờ bắt đầu sang phút
+                let endTimeLimit = gioKetThuc * 60;     // Giới hạn kết thúc
+
+                while (startTime + durationInMin <= endTimeLimit) {
+                    let sh = Math.floor(startTime / 60).toString().padStart(2, '0');
+                    let sm = (startTime % 60).toString().padStart(2, '0');
+                    let eh = Math.floor((startTime + durationInMin) / 60).toString().padStart(2, '0');
+                    let em = ((startTime + durationInMin) % 60).toString().padStart(2, '0');
+
+                    let optionStart = `${sh}:${sm}`;
+                    let optionEnd = `${eh}:${em}`;
+                    let optionText = `${optionStart} - ${optionEnd}`;
+
+                    select.append(`<option value="${optionStart}">${optionText}</option>`);
+                    startTime += stepInMin; // mỗi lần nhảy 30 phút
+                }
+            }
+        },
+        error: function (xhr, status, error) {
+            toastr.error("Có lỗi xảy ra khi lấy dữ liệu sân.");
+            console.error(error);
         }
-    } else if (interval === 1.5) {
-        // Khi thời lượng là 1.5 giờ: tạo option theo chuỗi liên tiếp
-        let startTime = 8 * 60; // Bắt đầu từ 8:00 (tính bằng phút từ nửa đêm)
-        let endOfDay = 24 * 60; // Giới hạn cuối ngày là 24:00 (1440 phút)
-
-        // Vòng lặp chạy cho đến khi khoảng thời gian kết thúc vượt qua 24:00
-        while (startTime + 90 <= endOfDay) {
-            let startHour = Math.floor(startTime / 60).toString().padStart(2, '0');
-            let startMin = (startTime % 60).toString().padStart(2, '0');
-            let optionStart = `${startHour}:${startMin}`;
-
-            let endTime = startTime + 90;
-            let endHour = Math.floor(endTime / 60) % 24;
-            let endMin = (endTime % 60).toString().padStart(2, '0');
-            let optionEnd = `${endHour.toString().padStart(2, '0')}:${endMin}`;
-
-            select.append(`<option value="${optionStart}">${optionStart} - ${optionEnd}</option>`);
-
-            startTime += 90; // Tăng startTime thêm 90 phút cho khoảng thời gian kế tiếp
-        }
-    }
+    });
 }
+
 
 // Hàm cập nhật trạng thái disable cho các option nếu ngày được chọn là hôm nay
 function updateTimeOptionsForToday() {

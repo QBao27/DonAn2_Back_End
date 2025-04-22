@@ -10,7 +10,6 @@
             type: 'GET',
             dataType: 'json',
             success: function (data) {
-                console.log(data)
                 let tableBody = $("#HoaDonTable");
                 tableBody.empty();
 
