@@ -272,6 +272,47 @@ $(document).ready(function () {
 });
 
 
+function fetchSanTrong() {
+    const ngayDat = $('#myID').val();
+    console.log(ngayDat)
+    const timeRange = $('#time-value').val() || $('#time-value').text();
+    const gioBatDau = timeRange.split('-')[0].trim();
+    const maChuSan = $('#MaChuSan').val();
+
+    if (!ngayDat || !gioBatDau) return;
+
+    $.ajax({
+        url: '/Customer/DatSan/GetSanTrong',
+        type: 'GET',
+        data: {
+            ngayDat: ngayDat,
+            gioBatDau: gioBatDau,
+            maChuSan: maChuSan
+        },
+        success: function (result) {
+            console.log(result)
+            var select = $('#selectSan');
+            select.empty();
+
+            if (result.length === 0) {
+                select.append('<option value="">Không có sân trống</option>');
+            } else {
+                result.forEach(san => {
+                    select.append(`<option value="${san.maSan}">${san.tenSan} - ${san.loaiSan} - ${san.gia}đ</option>`);
+                });
+            }
+        },
+        error: function (xhr, status, error) {
+            console.log('Lỗi khi tải danh sách sân trống:');
+            console.log('Status:', status);
+            console.log('Error:', error);
+            console.log('Response:', xhr.responseText);
+        }
+    });
+}
+
+// Tự gọi khi người dùng chọn ngày hoặc giờ
+$('#myID, #time-value').on('change', fetchSanTrong);
 
 
 
