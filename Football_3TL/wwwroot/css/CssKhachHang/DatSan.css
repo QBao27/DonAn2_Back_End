@@ -48,6 +48,7 @@
 }
 .hower-giodat :hover{
 background-color: white;
+cursor:pointer;
 }
 
 .nav-tabs .nav-link.active {
@@ -228,7 +229,16 @@ white-space: nowrap;
 .dropdown-toggle::after {
     display: none !important;
 }
+.scroll-contents {
+    height: 295px;
+    overflow-y: scroll;
+}
 
+V.disabled-slot {
+    background-color: #e0e0e0 !important;
+    color: #999 !important;
+    cursor: not-allowed;
+}
 
 
 

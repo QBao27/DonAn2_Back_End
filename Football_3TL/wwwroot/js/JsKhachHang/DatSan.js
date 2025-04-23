@@ -147,3 +147,132 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     });
 });
+
+
+$(document).ready(function () {
+    var maChuSan = $('#MaChuSan').val();
+
+    $.ajax({
+        url: '/Customer/DatSan/GetGioMoCua?maChuSan=' + maChuSan,
+        type: 'GET',
+        success: function (data) {
+            var gioMo = data.gioMoCua;
+            var gioDong = data.gioDongCua;
+
+            var html = '';
+
+            var now = new Date();
+            var currentTimeMinutes = now.getHours() * 60 + now.getMinutes();
+
+            for (var i = gioMo * 2; i < gioDong * 2; i++) {
+                var startHour = Math.floor(i / 2);
+                var startMin = (i % 2 === 0) ? 0 : 30;
+
+                var endTotal = i + 2;
+                var endHour = Math.floor(endTotal / 2);
+                var endMin = (endTotal % 2 === 0) ? 0 : 30;
+
+                var startTimeStr = startHour.toString().padStart(2, '0') + ":" + (startMin === 0 ? "00" : "30");
+                var endTimeStr = (endHour % 24).toString().padStart(2, '0') + ":" + (endMin === 0 ? "00" : "30");
+
+                var slotStartMinutes = startHour * 60 + startMin;
+
+                var isPast = slotStartMinutes <= currentTimeMinutes;
+
+                html += `
+        <div class="col-6 col-md-4 col-lg-3 p-1 hower-giodat">
+          <div id="time-slot-container">
+            <div class="giodat p-2 d-flex flex-column align-items-center ${isPast ? 'disabled-slot' : ''}" ${isPast ? 'style="pointer-events: none; opacity: 0.5;"' : ''}>
+                <div class="fw-bold">${startTimeStr} - ${endTimeStr}</div>
+            </div>
+           </div>
+        </div>
+    `;
+            }
+
+            $('#khungGioContainer').html(html);
+
+            $('#khungGioContainer').on('click', '.giodat', function () {
+                const timeText = $(this).find('.fw-bold').text();
+                console.log("Giờ được chọn:", timeText);
+
+                // Hiện lên phần hiển thị
+                $('#time-value').text(timeText);
+
+                // Xóa lớp chọn cũ, thêm lớp mới
+                $('.giodat').removeClass('selected-slot');
+                $(this).addClass('selected-slot');
+            });
+        },
+        error: function () {
+            alert("Lỗi khi tải giờ mở cửa.");
+        }
+    });
+});
+
+
+$(document).ready(function () {
+    var maChuSan = $('#MaChuSan').val();
+
+    $.ajax({
+        url: '/Customer/DatSan/GetGioMoCua?maChuSan=' + maChuSan,
+        type: 'GET',
+        success: function (data) {
+            var gioMo = data.gioMoCua;  // ví dụ: 6
+            var gioDong = data.gioDongCua; // ví dụ: 22
+
+            var html = '';
+
+            var now = new Date();
+            var currentTimeMinutes = now.getHours() * 60 + now.getMinutes();
+
+            // duyệt từng khung 30 phút, nhưng hiển thị mỗi lần 1.5 giờ = 90 phút
+            for (var i = gioMo * 60; i <= (gioDong * 60 - 90); i += 30) {
+                var startHour = Math.floor(i / 60);
+                var startMin = i % 60;
+
+                var endMinutes = i + 90;
+                var endHour = Math.floor(endMinutes / 60);
+                var endMin = endMinutes % 60;
+
+                var startTimeStr = startHour.toString().padStart(2, '0') + ":" + startMin.toString().padStart(2, '0');
+                var endTimeStr = endHour.toString().padStart(2, '0') + ":" + endMin.toString().padStart(2, '0');
+
+                var isPast = i <= currentTimeMinutes;
+
+                html += `
+        <div class="col-6 col-md-4 col-lg-3 p-1 hower-giodat">
+            <div id="time-slot-container">
+              <div class="giodat p-2 d-flex flex-column align-items-center ${isPast ? 'disabled-slot' : ''}" ${isPast ? 'style="pointer-events: none; opacity: 0.5;"' : ''}>
+                <div class="fw-bold">${startTimeStr} - ${endTimeStr}</div>
+              </div>
+            </div>
+        </div>
+    `;
+            }
+
+            $('#KhungGioDatle').html(html); // ⚠️ container mới bạn yêu cầu
+
+            $('#KhungGioDatle').on('click', '.giodat', function () {
+                const timeText = $(this).find('.fw-bold').text();
+                console.log("Giờ được chọn:", timeText);
+
+                // Hiện lên phần hiển thị
+                $('#time-value').text(timeText);
+
+                // Xóa lớp chọn cũ, thêm lớp mới
+                $('.giodat').removeClass('selected-slot');
+                $(this).addClass('selected-slot');
+            });
+        },
+        error: function () {
+            alert("Lỗi khi tải giờ mở cửa.");
+        }
+    });
+});
+
+
+
+
+
+

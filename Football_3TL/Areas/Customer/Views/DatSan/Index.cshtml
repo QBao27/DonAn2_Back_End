@@ -42,6 +42,7 @@
             <!-- reponsive Phần Tên sân bóng + icon -->
             <div class="row">
                 <h4 class="fw-bold">Sân bóng đá KAKA Sport khu đô thị Hòa Quý</h4>
+                <input type="hidden" id="MaChuSan" name="name" value="1" />
                 <div class="col-md-6 d-flex align-items-center flex-wrap">
                     <img src="~/Img/map-pin.svg" alt="" style="width: 24px; height: 27px;">
                     <div class="ms-2" style="font-size: large;">
@@ -172,25 +173,11 @@
                         </div>
                         <div class="d-flex flex-wrap mt-2">
                             <div style="font-weight: 700; font-size: large;"> Giờ đặt: </div>
-                            <div class="ms-2 fw-bold" style="font-size: large;"> 19:00 - 20:00</div>
+                            <div class="ms-2 fw-bold text-success" style="font-size: large;" id="time-value"></div>
                         </div>
                         <div class="d-flex flex-wrap mt-2">
                             <div style="font-weight: 700;font-size: large;"> Tổng thanh toán:  </div>
                             <div class="ms-2 fw-bold" style="font-size: large;"> 300.000 VND</div>
-                        </div>
-                        <div class="d-flex flex-wrap mt-1" style="justify-content: space-between;">
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" value="" id="flexCheckIndeterminate">
-                                <label class="form-check-label" for="flexCheckIndeterminate">
-                                    Trực tuyến
-                                </label>
-                            </div>
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" value="" id="flexCheckIndeterminate">
-                                <label class="form-check-label" for="flexCheckIndeterminate">
-                                    Trực tiếp
-                                </label>
-                            </div>
                         </div>
                         <div>
                             <button type="button" id="btnDatSan" class="btn btn-success w-100 mt-3"
@@ -217,103 +204,8 @@
                                         <div style="color: white;"> 1 giờ </div>
                                     </div>
                                 </div>
-                                <div class="row">
-                                    <div class="col-6 col-md-4 col-lg-3 p-1 hower-giodat">
-                                        <div class="giodat p-2 d-flex flex-column align-items-center">
-                                            <div class="fw-bold">8:00 - 9:00</div>
-                                            <div>300k</div>
-                                        </div>
-                                    </div>
-                                    <div class="col-6 col-md-4 col-lg-3 p-1 hower-giodat">
-                                        <div class="giodat p-2 d-flex flex-column align-items-center">
-                                            <div class="fw-bold">9:00 - 10:00</div>
-                                            <div>300k</div>
-                                        </div>
-                                    </div>
-                                    <div class="col-6 col-md-4 col-lg-3 p-1 hower-giodat">
-                                        <div class="giodat p-2 d-flex flex-column align-items-center">
-                                            <div class="fw-bold">10:00 - 11:00</div>
-                                            <div>300k</div>
-                                        </div>
-                                    </div>
-                                    <div class="col-6 col-md-4 col-lg-3 p-1 hower-giodat">
-                                        <div class="giodat p-2 d-flex flex-column align-items-center">
-                                            <div class="fw-bold">11:00 - 12:00</div>
-                                            <div>300k</div>
-                                        </div>
-                                    </div>
-                                    <div class="col-6 col-md-4 col-lg-3 p-1 hower-giodat">
-                                        <div class="giodat p-2 d-flex flex-column align-items-center">
-                                            <div class="fw-bold">12:00 - 13:00</div>
-                                            <div>300k</div>
-                                        </div>
-                                    </div>
-                                    <div class="col-6 col-md-4 col-lg-3 p-1 hower-giodat">
-                                        <div class="giodat p-2 d-flex flex-column align-items-center">
-                                            <div class="fw-bold">13:00 - 14:00</div>
-                                            <div>300k</div>
-                                        </div>
-                                    </div>
-                                    <div class="col-6 col-md-4 col-lg-3 p-1 hower-giodat">
-                                        <div class="giodat p-2 d-flex flex-column align-items-center">
-                                            <div class="fw-bold">14:00 - 15:00</div>
-                                            <div>300k</div>
-                                        </div>
-                                    </div>
-                                    <div class="col-6 col-md-4 col-lg-3 p-1 hower-giodat">
-                                        <div class="giodat p-2 d-flex flex-column align-items-center">
-                                            <div class="fw-bold">15:00 - 16:00</div>
-                                            <div>300k</div>
-                                        </div>
-                                    </div>
-                                    <div class="col-6 col-md-4 col-lg-3 p-1 hower-giodat">
-                                        <div class="giodat p-2 d-flex flex-column align-items-center">
-                                            <div class="fw-bold">16:00 - 17:00</div>
-                                            <div>300k</div>
-                                        </div>
-                                    </div>
-                                    <div class="col-6 col-md-4 col-lg-3 p-1 hower-giodat">
-                                        <div class="giodat p-2 d-flex flex-column align-items-center">
-                                            <div class="fw-bold">17:00 - 18:00</div>
-                                            <div>300k</div>
-                                        </div>
-                                    </div>
-                                    <div class="col-6 col-md-4 col-lg-3 p-1 hower-giodat">
-                                        <div class="giodat p-2 d-flex flex-column align-items-center">
-                                            <div class="fw-bold">18:00 - 19:00</div>
-                                            <div>300k</div>
-                                        </div>
-                                    </div>
-                                    <div class="col-6 col-md-4 col-lg-3 p-1 hower-giodat">
-                                        <div class="giodat p-2 d-flex flex-column align-items-center">
-                                            <div class="fw-bold">19:00 - 20:00</div>
-                                            <div>300k</div>
-                                        </div>
-                                    </div>
-                                    <div class="col-6 col-md-4 col-lg-3 p-1 hower-giodat">
-                                        <div class="giodat p-2 d-flex flex-column align-items-center">
-                                            <div class="fw-bold">20:00 - 21:00</div>
-                                            <div>300k</div>
-                                        </div>
-                                    </div>
-                                    <div class="col-6 col-md-4 col-lg-3 p-1 hower-giodat">
-                                        <div class="giodat p-2 d-flex flex-column align-items-center">
-                                            <div class="fw-bold">21:00 - 22:00</div>
-                                            <div>300k</div>
-                                        </div>
-                                    </div>
-                                    <div class="col-6 col-md-4 col-lg-3 p-1 hower-giodat">
-                                        <div class="giodat p-2 d-flex flex-column align-items-center">
-                                            <div class="fw-bold">22:00 - 23:00</div>
-                                            <div>300k</div>
-                                        </div>
-                                    </div>
-                                    <div class="col-6 col-md-4 col-lg-3 p-1 hower-giodat">
-                                        <div class="giodat p-2 d-flex flex-column align-items-center">
-                                            <div class="fw-bold">23:00 - 00:00</div>
-                                            <div>300k</div>
-                                        </div>
-                                    </div>
+                                <div class="row scroll-contents" id="khungGioContainer">
+                               
                                 </div>
                             </div>
 
@@ -331,79 +223,8 @@
                                         <div style="color: white;"> 1.5 giờ </div>
                                     </div>
                                 </div>
-                                <div class="row">
-                                    <div class="col-6 col-md-4 col-lg-3 p-1 hower-giodat">
-                                        <div class="giodat p-2 d-flex flex-column align-items-center">
-                                            <div class="fw-bold">5:00 - 6:30</div>
-                                            <div>300k</div>
-                                        </div>
-                                    </div>
-                                    <div class="col-6 col-md-4 col-lg-3 p-1 hower-giodat">
-                                        <div class="giodat p-2 d-flex flex-column align-items-center">
-                                            <div class="fw-bold">6:30 - 8:00</div>
-                                            <div>300k</div>
-                                        </div>
-                                    </div>
-                                    <div class="col-6 col-md-4 col-lg-3 p-1 hower-giodat">
-                                        <div class="giodat p-2 d-flex flex-column align-items-center">
-                                            <div class="fw-bold">8:00 - 9:30</div>
-                                            <div>300k</div>
-                                        </div>
-                                    </div>
-                                    <div class="col-6 col-md-4 col-lg-3 p-1 hower-giodat">
-                                        <div class="giodat p-2 d-flex flex-column align-items-center">
-                                            <div class="fw-bold">9:30 - 11:00</div>
-                                            <div>300k</div>
-                                        </div>
-                                    </div>
-                                    <div class="col-6 col-md-4 col-lg-3 p-1 hower-giodat">
-                                        <div class="giodat p-2 d-flex flex-column align-items-center">
-                                            <div class="fw-bold">11:00 - 12:30</div>
-                                            <div>300k</div>
-                                        </div>
-                                    </div>
-                                    <div class="col-6 col-md-4 col-lg-3 p-1 hower-giodat">
-                                        <div class="giodat p-2 d-flex flex-column align-items-center">
-                                            <div class="fw-bold">12:00 - 14:00</div>
-                                            <div>300k</div>
-                                        </div>
-                                    </div>
-                                    <div class="col-6 col-md-4 col-lg-3 p-1 hower-giodat">
-                                        <div class="giodat p-2 d-flex flex-column align-items-center">
-                                            <div class="fw-bold">14:00 - 15:30</div>
-                                            <div>300k</div>
-                                        </div>
-                                    </div>
-                                    <div class="col-6 col-md-4 col-lg-3 p-1 hower-giodat">
-                                        <div class="giodat p-2 d-flex flex-column align-items-center">
-                                            <div class="fw-bold">15:30 - 17:00</div>
-                                            <div>300k</div>
-                                        </div>
-                                    </div>
-                                    <div class="col-6 col-md-4 col-lg-3 p-1 hower-giodat">
-                                        <div class="giodat p-2 d-flex flex-column align-items-center">
-                                            <div class="fw-bold">17:00 - 18:30</div>
-                                            <div>300k</div>
-                                        </div>
-                                    </div>
-                                    <div class="col-6 col-md-4 col-lg-3 p-1 hower-giodat">
-                                        <div class="giodat p-2 d-flex flex-column align-items-center">
-                                            <div class="fw-bold">18:30 - 20:00</div>
-                                            <div>300k</div>
-                                        </div>
-                                    </div>
-                                    <div class="col-6 col-md-4 col-lg-3 p-1 hower-giodat">
-                                        <div class="giodat p-2 d-flex flex-column align-items-center">
-                                            <div class="fw-bold">20:00 - 21:30</div>
-                                            <div>300k</div>
-                                        </div>
-                                    </div>
-                                    <div class="col-6 col-md-4 col-lg-3 p-1 hower-giodat">
-                                        <div class="giodat p-2 d-flex flex-column align-items-center">
-                                            <div class="fw-bold">21:00 - 23:00</div>
-                                            <div>300k</div>
-                                        </div>
-                                    </div>
+                                <div class="row scroll-contents" id="KhungGioDatle">
+                                 
                                 </div>
                             </div>
                         </div>
@@ -695,6 +516,10 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.0.1/js/bootstrap.min.js"
             integrity="sha512-EKWWs1ZcA2ZY9lbLISPz8aGR2+L7JVYqBAYTq5AXgBkSjRSuQEGqWx8R1zAX16KdXPaCjOCaKE8MCpU0wcHlHA=="
             crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <!-- Jquery-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"
+            integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g=="
+            crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <!-- js file -->
 
     <script src="~/js/JsKhachHang/DanhGia.js"></script>
@@ -705,10 +530,6 @@
     <!-- Thư viện thông báo đẹp -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
-    <!-- Jquery-->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"
-            integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g=="
-            crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <!-- own Caroul js -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"
             integrity="sha512-bPs7Ae6pVvhOSiIcyUClR7/q2OAsRiovw4vAkX+zJbw3ShAeeqezq50RIIcIURq7Oa20rW2n2q+fyXBNcU9lrw=="

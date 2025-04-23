@@ -103,86 +103,86 @@ namespace Football_3TL.Areas.ChuSanBong.Controllers
         //}
 
         [HttpPost]
-        public async Task<IActionResult> UploadImages([FromForm] List<IFormFile> files)
-        {
-            try
-            {
-                var maChuSan = HttpContext.Session.GetInt32("maChuSan");
+        //public async Task<IActionResult> UploadImages([FromForm] List<IFormFile> files)
+        //{
+        //    try
+        //    {
+        //        var maChuSan = HttpContext.Session.GetInt32("maChuSan");
 
-                if (maChuSan == null)
-                {
-                    return BadRequest(new { Message = "Không xác định được MaChuSan." });
-                }
+        //        if (maChuSan == null)
+        //        {
+        //            return BadRequest(new { Message = "Không xác định được MaChuSan." });
+        //        }
 
-                var baiDang = dbContext.ThongTinBaiDangs.FirstOrDefault(x => x.MaChuSan == maChuSan);
+        //        var baiDang = dbContext.ThongTinBaiDangs.FirstOrDefault(x => x.MaChuSan == maChuSan);
 
-                if (baiDang == null)
-                {
-                    string maBaiDang = Guid.NewGuid().ToString();
+        //        if (baiDang == null)
+        //        {
+        //            string maBaiDang = Guid.NewGuid().ToString();
 
-                    baiDang = new ThongTinBaiDang
-                    {
-                        MaBaiDang = maBaiDang,
-                        GioMoCua = "07:00 - 23:00",
-                        MaChuSan = maChuSan.Value
-                    };
+        //            baiDang = new ThongTinBaiDang
+        //            {
+        //                MaBaiDang = maBaiDang,
+        //                GioMoCua = "07:00 - 23:00",
+        //                MaChuSan = maChuSan.Value
+        //            };
 
-                    dbContext.ThongTinBaiDangs.Add(baiDang);
-                    await dbContext.SaveChangesAsync();
-                }
+        //            dbContext.ThongTinBaiDangs.Add(baiDang);
+        //            await dbContext.SaveChangesAsync();
+        //        }
 
-                var hinhAnhCu = dbContext.HinhAnhBaiDangs
-                                          .Where(x => x.MaBaiDang == baiDang.MaBaiDang)
-                                          .OrderBy(x => x.MaAnh) // Sắp xếp theo MaAnh để giữ thứ tự
-                                          .ToList();
+        //        var hinhAnhCu = dbContext.HinhAnhBaiDangs
+        //                                  .Where(x => x.MaBaiDang == baiDang.MaBaiDang)
+        //                                  .OrderBy(x => x.MaAnh) // Sắp xếp theo MaAnh để giữ thứ tự
+        //                                  .ToList();
 
-                List<string> uploadedFiles = new List<string>();
+        //        List<string> uploadedFiles = new List<string>();
 
-                for (int i = 0; i < files.Count; i++)
-                {
-                    var file = files[i];
-                    if (file != null && file.Length > 0)
-                    {
-                        string fileName = $"{Guid.NewGuid()}_{Path.GetFileName(file.FileName)}";
-                        string filePath = Path.Combine("wwwroot/Img", fileName);
+        //        for (int i = 0; i < files.Count; i++)
+        //        {
+        //            var file = files[i];
+        //            if (file != null && file.Length > 0)
+        //            {
+        //                string fileName = $"{Guid.NewGuid()}_{Path.GetFileName(file.FileName)}";
+        //                string filePath = Path.Combine("wwwroot/Img", fileName);
 
-                        using (var stream = new FileStream(filePath, FileMode.Create))
-                        {
-                            await file.CopyToAsync(stream);
-                        }
+        //                using (var stream = new FileStream(filePath, FileMode.Create))
+        //                {
+        //                    await file.CopyToAsync(stream);
+        //                }
 
-                        string newFilePath = "/Img/" + fileName;
+        //                string newFilePath = "/Img/" + fileName;
 
-                        if (i < hinhAnhCu.Count)
-                        {
-                            // Cập nhật ảnh vào đúng MaAnh đã có
-                            var hinhAnhCapNhat = hinhAnhCu[i];
-                            hinhAnhCapNhat.HinhAnh = newFilePath;
-                            dbContext.HinhAnhBaiDangs.Update(hinhAnhCapNhat);
-                        }
-                        else
-                        {
-                            // Nếu chưa có ảnh, thêm ảnh mới vào cuối
-                            var hinhAnh = new HinhAnhBaiDang
-                            {
-                                MaBaiDang = baiDang.MaBaiDang,
-                                HinhAnh = newFilePath
-                            };
-                            dbContext.HinhAnhBaiDangs.Add(hinhAnh);
-                        }
+        //                if (i < hinhAnhCu.Count)
+        //                {
+        //                    // Cập nhật ảnh vào đúng MaAnh đã có
+        //                    var hinhAnhCapNhat = hinhAnhCu[i];
+        //                    hinhAnhCapNhat.HinhAnh = newFilePath;
+        //                    dbContext.HinhAnhBaiDangs.Update(hinhAnhCapNhat);
+        //                }
+        //                else
+        //                {
+        //                    // Nếu chưa có ảnh, thêm ảnh mới vào cuối
+        //                    var hinhAnh = new HinhAnhBaiDang
+        //                    {
+        //                        MaBaiDang = baiDang.MaBaiDang,
+        //                        HinhAnh = newFilePath
+        //                    };
+        //                    dbContext.HinhAnhBaiDangs.Add(hinhAnh);
+        //                }
 
-                        uploadedFiles.Add(newFilePath);
-                    }
-                }
+        //                uploadedFiles.Add(newFilePath);
+        //            }
+        //        }
 
-                await dbContext.SaveChangesAsync();
-                return Ok(new { Message = "Cập nhật ảnh thành công!", Files = uploadedFiles });
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, new { Message = "Lỗi server", Error = ex.Message });
-            }
-        }
+        //        await dbContext.SaveChangesAsync();
+        //        return Ok(new { Message = "Cập nhật ảnh thành công!", Files = uploadedFiles });
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        return StatusCode(500, new { Message = "Lỗi server", Error = ex.Message });
+        //    }
+        //}
 
 
 
