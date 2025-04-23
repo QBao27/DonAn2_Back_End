@@ -308,5 +308,82 @@ namespace Football_3TL.Areas.ChuSanBong.Controllers
                 return StatusCode(500, new { success = false, message = "Lỗi server", error = ex.Message });
             }
         }
+        [HttpPost]
+        public async Task<IActionResult> updateThoiGianMoCua([FromBody] UpdateTimeModel model)
+        {
+            try
+            {
+                var maChuSan = HttpContext.Session.GetInt32("maChuSan");
+                if (!maChuSan.HasValue)
+                {
+                    return Json(new { success = false, message = "Bạn chưa đăng nhập!" });
+                }
+
+                // Xử lý mặc định nếu không có giá trị
+                int gioMoCua = model.gioMoCua != 0 ? model.gioMoCua : 0;
+                int gioDongCua = model.gioDongCua != 0 ? model.gioDongCua : 24;
+
+                var thongtin = await dbContext.ThongTinBaiDangs.Where(tt => tt.MaChuSan == maChuSan).FirstOrDefaultAsync();
+
+                if (thongtin == null) {
+                    return Json(new { success = false, message = "Không có thông tin bài đăng hợp lệ!" });
+                }
+
+                thongtin.GioMoCua = gioMoCua;
+                thongtin.GioDongCua = gioDongCua;
+
+                await dbContext.SaveChangesAsync();
+
+                return Json(new { success = true, message = "Cập nhật thành công!" });
+            }
+            catch (Exception)
+            {
+
+                return Json(new { success = false, message = "Lỗi server, vui lòng thử lại sau!" });
+            }
+        }
+
+        //API get thời gian mở cửa và đóng cửa và số lượng sân
+        [HttpGet]
+        public async Task<IActionResult> GetThongTinBaiDangSan()
+        {
+            try
+            {
+                var maChuSan = HttpContext.Session.GetInt32("maChuSan");
+                if (!maChuSan.HasValue)
+                {
+                    return Json(new { success = false, message = "Bạn chưa đăng nhập!" });
+                }
+
+                var thongTin = await dbContext.ThongTinBaiDangs
+                    .Where(x => x.MaChuSan == maChuSan)
+                    .Select(x => new
+                    {
+                        x.GioMoCua,
+                        x.GioDongCua
+                    })
+                    .FirstOrDefaultAsync();
+
+                if (thongTin == null)
+                {
+                    return Json(new { success = false, message = "Không tìm thấy thông tin sân!" });
+                }
+                // Đếm số lượng sân từ bảng SanBong
+                int soLuongSan = await dbContext.SanBongs
+                    .CountAsync(s => s.MaChuSan == maChuSan);
+
+                return Json(new { success = true, data = new
+                {
+                    thongTin.GioMoCua,
+                    thongTin.GioDongCua,
+                    soLuongSan
+                }});
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { success = false, message = "Lỗi server", error = ex.Message });
+            }
+        }
+
     }
 }
