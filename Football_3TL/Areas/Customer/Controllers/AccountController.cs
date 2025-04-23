@@ -88,6 +88,36 @@ namespace Football_3TL.Areas.Customer.Controllers
                 await _db.SaveChangesAsync();
                 _log.LogInformation("Tạo tài khoản cho chủ sân với ID: {MaTaiKhoan}", taiKhoan.MaTaiKhoan);
 
+                //Tạo thông tin bài đăng mới 
+                // Lấy mã bài đăng lớn nhất hiện tại
+                var lastMaBaiDang = await _db.ThongTinBaiDangs
+                    .OrderByDescending(x => x.MaBaiDang)
+                    .Select(x => x.MaBaiDang)
+                    .FirstOrDefaultAsync();
+
+                string newMaBaiDang = "BD001"; // Mặc định nếu chưa có bài đăng nào
+
+                if (!string.IsNullOrEmpty(lastMaBaiDang))
+                {
+                    // Tách phần số phía sau "BD"
+                    int number = int.Parse(lastMaBaiDang.Substring(2));
+                    number++; // tăng lên 1
+                    newMaBaiDang = "BD" + number.ToString("D3"); // định dạng về BD00x
+                }
+
+                // Tạo mới bài đăng
+                var baiDang = new ThongTinBaiDang
+                {
+                    MaBaiDang = newMaBaiDang,
+                    GioMoCua = 6,
+                    GioDongCua = 22,
+                    MaChuSan = chuSan.MaChuSan
+                };
+
+                await _db.ThongTinBaiDangs.AddAsync(baiDang);
+                await _db.SaveChangesAsync();
+
+
                 return Json(new { success = true, message = "Tạo tài khoản thành công!" });
             }
             catch (Exception ex)
@@ -139,7 +169,12 @@ namespace Football_3TL.Areas.Customer.Controllers
                 if (!VerifyPassword(model.MatKhau, taiKhoan.MatKhau ?? ""))
                 {
                     _log.LogWarning("Đăng nhập thất bại: Sai mật khẩu cho user: {0}", user.MaChuSan);
-                    return Json(new { success = false, checkPassword = false, message = $"Mật khẩu không đúng!" });
+                    return Json(new { success = false, checkPassword = false, message = $"Mật khẩu không đúng!"});
+                }
+
+                if(taiKhoan.TrangThai == "Đã khóa")
+                {
+                    return Json(new { success = false, checkPassword = false, message = $"Tài khoản đã bị khóa!"});
                 }
 
                 //Lưu thông tin vào session

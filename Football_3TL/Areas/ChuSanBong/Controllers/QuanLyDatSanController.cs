@@ -50,6 +50,7 @@ namespace Football_3TL.Areas.ChuSanBong.Controllers
                         s.TenSan,
                         s.LoaiSan,
                         s.Gia,
+                        s.MaSan,
                         ThongTinDatSans = s.ThongTinDatSans
                     })
                     .ToList();
@@ -70,6 +71,7 @@ namespace Football_3TL.Areas.ChuSanBong.Controllers
                             TenSan = s.TenSan,
                             LoaiSan = s.LoaiSan,
                             GiaSan = s.Gia,
+                            MaSan = s.MaSan,
                             TrangThai = thongTin?.TrangThaiSan ?? "Trống",
                             TrangThaiThanhToan = thongTin?.TrangThaiThanhToan ?? "Sân chưa đặt",
                             MaDatSan = thongTin?.MaDatSan ?? 0
@@ -138,6 +140,7 @@ namespace Football_3TL.Areas.ChuSanBong.Controllers
                             TenSan = s.TenSan,
                             LoaiSan = s.LoaiSan,
                             GiaSan = s.Gia,
+                            MaSan = s.MaSan,
                             TrangThai = thongTin?.TrangThaiSan ?? "Trống",
                             TrangThaiThanhToan = thongTin?.TrangThaiThanhToan ?? "Sân chưa đặt",
                             MaDatSan = thongTin?.MaDatSan ?? 0
@@ -160,6 +163,7 @@ namespace Football_3TL.Areas.ChuSanBong.Controllers
                              TenSan = s.TenSan,
                              LoaiSan = s.LoaiSan,
                              GiaSan = s.Gia,
+                             MaSan = s.MaSan,
                              TrangThai = thongTin?.TrangThaiSan ?? "Trống",
                              TrangThaiThanhToan = thongTin?.TrangThaiThanhToan ?? "Sân chưa đặt",
                              MaDatSan = thongTin?.MaDatSan ?? 0
@@ -194,6 +198,7 @@ namespace Football_3TL.Areas.ChuSanBong.Controllers
                              TenSan = s.TenSan,
                              LoaiSan = s.LoaiSan,
                              GiaSan = s.Gia,
+                             MaSan = s.MaSan,
                              TrangThai = thongTin?.TrangThaiSan ?? "Trống",
                              TrangThaiThanhToan = thongTin?.TrangThaiThanhToan ?? "Sân chưa đặt",
                              MaDatSan = thongTin?.MaDatSan ?? 0
@@ -285,7 +290,8 @@ namespace Football_3TL.Areas.ChuSanBong.Controllers
                 // lưu thông tin vào bảng hóa đơn
                 var hoaDon = new HoaDon
                 {
-                    MaDatSan = thongTin.MaDatSan
+                    MaDatSan = thongTin.MaDatSan,
+                    ThoiGian = DateOnly.FromDateTime(DateTime.Now)
                 };
 
                 _db.HoaDons.Add(hoaDon);
@@ -306,6 +312,7 @@ namespace Football_3TL.Areas.ChuSanBong.Controllers
         {
             try
             {
+                // Hoặc nếu bạn dùng logging, bạn có thể ghi log như sau: 
                 var maChuSan = HttpContext.Session.GetInt32("maChuSan");
                 if (!maChuSan.HasValue)
                 {
@@ -318,12 +325,26 @@ namespace Football_3TL.Areas.ChuSanBong.Controllers
                     _log.LogError("Thông tin đặt sân không hợp lệ!");
                     return Json(new { success = false, message = "Thông tin đặt sân không hợp lệ!" });
                 }
+                // lấy mã khách hàng rồi + 1
+                var lastKhachHang = _db.KhachHangs
+                     .Where(k => k.MaKhachHang.StartsWith("KH"))
+                     .AsEnumerable() // chuyển sang client evaluation
+                     .Select(k => new {
+                         MaKhachHang = k.MaKhachHang,
+                         Number = int.Parse(k.MaKhachHang.Substring(2))
+                     })
+                     .OrderByDescending(x => x.Number)
+                     .FirstOrDefault();
 
+                int newNumber = (lastKhachHang != null) ? lastKhachHang.Number + 1 : 1;
+                string newMaKhachHang = "KH" + newNumber.ToString("D3");
                 var khachHang = new KhachHang
                 {
+                    MaKhachHang = newMaKhachHang,
                     HoVaTen = model.hoTenKH,
                     SoDienThoai = model.soDienThoaiKH,
-                };
+                }; 
+
                 await _db.KhachHangs.AddAsync(khachHang);
                 await _db.SaveChangesAsync();
 
@@ -353,5 +374,63 @@ namespace Football_3TL.Areas.ChuSanBong.Controllers
                 return Json(new { success = false, message = "Lỗi server, vui lòng thử lại sau!" });
             }
         }
+
+        //API thay đổi trạng thái sân theo thời gian
+        [HttpPost]
+        public async Task<IActionResult> UpdateTrangThaiSan()
+        {
+            try
+            {
+                var maChuSan = HttpContext.Session.GetInt32("maChuSan");
+                if (!maChuSan.HasValue)
+                {
+                    _log.LogError("maChuSan is null. Session might not be set.");
+                    return Json(new { success = false, message = "Bạn chưa đăng nhập!" });
+                }
+
+                var now = DateTime.Now;
+                var currentDate = DateOnly.FromDateTime(now);
+                var currentTime = TimeOnly.FromDateTime(now);
+
+                // Lấy tất cả các lượt đặt của chủ sân
+                var danhSachDatSan = await _db.ThongTinDatSans
+                    .Where(t => t.MaChuSan == maChuSan && t.NgayDat == currentDate)
+                    .ToListAsync();
+
+                foreach (var datSan in danhSachDatSan)
+                {
+                    // Kiểm tra nếu có giá trị giờ đặt (GioDat)
+                    if (datSan.GioDat.HasValue)
+                    {
+                        var gioBatDau = datSan.GioDat.Value;
+                        var gioKetThuc = gioBatDau.AddMinutes(datSan.ThoiLuong ?? 0);
+
+                        if (currentTime >= gioKetThuc)
+                        {
+                            datSan.TrangThaiSan = "Hết giờ";
+                        }
+                        else if (currentTime >= gioBatDau && currentTime < gioKetThuc)
+                        {
+                            datSan.TrangThaiSan = "Đang hoạt động";
+                        }
+                        else
+                        {
+                            datSan.TrangThaiSan = "Đã đặt";
+                        }
+                    }
+                }
+
+                await _db.SaveChangesAsync();
+
+                return Json(new { success = true, message = "Cập nhật trạng thái sân thành công!" });
+            }
+            catch (Exception ex)
+            {
+                _log.LogError(ex, "Lỗi khi cập nhật trạng thái sân.");
+                return Json(new { success = false, message = "Lỗi server, vui lòng thử lại sau!" });
+            }
+        }
+
+
     }
 }

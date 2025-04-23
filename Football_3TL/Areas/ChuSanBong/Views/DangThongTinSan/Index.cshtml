@@ -7,7 +7,7 @@
                 </li>
                 <li class="nav-item dropdown">
                     <a href="#" data-bs-toggle="dropdown" class="nav-icon pe-md-0">
-                        <img src="images/account.png" class="avatar img-fluid" alt="">
+                        <img src="~/Img/account.png" class="avatar img-fluid" alt="">
                     </a>
                     <div class="dropdown-menu dropdown-menu-end rounded" style="width: 180px;">
                         <div class="row">
@@ -16,7 +16,7 @@
                             </h4>
                         </div>
                         <div class="d-flex">
-                            <a class="ms-2 cusor" style="color: red;" href="/KhachHang/Account/Logout">Đăng xuất</a>
+                            <a class="ms-2 cusor" style="color: red;" href="/Customer/Account/Logout">Đăng xuất</a>
                         </div>
                     </div>
                 </li>
@@ -73,14 +73,65 @@
                 </div>
                 <div class="col-lg-4 col-md-12 mt-4" style="border-radius: 10px; background-color: white;">
                     <div class="p-3">
-                        <div class="Thongtinsan fs-4 fw-bold">Thông tin sân</div>
+                        <!-- Nút mở modal -->
+                        <div class="d-flex justify-content-sm-between">
+                            <div class="Thongtinsan fs-4 fw-bold">Thông tin sân</div>
+                            <button type="button" class="btn btn-warning text-light"
+                                    style="width: 150px; font-size: small;"
+                                    id="btnSuaGioMoCua"
+                                    data-bs-toggle="modal"
+                                    data-bs-target="#editTimeModal">
+                                Thay đổi thời gian
+                            </button>
+                        </div>
+
+                        <!-- Modal sửa thời gian -->
+                        <div class="modal fade" id="editTimeModal" tabindex="-1" aria-labelledby="editTimeLabel" aria-hidden="true">
+                            <div class="modal-dialog modal-sm">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title fw-bold" id="editTimeLabel">Chỉnh sửa thời gian</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Đóng"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <form id="editTimeForm">
+                                            <div class="mb-3">
+                                                <label for="openingTime" class="form-label fw-bold">Giờ mở cửa</label>
+                                                <select class="form-select" id="openingTime" name="openingTime" required>
+                                                    @for (int i = 0; i <= 24; i++)
+
+                                                    {
+                                                        <option value="@i">@i:00</option>
+                                                    }
+                                                </select>
+                                            </div>
+                                            <div class="mb-3">
+                                                <label for="closingTime" class="form-label fw-bold">Giờ đóng cửa</label>
+                                                <select class="form-select" id="closingTime" name="closingTime" required>
+                                                    @for (int i = 0; i <= 24; i++)
+
+                                                    {
+                                                        <option value="@i">@i:00</option>
+                                                    }
+                                                </select>
+                                            </div>
+                                        </form>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
+                                        <button class="btn btn-primary" onclick="updateTime()">Lưu</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
                         <div class="row mt-3">
                             <div class="col-6 fw-medium fw-bold">Giờ mở cửa: </div>
-                            <div class="col-6 text-end fw-bold">6h - 23h</div>
+                            <div class="col-6 text-end fw-bold"><span id="gioMoCuaBD"></span>h - <span id="gioDongCuaBD"></span>h</div>
                         </div>
                         <div class="row mt-3">
                             <div class="col-6 fw-medium fw-bold">Số sân thi đấu: </div>
-                            <div class="col-6 text-end fw-bold">4 sân</div>
+                            <div class="col-6 text-end fw-bold"><span id="soLuongSanBD"></span> sân</div>
                         </div>
                         <div class="row mt-3">
                             <div class="col-6 fw-medium fw-bold">Giá sân: </div>
