@@ -142,81 +142,81 @@
 
 
     //hàm update thời gian mở cửa và đóng cửa
-function updateTime() {
-    let gioMoCua = parseInt($('#openingTime').val());
-    let gioDongCua = parseInt($('#closingTime').val());
+//function updateTime() {
+//    let gioMoCua = parseInt($('#openingTime').val());
+//    let gioDongCua = parseInt($('#closingTime').val());
 
-    if (gioDongCua <= gioMoCua) {
-        toastr.warning("Thời gian không hợp lệ!", "", {
-            timeOut: 2000 // Giới hạn thời gian hiển thị là 2 giây
-        });
-        return;
-    }
+//    if (gioDongCua <= gioMoCua) {
+//        toastr.warning("Thời gian không hợp lệ!", "", {
+//            timeOut: 2000 // Giới hạn thời gian hiển thị là 2 giây
+//        });
+//        return;
+//    }
 
-    // Gửi AJAX với dữ liệu JSON
-    $.ajax({
-        url: "/ChuSanBong/DangThongTinSan/updateThoiGianMoCua",
-        type: "POST", // Đảm bảo phương thức POST
-        dataType: 'json',
-        contentType: 'application/json', // Đảm bảo gửi dữ liệu dưới dạng JSON
-        data: JSON.stringify({
-            gioMoCua: gioMoCua, // Dữ liệu gửi đi
-            gioDongCua: gioDongCua
-        }),
-        success: function (response) {
-            if (response.success) {
-                Swal.fire({
-                    icon: "success",
-                    title: "Thành công",
-                    text: response.message,
-                    timer: 2000,
-                    showConfirmButton: false
-                });
-                // Ẩn modal
-                $('#editTimeModal').modal('hide');
-                showThongTinBaiDang();
-            } else {
-                toastr.error(response.message, "", {
-                    timeOut: 2000
-                });
-            }
-        },
-        error: function (xhr) {
-            Swal.fire({
-                icon: "error",
-                title: "Lỗi hệ thống",
-                text: "Không thể kết nối với máy chủ, vui lòng thử lại sau!",
-                confirmButtonText: "OK",
-                timer: 2000,
-                customClass: {
-                    popup: 'custom-swal'
-                }
-            });
-        }
-    });
-}
+//    // Gửi AJAX với dữ liệu JSON
+//    $.ajax({
+//        url: "/ChuSanBong/DangThongTinSan/updateThoiGianMoCua",
+//        type: "POST", // Đảm bảo phương thức POST
+//        dataType: 'json',
+//        contentType: 'application/json', // Đảm bảo gửi dữ liệu dưới dạng JSON
+//        data: JSON.stringify({
+//            gioMoCua: gioMoCua, // Dữ liệu gửi đi
+//            gioDongCua: gioDongCua
+//        }),
+//        success: function (response) {
+//            if (response.success) {
+//                Swal.fire({
+//                    icon: "success",
+//                    title: "Thành công",
+//                    text: response.message,
+//                    timer: 2000,
+//                    showConfirmButton: false
+//                });
+//                // Ẩn modal
+//                $('#editTimeModal').modal('hide');
+//                showThongTinBaiDang();
+//            } else {
+//                toastr.error(response.message, "", {
+//                    timeOut: 2000
+//                });
+//            }
+//        },
+//        error: function (xhr) {
+//            Swal.fire({
+//                icon: "error",
+//                title: "Lỗi hệ thống",
+//                text: "Không thể kết nối với máy chủ, vui lòng thử lại sau!",
+//                confirmButtonText: "OK",
+//                timer: 2000,
+//                customClass: {
+//                    popup: 'custom-swal'
+//                }
+//            });
+//        }
+//    });
+//}
 
-//hiển thị thông tin
-function showThongTinBaiDang() {
-    $.ajax({
-        url: "/ChuSanBong/DangThongTinSan/GetThongTinBaiDangSan", // Đổi 'TenController' thành tên controller thật sự
-        type: 'GET',
-        success: function (response) {
-            if (response.success) {
-                let data = response.data;
-                $("#gioMoCuaBD").text(data.gioMoCua);
-                $("#gioDongCuaBD").text(data.gioDongCua);
-                $("#soLuongSanBD").text(data.soLuongSan);
-            }
-        },
-        error: function (xhr, status, error) {
-            toastr.error("Có lỗi xảy ra khi lấy dữ liệu sân.");
-            console.error(error);
-        }
-    });
-}
+////hiển thị thông tin
+//function showThongTinBaiDang() {
+//    $.ajax({
+//        url: "/ChuSanBong/DangThongTinSan/GetThongTinBaiDangSan", // Đổi 'TenController' thành tên controller thật sự
+//        type: 'GET',
+//        success: function (response) {
+//            if (response.success) {
+//                let data = response.data;
+//                $("#gioMoCuaBD").text(data.gioMoCua);
+//                $("#gioDongCuaBD").text(data.gioDongCua);
+//                $("#soLuongSanBD").text(data.soLuongSan);
+//            }
+//        },
+//        error: function (xhr, status, error) {
+//            toastr.error("Có lỗi xảy ra khi lấy dữ liệu sân.");
+//            console.error(error);
+//        }
+//    });
+//}
 
-$(document).ready(function () {
-    showThongTinBaiDang();
-})
+//$(document).ready(function () {
+//    showThongTinBaiDang();
+//})
 
