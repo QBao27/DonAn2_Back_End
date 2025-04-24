@@ -68,30 +68,24 @@ namespace Football_3TL.Areas.Customer.Controllers
         //}
 
         [HttpGet]
-        public IActionResult GetSanTrong(DateTime ngayDat, string gioBatDau, int maChuSan)
+        public IActionResult GetSanTrong(DateOnly ngayDat, string gioBatDau, int maChuSan)
         {
             Console.WriteLine("---bắt đầu---");
-            int thoiLuong = 60; // Mặc định 60 phút
+            int thoiLuong = 60;
 
-            // Chuyển đổi giờ bắt đầu sang TimeOnly
             var gioBD = TimeOnly.Parse(gioBatDau);
             var gioKT = gioBD.AddMinutes(thoiLuong);
-            var ngay = DateOnly.FromDateTime(ngayDat);
 
-            Console.WriteLine("ngay: " + ngay);
-            Console.WriteLine("Gio:"+gioKT);
+            Console.WriteLine("ngay: " + ngayDat);
+            Console.WriteLine("Gio:" + gioKT);
             Console.WriteLine("gioBD: " + gioBD);
 
-            Console.WriteLine($"Ngày đặt: {ngayDat}, Giờ bắt đầu: {gioBD}, Giờ kết thúc: {gioKT}");
-
-            // Lấy danh sách đặt sân đã tồn tại trong ngày đó và của chủ sân
             var datSans = dbContext.ThongTinDatSans
-                .Where(ds => ds.NgayDat == ngay && ds.MaChuSan == maChuSan && ds.GioDat.HasValue)
-                .ToList(); // phải ToList để xử lý TimeOnly trong bộ nhớ
+                .Where(ds => ds.NgayDat == ngayDat && ds.MaChuSan == maChuSan && ds.GioDat.HasValue)
+                .ToList();
 
             Console.WriteLine($"Có {datSans.Count} sân đã được đặt trong ngày này.");
 
-            // In ra để debug từng dòng
             foreach (var ds in datSans)
             {
                 var bStart = ds.GioDat!.Value;
@@ -101,14 +95,13 @@ namespace Football_3TL.Areas.Customer.Controllers
                 Console.WriteLine($"🟥 MaSan={ds.MaSan}: [{bStart} - {bEnd}] vs [{gioBD} - {gioKT}] => Overlap: {isOverlap}");
             }
 
-            // Lấy các sân chưa bị trùng thời gian
             var sanTrong = dbContext.SanBongs
                 .Where(sb => sb.MaChuSan == maChuSan)
                 .ToList()
                 .Where(sb =>
                     !datSans.Any(ds =>
                         ds.MaSan == sb.MaSan &&
-                        ds.GioDat.HasValue && // đảm bảo không null
+                        ds.GioDat.HasValue &&
                         IsOverlapping(
                             gioBD,
                             gioKT,
@@ -134,6 +127,7 @@ namespace Football_3TL.Areas.Customer.Controllers
 
             return Json(sanTrong);
         }
+
 
         // Hàm kiểm tra thời gian bị trùng
         private bool IsOverlapping(TimeOnly aStart, TimeOnly aEnd, TimeOnly bStart, TimeOnly bEnd)

@@ -273,7 +273,10 @@ $(document).ready(function () {
 
 
 function fetchSanTrong() {
-    const ngayDat = $('#myID').val();
+
+    const raw = $('#myID').val();
+    const parts = raw.split("-");
+    const ngayDat = `${parts[2]}-${parts[1]}-${parts[0]}`; // đổi sang yyyy-MM-dd
     console.log(ngayDat)
     const timeRange = $('#time-value').val() || $('#time-value').text();
     const gioBatDau = timeRange.split('-')[0].trim();
