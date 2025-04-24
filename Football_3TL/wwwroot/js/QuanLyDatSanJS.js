@@ -314,7 +314,7 @@ function checkDataDatSanTrong() {
 
 //reset data 
 function resetDataDatSan() {
-    $("#hotenDatSan, #soDienThoaiDatSan").val('');
+    $("#hotenDatSan, #soDienThoaiDatSan, #ghiChuDatSan").val('');
     resetErrorDatSan();
 }
 
