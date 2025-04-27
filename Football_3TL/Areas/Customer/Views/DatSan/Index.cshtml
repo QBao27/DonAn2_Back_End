@@ -41,21 +41,21 @@
         <div class="mx-5 py-4">
             <!-- reponsive Phần Tên sân bóng + icon -->
             <div class="row">
-                <h4 class="fw-bold">Sân bóng đá KAKA Sport khu đô thị Hòa Quý</h4>
+                <h4 class="fw-bold" id="TenSanBong">Sân bóng đá KAKA Sport khu đô thị Hòa Quý</h4>
                 
                 <div class="col-md-6 d-flex align-items-center flex-wrap">
                     <img src="~/Img/map-pin.svg" alt="" style="width: 24px; height: 27px;">
-                    <div class="ms-2" style="font-size: large;">
+                    <div class="ms-2" id="DiaChi" style="font-size: large;">
                         Quảng Nam, Phường Hòa Quý, Quận Ngũ Hành Sơn, Đà Nẵng
                     </div>
                 </div>
                 <div class="col-md-6 d-flex justify-content-md-end justify-content-start align-items-center flex-wrap mt-2 mt-md-0">
                     <div style="font-size: large;"> Đánh giá: </div>
-                    <div class="ms-2" style="font-size: large;">4/5</div>
+                    <div class="ms-2" style="font-size: large;"><span id="averageRating1">5</span>/5</div>
                     <div class="ms-2">
                         <img src="~/Img/star-svgrepo-com.svg" alt="" style="width: 15px;height: 15px;">
                     </div>
-                    <div class="ms-2" style="font-size: large;">(1 đánh giá)</div>
+                    <div class="ms-2" style="font-size: large;">(<span id="totalReviews3">1</span> đánh giá)</div>
                     <div class="d-flex ms-md-3 ms-0 mt-2 mt-md-0">
                         <img src="~/Img/bell.svg" alt="" class="ms-2" style="width: 22px; height: 22px;">
                         <img src="~/Img/heart.svg" alt="" class="ms-2" style="width: 22px; height: 22px;">
@@ -69,21 +69,21 @@
                     <div class="row">
                         <div class="col-md-7 col-sm-12">
                             <div>
-                                <img src="~/Img/anh 1.webp" alt=""
+                                <img id="img1" src="" alt=""
                                      class="img-fluid w-100" style="height: 255px; object-fit: cover; border-radius: 10px;">
                             </div>
                             <div class="mt-3">
-                                <img src="~/Img/anh 2.webp" alt=""
+                                <img id="img2" src="" alt=""
                                      class="img-fluid w-100" style="height: 155px; object-fit: cover; border-radius: 10px;">
                             </div>
                         </div>
                         <div class="col-md-5 col-sm-12 mt-3 mt-md-0">
                             <div>
-                                <img src="~/Img/anh 3.webp" alt=""
+                                <img id="img3" src="" alt=""
                                      class="img-fluid w-100" style="height: 145px; object-fit: cover; border-radius: 10px;">
                             </div>
                             <div class="mt-3">
-                                <img src="~/Img/anh 4.webp" alt=""
+                                <img id="img4" src="" alt=""
                                      class="img-fluid w-100" style="height: 268px; object-fit: cover; border-radius: 10px;">
                             </div>
                         </div>
@@ -94,11 +94,11 @@
                         <div class="Thongtinsan fs-4 fw-bold">Thông tin sân</div>
                         <div class="row mt-3">
                             <div class="col-6 fw-medium fw-bold">Giờ mở cửa: </div>
-                            <div class="col-6 text-end fw-bold">6h - 23h</div>
+                            <div class="col-6 text-end fw-bold"> <span id="GioMoCua">6</span>h - <span id="GioDongCua">23</span>h</div>
                         </div>
                         <div class="row mt-3">
                             <div class="col-6 fw-medium fw-bold">Số sân thi đấu: </div>
-                            <div class="col-6 text-end fw-bold">4 sân</div>
+                            <div class="col-6 text-end fw-bold"> <span id="SoSan">4</span> sân</div>
                         </div>
                         <div class="row mt-3">
                             <div class="col-6 fw-medium fw-bold">Giá sân: </div>
@@ -245,7 +245,7 @@
                 <div class="row p-5 pt-2 pb-4">
                     <div class="col-lg-4 col-12 text-center">
                         <div>
-                            <h3 class="text-warning"><span id="averageRating">5</span> / 5</h3>
+                            <h3 class="text-warning"> <span id="averageRating">5</span> / 5</h3>
                         </div>
                         <div class="star-rating2 mb-1">
                             <label for="star1"><i class="fas fa-star saoTrungBinh" data-value="1"></i></label>
@@ -256,8 +256,7 @@
                         </div>
                         <div class="mb-3">(<span id="totalReviews">100</span> đánh giá)</div>
                         <div>
-                            <a class="btn bg-warning text-light" data-bs-toggle="modal"
-                               data-bs-target="#modalDanhGia">Gửi Đánh Giá Của Bạn</a>
+                            <a class="btn bg-warning text-light" id="btnOpenModalDanhGia">Gửi Đánh Giá Của Bạn</a>
                         </div>
                     </div>
                     <div class="col-lg-8 col-12 pt-4">
@@ -346,7 +345,7 @@
             </div>
         </div>
         <!-- modal danh gia -->
-        <div class="modal fade" id="modalDanhGia">
+        <div class="modal fade" id="modalDanhGia" tabindex="-1" aria-labelledby="modalDanhGia" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content p-3 pb-0">
                     <!-- Nội dung của modal -->
@@ -395,7 +394,7 @@
                     </div>
                     <!-- modal footer -->
                     <div class="modal-footer">
-                        <a class="btn btn-warning text-light" onclick="validateAssessmentForm()">Gửi Đánh Giá</a>
+                        <a class="btn btn-warning text-light" onclick="submitAssessmentForm()">Gửi Đánh Giá</a>
                     </div>
                 </div>
             </div>
