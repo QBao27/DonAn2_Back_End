@@ -1,10 +1,30 @@
-﻿using Football_3TL.Data;
+﻿using Football_3TL.Binders;
+using Football_3TL.Data;
+using Football_3TL.Services.Vnpay;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
+// Thêm session service
+builder.Services.AddDistributedMemoryCache();
+builder.Services.AddSession(options =>
+{
+    options.IdleTimeout = TimeSpan.FromMinutes(30); // thời gian sống của session
+    options.Cookie.HttpOnly = true;
+    options.Cookie.IsEssential = true;
+});
+
+builder.Services.AddControllersWithViews(options =>
+{
+    options.ModelBinderProviders.Insert(0, new CustomBinderProvider());
+});
+
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+
+//Connect VNPay API
+builder.Services.AddScoped<IVnPayService, VnPayService>();
+
 
 //Đăng ký kết nối csdl
 builder.Services.AddDbContext <Football3tlContext>(options => { options.UseSqlServer(builder.Configuration.GetConnectionString("ConnFB3TL")); });
