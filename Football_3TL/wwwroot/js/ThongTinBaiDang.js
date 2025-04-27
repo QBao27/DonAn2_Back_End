@@ -1,132 +1,5 @@
-﻿//function uploadImages() {
-//    let formData = new FormData();
-
-//    let fileInputs = document.querySelectorAll(".file-upload");
-//    fileInputs.forEach(input => {
-//        if (input.files.length > 0) {
-//            formData.append("files", input.files[0]); // "files" phải khớp với tên tham số trong API
-//        }
-//    });
-
-//    fetch('/ChuSanBong/DangThongTinSan/UploadImages', {
-//        method: 'POST',
-//        body: formData
-//    })
-//        .then(response => response.json()) // Chuyển response thành JSON
-//        .then(data => {
-//            location.reload();
-//        })
-//        .catch(error => {
-//            console.error("Lỗi:", error);
-//            alert("Lỗi trong quá trình tải ảnh lên.");
-//        });
-
-//}
-
-
-//function loadImagesFromAPI() {
-
-//    fetch('/ChuSanBong/DangThongTinSan/GetMaChuSan')
-//        .then(response => response.json())
-//        .then(data => {
-//            if (!data.maChuSan) {
-//                return;
-//            }
-
-//            loadImages(data.maChuSan);
-//        })
-//        .catch(error => console.error("❌ Lỗi khi lấy MaChuSan:", error));
-//}
-
-//// Gọi API khi trang tải xong
-//document.addEventListener("DOMContentLoaded", function () {
-//    loadImagesFromAPI();
-//});
-
-
-//function loadImages(maChuSan) {
-//    console.log("🔍 Gửi request với MaChuSan:", maChuSan);
-
-//    fetch(`/ChuSanBong/DangThongTinSan/GetImages?maChuSan=${maChuSan}`)
-//        .then(response => {
-//            if (!response.ok) {
-//                throw new Error(`HTTP error! Status: ${response.status}`);
-//            }
-//            return response.json();
-//        })
-//        .then(data => {
-//            console.log("📥 Dữ liệu nhận được từ server:", data);
-
-//            if (!Array.isArray(data)) {
-//                console.error("❌ Lỗi: Server không trả về danh sách ảnh.", data);
-//                return;
-//            }
-
-//            data.forEach(image => {
-//                console.log("📝 Dữ liệu ảnh:", image);
-
-//                let imgElement = document.getElementById(image.imgId);
-//                let index = image.Index !== undefined ? image.Index : image.imgId.replace("img", "");
-//                let maAnhElement = document.getElementById(`maAnh${index}`);
-
-//                // Cập nhật ảnh vào thẻ <img> tại vị trí thẻ tương ứng
-//                if (imgElement) {
-//                    imgElement.src = image.hinhAnh.replace("~", "");
-//                    console.log(`✅ Cập nhật ảnh ${image.maAnh}: ${image.imgId} -> ${imgElement.src}`);
-//                } else {
-//                    console.warn(`⚠️ Không tìm thấy phần tử có ID: ${image.imgId}`);
-//                }
-
-//                // Cập nhật maAnh vào thẻ <span> nhưng không thay đổi vị trí của thẻ đó
-//                if (maAnhElement) {
-//                    maAnhElement.textContent = image.maAnh;
-//                    maAnhElement.style.display = "none";
-//                    console.log(`✅ Cập nhật maAnh: ${image.maAnh} vào ${maAnhElement.id}`);
-//                } else {
-//                    console.warn(`⚠️ Không tìm thấy phần tử có ID: maAnh${index}`);
-//                }
-//            });
-//        })
-//        .catch(error => console.error("❌ Lỗi khi tải ảnh:", error));
-//}
-
-
-
-
-
-//function updateImage() {
-//    // Lấy ID ảnh mà bạn muốn cập nhật
-//    let selectedImageId = document.querySelector('input[type="file"]:checked').id.replace('file', 'img'); // ID của ảnh
-//    let spanId = `maAnh${selectedImageId.replace('img', '')}`; // Tạo ID tương ứng với span
-
-//    let maAnh = document.getElementById(spanId).textContent; // Lấy maAnh từ span
-//    let fileInput = document.getElementById(`file${selectedImageId.replace('img', '')}`);
-
-//    // Chắc chắn rằng bạn đã chọn một file
-//    if (fileInput.files.length > 0) {
-//        let formData = new FormData();
-//        formData.append("file", fileInput.files[0]); // Thêm ảnh mới vào formData
-//        formData.append("maAnh", maAnh); // Thêm maAnh vào formData
-
-//        // Gửi yêu cầu POST để cập nhật ảnh
-//        fetch('/ChuSanBong/DangThongTinSan/UploadImages', {
-//            method: 'POST',
-//            body: formData
-//        })
-//            .then(response => response.json())
-//            .then(data => {
-//                console.log('✅ Ảnh đã được upload:', data);
-//                location.reload(); // Tải lại trang sau khi cập nhật
-//            })
-//            .catch(error => {
-//                console.error('❌ Lỗi khi upload ảnh:', error);
-//            });
-//    }
-//}
-
-
-
-
+﻿
+//Hàm preview hình ảnh
 function previewImage(event, imgId) {
     let imgElement = document.getElementById(imgId);
     let file = event.target.files[0];
@@ -139,6 +12,10 @@ function previewImage(event, imgId) {
     }
 }
 
+$(document).ready(function () {
+    showThongTinBaiDang();
+    getImages();
+})
 
 //Hàm hiển thị hình ảnh 
 function getImages() {
@@ -150,7 +27,7 @@ function getImages() {
                 let data = response.data;
                 data.forEach(img => {
                     // Set src cho từng thẻ <img>
-                    $(`#${img.imgId}`).attr('src', img.hinhAnh);
+                    $(`#${img.imgIndex}`).attr('src', img.hinhAnh);
                 });
             }
         },
@@ -159,6 +36,64 @@ function getImages() {
             console.error("XHR:", xhr);
             console.error("Status:", status);
             console.error("Error:", error);
+        }
+    });
+}
+
+//hàm update hình ảnh
+function updateImages() {
+    var formData = new FormData();
+
+    // Duyệt 4 ô file, nếu có file mới thì append 2 trường:
+    //   - "files"  : chính là file
+    //   - "orders" : thứ tự (i)
+    for (var i = 1; i <= 4; i++) {
+        var input = document.getElementById("file" + i);
+        if (input.files && input.files.length > 0) {
+            formData.append("files", input.files[0]);
+            formData.append("orders", i);
+        }
+    }
+
+    // Gửi AJAX lên server
+    $.ajax({
+        url: "/ChuSanBong/DangThongTinSan/UpdateImages",  // endpoint xử lý files + orders
+        type: 'POST',
+        data: formData,
+        processData: false,   // không để jQuery tự chuyển data thành query string
+        contentType: false,   // để browser tự set boundary multipart/form-data
+        success: function (response) {
+            if (response.success) {
+                Swal.fire({
+                    icon: "success",
+                    title: "Thành công",
+                    text: response.message,
+                    timer: 2000,
+                    showConfirmButton: false
+                }).then(() => {
+                    // Xóa tất cả file inputs
+                    for (var i = 1; i <= 4; i++) {
+                        $("#file" + i).val("");
+                    }
+                });
+            }
+            else {
+                toastr.error(response.message, "", {
+                    timeOut: 2000
+                });
+            }
+        },
+        error: function (xhr, status, error) {
+            Swal.fire({
+                icon: "error",
+                title: "Lỗi hệ thống",
+                text: "Không thể kết nối với máy chủ, vui lòng thử lại sau!",
+                confirmButtonText: "OK",
+                timer: 2000,
+                customClass: {
+                    popup: 'custom-swal'
+                }
+            });
         }
     });
 }
@@ -238,8 +173,4 @@ function showThongTinBaiDang() {
     });
 }
 
-$(document).ready(function () {
-    showThongTinBaiDang();
-    getImages();
-})
 

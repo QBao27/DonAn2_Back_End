@@ -81,7 +81,8 @@ namespace Football_3TL.Areas.Customer.Controllers
                 {
                     MaChuSan = chuSan.MaChuSan,
                     MatKhau = password,
-                    Quyen = 1
+                    Quyen = 1,
+                    TrangThai = "Không khóa"
                 };
 
                 await _db.TaiKhoans.AddAsync(taiKhoan);
@@ -115,6 +116,22 @@ namespace Football_3TL.Areas.Customer.Controllers
                 };
 
                 await _db.ThongTinBaiDangs.AddAsync(baiDang);
+                await _db.SaveChangesAsync();
+
+                //Tạo 4 hình ảnh mặc định
+                var hinhAnhs = new List<HinhAnhBaiDang>();
+                for (int i = 1; i <= 4; i++)
+                {
+                    hinhAnhs.Add(new HinhAnhBaiDang
+                    {
+                        MaBaiDang = baiDang.MaBaiDang,
+                        HinhAnh = $"/Img/anhSanBongDefault.png",  // pattern chung
+                        ThuTu = i
+                    });
+                }
+
+                // Lưu vào database
+                _db.HinhAnhBaiDangs.AddRange(hinhAnhs);
                 await _db.SaveChangesAsync();
 
 

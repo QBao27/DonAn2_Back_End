@@ -4,6 +4,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json;
+using System.Runtime.Intrinsics.Arm;
+using static NuGet.Packaging.PackagingConstants;
 
 namespace Football_3TL.Areas.ChuSanBong.Controllers
 {
@@ -22,101 +24,90 @@ namespace Football_3TL.Areas.ChuSanBong.Controllers
 
         //API cập nhật hình ảnh
         [HttpPost]
-        public async Task<IActionResult> UploadImages([FromForm] List<IFormFile> files)
+        public async Task<IActionResult> UpdateImages(
+            [FromForm] List<IFormFile> files,
+            [FromForm] List<int> orders)
         {
             try
             {
-                // Lấy MaChuSan từ API thay vì session
+                // Lấy ID bài đăng (hoặc chủ sân) từ session
                 var maChuSan = HttpContext.Session.GetInt32("maChuSan");
-
                 if (maChuSan == null)
-                {
-                    return Json (new { success = false, message = "Bạn chưa đăng nhập!" });
-                }
+                    return Json(new { success = false, message = "Bạn chưa đăng nhập!" });
 
-                var baiDang = dbContext.ThongTinBaiDangs.FirstOrDefault(x => x.MaChuSan == maChuSan);
+                // Validate đầu vào
+                if (files == null || files.Count == 0)
+                    return Json(new { success = true, message = "Không có ảnh nào được thay đổi." });
+                if (orders == null || files.Count != orders.Count)
+                    return Json(new { success = false, message = "Dữ liệu upload không hợp lệ." });
 
+                // Tìm bài đăng trong DB
+                var baiDang = await dbContext.ThongTinBaiDangs
+                    .FirstOrDefaultAsync(x => x.MaChuSan == maChuSan);
                 if (baiDang == null)
-                {
-                    //Tạo thông tin bài đăng mới 
-                    // Lấy mã bài đăng lớn nhất hiện tại
-                    var lastMaBaiDang = await dbContext.ThongTinBaiDangs
-                        .OrderByDescending(x => x.MaBaiDang)
-                        .Select(x => x.MaBaiDang)
-                        .FirstOrDefaultAsync();
+                    return Json(new { success = false, message = "Bài đăng không tồn tại!" });
 
-                    string newMaBaiDang = "BD001"; // Mặc định nếu chưa có bài đăng nào
+                // Chuẩn bị thư mục lưu ảnh: wwwroot/Img/{maChuSan}/
+                var contentRoot = Directory.GetCurrentDirectory();
+                var uploadDir = Path.Combine(contentRoot, "wwwroot", "Img", maChuSan.ToString() ?? "0");
+                if (!Directory.Exists(uploadDir))
+                    Directory.CreateDirectory(uploadDir);
 
-                    if (!string.IsNullOrEmpty(lastMaBaiDang))
-                    {
-                        // Tách phần số phía sau "BD"
-                        int number = int.Parse(lastMaBaiDang.Substring(2));
-                        number++; // tăng lên 1
-                        newMaBaiDang = "BD" + number.ToString("D3"); // định dạng về BD00x
-                    }
+                // Convert khóa ngoại sang string nếu cần
+                var maBaiDangKey = baiDang.MaBaiDang.ToString();
 
-                    // Tạo mới bài đăng
-                    baiDang = new ThongTinBaiDang
-                    {
-                        MaBaiDang = newMaBaiDang,
-                        GioMoCua = 6,
-                        GioDongCua = 22,
-                        MaChuSan = maChuSan
-                    };
-
-                    await dbContext.ThongTinBaiDangs.AddAsync(baiDang);
-                    await dbContext.SaveChangesAsync();
-                }
-
-                // Lấy danh sách ảnh hiện có của bài đăng
-                var hinhAnhBaiDang = dbContext.HinhAnhBaiDangs
-                                         .Where(x => x.MaBaiDang == baiDang.MaBaiDang)
-                                         .ToList();
-
-                List<string> uploadedFiles = new List<string>();
-
+                // Xử lý từng file
                 for (int i = 0; i < files.Count; i++)
                 {
                     var file = files[i];
-                    if (file != null && file.Length > 0)
-                    {
-                        string fileName = $"{Guid.NewGuid()}_{Path.GetFileName(file.FileName)}";
-                        string filePath = Path.Combine("wwwroot/Img", fileName);
+                    var order = orders[i]; // 1..4
 
-                        using (var stream = new FileStream(filePath, FileMode.Create))
+                    // Lấy tên file gốc và path
+                    var fileName = Path.GetFileName(file.FileName);
+                    var fullPath = Path.Combine(uploadDir, fileName);
+
+                    // Nếu file chưa tồn tại trên đĩa, lưu mới
+                    if (!System.IO.File.Exists(fullPath))
+                    {
+                        using (var stream = new FileStream(fullPath, FileMode.Create))
                         {
                             await file.CopyToAsync(stream);
                         }
+                    }
 
-                        string newFilePath = "/Img/" + fileName;
+                    // Đường dẫn tương đối để lưu vào DB
+                    var relativePath = $"/Img/{maChuSan}/{fileName}";
 
-                        if (i < hinhAnhBaiDang.Count)
+                    // Tìm record HinhAnhBaiDang với MaBaiDang và ThuTu = order
+                    var imgRecord = await dbContext.HinhAnhBaiDangs
+                        .FirstOrDefaultAsync(x => x.MaBaiDang == maBaiDangKey && x.ThuTu == order);
+
+                    if (imgRecord == null)
+                    {
+                        // Tạo mới nếu chưa có
+                        imgRecord = new HinhAnhBaiDang
                         {
-                            // Cập nhật ảnh cũ
-                            hinhAnhBaiDang[i].HinhAnh = newFilePath;
-                            dbContext.HinhAnhBaiDangs.Update(hinhAnhBaiDang[i]);
-                        }
-                        else
-                        {
-                            // Thêm ảnh mới nếu vượt quá số ảnh cũ
-                            var hinhAnh = new HinhAnhBaiDang
-                            {
-                                MaBaiDang = baiDang.MaBaiDang,
-                                HinhAnh = newFilePath
-                            };
-                            dbContext.HinhAnhBaiDangs.Add(hinhAnh);
-                        }
-
-                        uploadedFiles.Add(newFilePath);
+                            MaBaiDang = maBaiDangKey,
+                            ThuTu = order,
+                            HinhAnh = relativePath
+                        };
+                        dbContext.HinhAnhBaiDangs.Add(imgRecord);
+                    }
+                    else
+                    {
+                        // Cập nhật đường dẫn cho record đã tồn tại
+                        imgRecord.HinhAnh = relativePath;
                     }
                 }
 
+                // Lưu mọi thay đổi
                 await dbContext.SaveChangesAsync();
-                return Ok(new { Message = "Cập nhật ảnh thành công!", Files = uploadedFiles });
+
+                return Json(new { success = true, message = "Cập nhật ảnh thành công!" });
             }
             catch (Exception ex)
             {
-                return StatusCode(500, new { Message = "Lỗi server", Error = ex.Message });
+                return Json(new { success = false, message = $"Lỗi server: {ex.Message}" });
             }
         }
 
@@ -182,9 +173,8 @@ namespace Football_3TL.Areas.ChuSanBong.Controllers
                 // Định dạng danh sách ảnh trả về
                 var result = images.Select((x, index) => new
                 {
-                    Index = index + 1,
                     MaAnh = x.MaAnh,
-                    ImgId = $"img{index + 1}",
+                    ImgIndex = $"img{x.ThuTu}",
                     HinhAnh = Url.Content(x.HinhAnh.StartsWith("~/") ? x.HinhAnh : $"~{x.HinhAnh}")
                 }).ToList();
 

@@ -30,6 +30,7 @@ function loadTimeOptions(interval) {
                     select.append(`<option value="${optionStart}">${optionText}</option>`);
                     startTime += stepInMin; // mỗi lần nhảy 30 phút
                 }
+                updateTimeOptionsForToday();
             }
         },
         error: function (xhr, status, error) {
@@ -95,7 +96,6 @@ $(document).ready(function () {
     $("#selectThoiLuong").change(function () {
         let interval = parseFloat($(this).val());
         loadTimeOptions(interval);
-        updateTimeOptionsForToday();
     });
 
     //reset tìm kiếm 
