@@ -130,6 +130,24 @@
 //    });
 //});
 
+// Hàm lấy tham số từ URL
+//function getParameterByName(name) {
+//    const url = window.location.href;
+//    name = name.replace(/[\[\]]/g, '\\$&');
+//    const regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)'),
+//        results = regex.exec(url);
+//    if (!results) return null;
+//    if (!results[2]) return '';
+//    return decodeURIComponent(results[2].replace(/\+/g, ' '));
+//}
+
+//// Lấy giá trị maChuSan
+//const maChuSan = getParameterByName('maChuSan');
+
+//// Gán giá trị vào input
+//if (maChuSan) {
+//    document.getElementById('MaChuSan').value = maChuSan;
+//}
 
 document.addEventListener("DOMContentLoaded", function () {
     function validateInput(inputId, errorId, regex, errorMessage) {
@@ -1028,8 +1046,6 @@ document.addEventListener("DOMContentLoaded", function () {
     timeSelect.addEventListener('change', updateThoiLuong);
     myID.addEventListener('change', updateNgayDat);
 });
-
-
 
 
 

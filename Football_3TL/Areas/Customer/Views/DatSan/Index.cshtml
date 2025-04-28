@@ -140,7 +140,7 @@
                             Đặt sân theo yêu cầu
                         </div>
                           <form method="POST" asp-area="Customer" asp-controller="Payment" asp-action="CreatePaymentUrlVnpay">
-                            <input type="hidden" id="MaChuSan" name="MaChuSan" value="6" />
+                            <input type="hidden" id="MaChuSan" name="MaChuSan" value="@Context.Request.Query["maChuSan"]" />
                             <div>
                                 <input type="text" id="hoten" name="hoTenKH" class="form-control mt-4 p-2" style="border-radius: 10px;" placeholder="Họ và tên">
                                 <span id="error-hoten" class="text-error text-danger"></span>
