@@ -17,15 +17,13 @@
                     </select>
                 </div>
                 <div class="col-md-2">
-                    <select id="fieldType" class="form-select" style="font-size: large;border-radius: 10px;">
-                        <option value="">Loại sân</option>
-                        <option value="5">Sân 5</option>
-                        <option value="7">Sân 7</option>
+                    <select id="danhSachTenSan" class="form-select" style="font-size: large;border-radius: 10px;">
+                      
                     </select>
                 </div>
                 <div class="col-md-2 d-flex">
-                    <button class="btn btn-dark w-100" style="border-radius: 10px;">Tìm sân</button>
-                    <button class="btn btn-outline-dark ms-2" style="border-radius: 10px;">
+                    <button class="btn btn-dark w-100" id="btnTimKiemDanhSachSan" type="button" style="border-radius: 10px;">Tìm sân</button>
+                    <button class="btn btn-outline-dark ms-2" id="btnResetTimKiem" type="button" style="border-radius: 10px;">
                         <i class="bi bi-arrow-clockwise"></i>
                     </button>
                 </div>
@@ -39,7 +37,7 @@
         <div class="col-md-6">
             <div class="banner">
                 <div class="text-content">
-                    <h3><span class="highlight">Có 7.350 sân thể thao</span></h3>
+                    <h3><span class="highlight">Có <span id="tongSoSanBongDa">0</span> sân thể thao</span></h3>
                     <button class="btn btn-custom">Đăng ký ngay</button>
                 </div>
                 <img src="https://img.thegioithethao.vn/media/banner/banner_gio_vang.png" alt="Sân thể thao">
