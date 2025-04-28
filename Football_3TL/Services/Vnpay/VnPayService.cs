@@ -75,8 +75,19 @@ namespace Football_3TL.Services.Vnpay
             var pay = new VnPayLibrary();
             var response = pay.GetFullResponseData(collections, _configuration["Vnpay:HashSecret"]);
 
+            // Kiểm tra vnp_ResponseCode ở đây
+            if (response.VnPayResponseCode == "00")
+            {
+                response.Success = true;
+            }
+            else
+            {
+                response.Success = false;
+            }
+
             return response;
         }
+
 
     }
 

@@ -181,7 +181,32 @@
                                 <div class="ms-2 fw-bold text-success" style="font-size: large;" id="TongThanhToan"></div>
                                 <input type="hidden" name="Amount" id="Amount" />
                             </div>
+                            <script>
+                                document.getElementById('timeSelect').addEventListener('change', function () {
+                                    var selectedValue = this.value;
 
+                                    if (selectedValue === "1" || selectedValue === "1.5") {
+                                        // Reset select sân
+                                        var selectSan = document.getElementById('selectSan');
+                                        selectSan.innerHTML = '<option value="">Chưa có sân</option>';
+
+                                        // Reset hidden inputs liên quan sân
+                                        document.getElementById('hiddenTenSan').value = '';
+                                        document.getElementById('hiddenMaSan').value = '';
+
+                                        // Reset giờ đặt
+                                        document.getElementById('time-value').textContent = '';
+                                        document.getElementById('hiddenGioDat').value = '';
+
+                                        // Reset tổng thanh toán
+                                        document.getElementById('TongThanhToan').textContent = '';
+                                        document.getElementById('Amount').value = '';
+                                    }
+
+                                    // Luôn luôn cập nhật hidden ThoiLuong
+                                    document.getElementById('thoiluong').value = selectedValue;
+                                });
+                            </script>
                             <button  id="btnDatSan" class="btn btn-success w-100 mt-3" style="height: 48px; border-radius: 10px;background-color: #0e2238;">Thanh toán VNPay</button>
                         </form>
                     </div>
