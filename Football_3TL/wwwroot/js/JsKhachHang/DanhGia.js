@@ -153,6 +153,53 @@ document.getElementById('btnOpenModalDanhGia').addEventListener('click', functio
     modalDanhGia.show();
 });
 
+//function submitAssessmentForm() {
+//    if (!validateAssessmentForm()) {
+//        return; // Nếu validate fail thì không gửi
+//    }
+
+//    var fullName = $("#fullNameAssess").val().trim();
+//    var phoneNumber = $("#PhoneNumberAssess").val().trim();
+//    var content = $("#ContentAssess").val().trim();
+//    var rating = $('input[name="rating"]:checked').val();
+//    var maChuSan = $("#MaChuSan").val();
+    
+
+//    $.ajax({
+//        url: '/Customer/DanhGia/Create',
+//        type: 'POST',
+//        data: {
+//            FullName: fullName,
+//            PhoneNumber: phoneNumber,
+//            Content: content,
+//            Rating: rating,
+//            MaChuSan: maChuSan
+//        },
+//        success: function (response) {
+//            if (response.success) {
+
+//                modalDanhGia.hide(); // Ẩn modal
+             
+//                clearDataAssessInput(); // Xóa input
+//                clearStarAssess();      // Xóa sao
+//                resetError();           // Xóa lỗi
+//                loadDanhGia(maChuSan);
+//                tinhTrungBinhSao();
+//                demDanhGia();
+//                DemDanhGia5()
+//                showSweetAlertDG();
+                
+//            } else {
+//                alert('Gửi đánh giá thất bại. Vui lòng thử lại.');
+//            }
+//        },
+//        error: function (xhr, status, error) {
+//            console.error(error);
+//            alert('Có lỗi xảy ra khi gửi đánh giá.');
+//        }
+//    });
+//}
+
 function submitAssessmentForm() {
     if (!validateAssessmentForm()) {
         return; // Nếu validate fail thì không gửi
@@ -162,8 +209,7 @@ function submitAssessmentForm() {
     var phoneNumber = $("#PhoneNumberAssess").val().trim();
     var content = $("#ContentAssess").val().trim();
     var rating = $('input[name="rating"]:checked').val();
-    var maChuSan = $("#MaChuSan").val();
-    
+    var maChuSan = $("#MaChuSan").val();  // Lấy đúng từ thẻ hidden
 
     $.ajax({
         url: '/Customer/DanhGia/Create',
@@ -177,25 +223,31 @@ function submitAssessmentForm() {
         },
         success: function (response) {
             if (response.success) {
-
                 modalDanhGia.hide(); // Ẩn modal
-             
                 clearDataAssessInput(); // Xóa input
                 clearStarAssess();      // Xóa sao
                 resetError();           // Xóa lỗi
                 loadDanhGia(maChuSan);
                 tinhTrungBinhSao();
                 demDanhGia();
-                DemDanhGia5()
-                showSweetAlertDG();
-                
+                DemDanhGia5();
+                showSweetAlertDG();     // Thông báo thành công
             } else {
-                alert('Gửi đánh giá thất bại. Vui lòng thử lại.');
+                // Thay alert bằng SweetAlert2 đẹp hơn
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Không thể đánh giá',
+                    text: response.message
+                });
             }
         },
         error: function (xhr, status, error) {
             console.error(error);
-            alert('Có lỗi xảy ra khi gửi đánh giá.');
+            Swal.fire({
+                icon: 'error',
+                title: 'Lỗi hệ thống',
+                text: 'Có lỗi xảy ra khi gửi đánh giá. Vui lòng thử lại.'
+            });
         }
     });
 }

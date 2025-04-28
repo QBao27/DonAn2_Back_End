@@ -37,14 +37,36 @@ namespace Football_3TL.Areas.Customer.Controllers
         {
             try
             {
+                // 1. Tìm khách hàng dựa theo số điện thoại
+                var khachHang = dbContext.KhachHangs
+                    .FirstOrDefault(kh => kh.SoDienThoai == PhoneNumber);
+
+                if (khachHang == null)
+                {
+                    return Json(new { success = false, message = "Số điện thoại không tồn tại trong hệ thống. Vui lòng đặt sân." });
+                }
+
+                // 2. Kiểm tra KH đó có từng đặt sân với MaChuSan này chưa
+                var daDatSan = dbContext.ThongTinDatSans
+                    .Any(ds =>
+                        ds.MaKhachHang == khachHang.MaKhachHang &&
+                        ds.MaChuSan == MaChuSan
+                    );
+
+                if (!daDatSan)
+                {
+                    return Json(new { success = false, message = "Bạn chưa từng đặt sân tại cơ sở này nên không thể đánh giá." });
+                }
+
+                // 3. Cho phép lưu đánh giá
                 var danhGia = new DanhGia
                 {
                     HoTen = FullName,
                     SoDienThoai = PhoneNumber,
                     NoiDung = Content,
                     SoSao = Rating,
-                    MaChuSan = MaChuSan,
-                    ThoiGian = TimeOnly.FromDateTime(DateTime.Now) // lấy giờ phút hiện tại
+                    MaChuSan = MaChuSan,  // MaChuSan được gửi từ form
+                    ThoiGian = TimeOnly.FromDateTime(DateTime.Now)
                 };
 
                 dbContext.DanhGia.Add(danhGia);
@@ -54,10 +76,10 @@ namespace Football_3TL.Areas.Customer.Controllers
             }
             catch (Exception ex)
             {
-                // Log lỗi nếu cần: ex.Message
-                return Json(new { success = false, error = ex.Message });
+                return Json(new { success = false, message = "Có lỗi xảy ra khi gửi đánh giá." });
             }
         }
+
 
         [HttpGet]
         public async Task<IActionResult> TinhTrungBinhSao(int maChuSan)
