@@ -51,7 +51,9 @@ namespace Football_3TL.Areas.Customer.Controllers
                           .FirstOrDefault()
                  })
                  .ToListAsync();
-                return Json(new { success = true, data = list });
+
+                var tongSoSan = await _db.ChuSans.CountAsync();
+                return Json(new { success = true, data = list, tongSan = tongSoSan });
             }
             catch (Exception)
             {

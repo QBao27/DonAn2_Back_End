@@ -1,5 +1,6 @@
 // 1. Khai báo biến toàn cục
 let sanBongs = [];          // đây sẽ chứa dữ liệu từ API
+let danhSachSanSearch = [];  //đây sẽ lưu dữ liệu khi load lần đầu thành công
 const itemsPerPage = 8;     // số sân mỗi trang
 let currentPage = 1;        // trang hiện tại
 
@@ -11,6 +12,19 @@ function fetchDanhSachSan() {
         success: function (response) {
             if (response.success) {
                 sanBongs = response.data;    // gán dữ liệu từ API
+                danhSachSanSearch = response.data.slice(); // lưu bản gốc
+                const $sel = $('#danhSachTenSan');
+                $sel.empty();
+                $sel.append('<option value="">-- Chọn sân --</option>');
+                response.data.forEach(san => {
+                    $sel.append(`
+                        <option value="${san.tenSanBong}">
+                            ${san.tenSanBong}
+                        </option>
+                    `);
+                });
+
+                $('#tongSoSanBongDa').text(response.tongSan)
                 currentPage = 1;             // reset về trang 1
                 displaySanBong();            // vẽ danh sách trang đầu
                 updatePagination();          // vẽ thanh phân trang
@@ -113,7 +127,69 @@ function updatePagination() {
     }
 }
 
+
 // 6. Khi DOM ready thì gọi API
 $(document).ready(function () {
     fetchDanhSachSan();
+
+    $('#btnResetTimKiem').on('click', function (e) {
+        e.preventDefault();
+        $('#diaChiTinhTimKiem, #diaChiHuyenTimKiem, #danhSachTenSan').val('');
+        sanBongs = danhSachSanSearch.slice();
+        currentPage = 1;
+        displaySanBong();
+        updatePagination();
+    });
+
+    // Tìm kiếm (filter) theo Tỉnh / Huyện / Loại
+    $('#btnTimKiemDanhSachSan').on('click', function (e) { 
+        e.preventDefault();  // ngăn reload trang
+
+        // 1) Lấy VALUE (rỗng nếu chưa chọn)
+        const tinhVal = $('#diaChiTinhTimKiem').val().trim();
+        const huyenVal = $('#diaChiHuyenTimKiem').val().trim();
+        const tenVal = $('#danhSachTenSan').val().trim();
+
+        // Lấy text hiển thị
+        const tinh = $('#diaChiTinhTimKiem option:selected').text().trim();
+        const huyen = $('#diaChiHuyenTimKiem option:selected').text().trim();
+
+        if (!tinhVal && !huyenVal) {
+            sanBongs = danhSachSanSearch.slice();
+        }
+        else if (tinhVal && !huyenVal) {
+            sanBongs = danhSachSanSearch.filter(san => {
+                return (!tinh || san.tinh === tinh)
+            });
+        }
+        else {
+            sanBongs = danhSachSanSearch.filter(san => {
+                return (!tinh || san.tinh === tinh) &&
+                    (!huyen || san.huyen === huyen)
+            });
+        }
+
+        if (tenVal != '') {
+            sanBongs = danhSachSanSearch.filter(san => {
+                return (!tenVal || san.tenSanBong === tenVal) 
+            });
+        }
+        currentPage = 1;
+        displaySanBong();
+        updatePagination();
+    });
+
+    //tìm kiếm sân bóng trên thanh header 
+    $('#timKiemOnHeader').on('input', function () {
+        const keyword = $(this).val().trim().toLowerCase();
+
+        sanBongs = danhSachSanSearch.filter(san => {
+            const okKeyword = !keyword || san.tenSanBong.toLowerCase().includes(keyword);
+            return okKeyword;
+        });
+
+        currentPage = 1;
+        displaySanBong();
+        updatePagination();
+    });
 });

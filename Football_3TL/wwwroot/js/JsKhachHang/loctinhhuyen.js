@@ -1,5 +1,5 @@
 document.addEventListener("DOMContentLoaded", function () {
-    const searchInput = document.getElementById("timkiem"); // Ô input
+    const searchInput = document.getElementById("timKiemOnHeader"); // Ô input
     const text = "Tìm sân thể thao"; // Văn bản hiệu ứng
     let index = 0;
     let typingTimeout;
