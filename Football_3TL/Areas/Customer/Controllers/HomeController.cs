@@ -61,5 +61,54 @@ namespace Football_3TL.Areas.Customer.Controllers
                 return Json(new { success = false, message = "Lỗi server!" });
             }
         }
+
+        //API tra cứu lịch sử đặt sân 
+        [HttpGet]
+        public async Task<IActionResult> TraCuuLichSu(string soDienThoai)
+        {
+            try
+            {
+                var danhSachThongTin = await _db.ThongTinDatSans
+                    .AsNoTracking()  // nếu chỉ đọc thôi, không cần track thay đổi
+                                     // Nạp luôn thông tin Khách hàng
+                    .Include(dp => dp.MaKhachHangNavigation)
+                    // Nạp luôn thông tin Sân bóng
+                    .Include(dp => dp.MaSanNavigation)
+                    .Include(dp => dp.MaChuSanNavigation)
+                    // Lọc theo số điện thoại của Khách hàng
+                    .Where(dp => dp.MaKhachHangNavigation != null
+                              && dp.MaKhachHangNavigation.SoDienThoai == soDienThoai)
+                    // Chiếu lên DTO modelLichSuDatSan
+                    .Select(dp => new modelLichSuDatSan
+                    {
+                        MaKhachHang = dp.MaKhachHang,
+                        MaDatSan = dp.MaDatSan,
+                        NgayDat = dp.NgayDat,
+                        GioDat = dp.GioDat,
+                        MaSan = dp.MaSan,
+                        ThoiLuong = dp.ThoiLuong,
+                        TrangThaiThanhToan = dp.TrangThaiThanhToan,
+                        // Hoặc lấy trực tiếp từ navigation nếu bạn muốn chắc chắn lấy tên sân chuẩn từ bảng SanBong
+                        TenSan = dp.MaSanNavigation!.TenSan,         // bảng SanBong
+                        TenSanBong = dp.MaChuSanNavigation!.TenSanBong,
+                        TenKhachHang = dp.MaKhachHangNavigation!.HoVaTen,
+                        TongThanhToan = dp.MaSanNavigation.Gia * (dp.ThoiLuong / 60)
+                    }).ToListAsync();
+
+                // Nếu không tìm thấy, trả về thông báo
+                if (danhSachThongTin == null || !danhSachThongTin.Any())
+                {
+                    return Json(new { success = false, message = "Không tìm thấy thông tin đặt sân với số điện thoại cung cấp." });
+                }
+
+                // Trả về danh sách thông tin
+                return Json(new { success = true, data = danhSachThongTin });
+            }
+            catch (Exception ex)
+            {
+                // Xử lý lỗi nếu có
+                return Json(new { success = false, message = "Có lỗi xảy ra: " + ex.Message });
+            }
+        }
     }
 }

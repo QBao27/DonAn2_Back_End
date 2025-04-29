@@ -165,10 +165,9 @@ background-size: cover; margin-bottom: 0px; padding-top: 100px ">
                             <div class="col-4 col-md-2" style="padding: 15px 0 15px 15px;">Thời Gian Đặt</div>
                             <div class="col-4 col-md-2" style="padding: 15px 0 15px 0;">Tên Người Đặt</div>
                             <div class="col-4 col-md-2" style="padding: 15px 0 15px 0;">Tên Sân</div>
-                            <div class="col-4 col-md-1" style="padding: 15px 0 15px 0;">Thời Lượng</div>
+                            <div class="col-4 col-md-2" style="padding: 15px 0 15px 0;">Thời Lượng</div>
                             <div class="col-4 col-md-2" style="padding: 15px 0 15px 0;">Trạng Thái</div>
                             <div class="col-4 col-md-2" style="padding: 15px 0 15px 0;">Tổng Thanh Toán</div>
-                            <div class="col-4 col-md-1" style="padding: 15px 0 15px 0;"> </div>
 
                         </div>
                     </div>
@@ -182,69 +181,14 @@ background-size: cover; margin-bottom: 0px; padding-top: 100px ">
                     <!-- Container body -->
                     <!-- du lieu dat phong -->
                     <div id="tblBodyLichSuDatPhong" class="mb-5">
-                        <div class="pt-2">
-                            <div class="container mt-2 shadow div-hover"
-                                 style="background:white;border-radius: 20px; font-weight: 600 ">
-                                <div class="row">
-                                    <div class="col-4 col-md-2 thongTinLichSuDatSan"
-                                         style="padding: 15px 10px 15px 15px;">
-                                        <span>
-                                            12h : 50p
-                                        </span>
-                                    </div>
-                                    <div class="col-4 col-md-2 thongTinLichSuDatSan"
-                                         style="padding: 15px 10px 15px 0;">
-                                        <span>Bảo Anh</span>
-                                    </div>
-                                    <div class="col-4 col-md-2 thongTinLichSuDatSan"
-                                         style="padding: 15px 0 15px 0;">
-                                        <span>Sân An Khánh / Sân 1</span>
-                                    </div>
-                                    <div class="col-2 col-md-1 thongTinLichSuDaSan"
-                                         style="padding: 15px 10px 15px 10px;">
-                                        <span>1.5 giờ</span>
-                                    </div>
-                                    <div class="col-4 col-md-2 thongTinLichSuDaSan"
-                                         style="padding: 15px 10px 15px 0;">
-                                        <span>Chưa thanh toán</span>
-                                    </div>
-                                    <div class="col-4 col-md-2 thongTinLichSuDaSan" style="padding: 15px 0 15px 0;">
-                                        <span><b>250.000</b></span>
-                                        <b>VND</b>
-                                    </div>
-                                    <div class="col-2 col-md-1 thongTinLichSuDatSan"
-                                         style="padding: 15px 0 15px 15px;">
-                                        <button class="btn btn-danger btn-sm">Hủy</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                        <!-- code js vao day -->
                     </div>
                 </div>
                 <!-- dành cho kích thước màn hình nhỏ -->
                 <div class="modal-body d-lg-none">
                     <h6 class="fw-bold text-center mb-3">Thông tin đặt sân</h6>
-                    <div class="card mb-3 shadow-lg" style="border-radius: 15px;">
-                        <div class="card-body">
-                            <h6 class="card-title text-primary">Bảo Anh - Sân An Khánh / Sân 1</h6>
-                            <p class="mb-1"><b>Thời gian đặt:</b> 12h : 50p</p>
-                            <p class="mb-1"><b>Thời lượng:</b> 1.5 giờ</p>
-                            <p class="mb-1"><b>Trạng thái:</b> <span class="text-success">Đã thanh toán</span></p>
-                            <p class="mb-1"><b>Tổng thanh toán:</b> 250.000 VND</p>
-                            <button class="btn btn-danger btn-sm mt-2">Hủy</button>
-                        </div>
-                    </div>
-
-                    <div class="card mb-3 shadow-lg" style="border-radius: 15px;">
-                        <div class="card-body">
-                            <h6 class="card-title text-primary">Ngọc Linh - Sân Mỹ Đình / Sân 2</h6>
-                            <p class="mb-1"><b>Thời gian đặt:</b> 14h : 30p</p>
-                            <p class="mb-1"><b>Thời lượng:</b> 2 giờ</p>
-                            <p class="mb-1"><b>Trạng thái:</b> <span class="text-warning">Chưa thanh toán</span></p>
-                            <p class="mb-1"><b>Tổng thanh toán:</b> 300.000 VND</p>
-                            <button class="btn btn-danger btn-sm mt-2">Hủy</button>
-                        </div>
-                    </div>
+                    <!-- Thêm thẻ div này để JS chèn các card vào -->
+                    <div id="cardThongTinDatSanMobile"></div>
                 </div>
             </div>
         </div>
