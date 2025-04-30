@@ -1,4 +1,119 @@
 ﻿<h1 class="text-center text-success my-5" style="font-weight:700">Thanh toán thành công</h1>
+
+<section id="traCuuDatSan" class="min-vh-100 d-flex text-center align-items-center" style="background-image: url('https://soccerplayer.net/wp-content/uploads/2021/11/pexels-photo-14815970.jpeg'); background-position: center;
+background-size: cover; margin-bottom: 0px; padding-top: 100px ">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <h1 class="text-light pb-3">TRA CỨU ĐẶT SÂN</h1>
+            </div>
+            <div class="col-12 d-flex justify-content-center">
+                <div class="input-group mb-3" style="width: 600px;">
+                    <input id="SoDienThoaiTraCuu" type="text" class="form-control" placeholder="Nhập số điện thoại"
+                           aria-label="Recipient's username" aria-describedby="basic-addon2">
+                    <a class="btn btn-primary text-center" onclick="validatePhoneNumber()" id="btnTraCuu"
+                       style="background-color: #0e2238;border-color: #0e2238;">
+                        <i class="fa-solid fa-magnifying-glass pt-1"></i>
+                    </a>
+                </div>
+            </div>
+
+        </div>
+        <!-- modal otp -->
+        <!-- <div class="modal fade" id="OTPTraCuu" tabindex="-1" aria-labelledby="Lichsu" aria-hidden="true"
+            onclick="clearOtpInputs()">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content" style="border-radius: 20px;">
+
+                    <div class="modal-header d-flex justify-content-center">
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+
+                    <div class=" modal-body bg-body-tertiary d-block">
+                        <div class="row justify-content-center m-5">
+                            <div class="col-12 col-md-6 col-lg-4" style="min-width: 500px;">
+                                <div class="card bg-white border-0"
+                                    style="box-shadow: 0 12px 15px rgba(0, 0, 0, 0.02);">
+                                    <div class="card-body text-center">
+                                        <h4>Xác Nhận OTP</h4>
+                                        <p>Mã OTP sẽ được gửi qua số điện thoại của bạn</p>
+                                        <div class="otp-field mb-2">
+                                            <input type="number" maxlength="1" class="otp-input" />
+                                            <input type="number" maxlength="1" class="otp-input" />
+                                            <input type="number" maxlength="1" class="otp-input" />
+                                            <input type="number" maxlength="1" class="otp-input" />
+                                            <input type="number" maxlength="1" class="otp-input" />
+                                            <input type="number" maxlength="1" class="otp-input" />
+                                        </div>
+                                        <div id="otpError" class="text-danger pb-2"></div>
+                                        <a class="btn btn-warning text-light mb-3" onclick="checkOTPTraCuu()">
+                                            Xác
+                                            Nhận
+                                        </a>
+                                        <p class="resend text-muted mb-0">
+                                            Didn't receive code? <a href="" class="text-warning">
+                                                Request
+                                                again
+                                            </a>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div> -->
+    </div>
+    <!-- modal hien thi lich su dat phong -->
+    <div class="modal fade" id="LichSuDatSan">
+        <div class="modal-dialog modal-xl">
+            <div class="modal-content" style="border-radius: 20px;">
+                <!-- header -->
+                <div class="modal-header d-flex justify-content-center">
+                    <div>
+                        <h5>Lịch Sử Đặt Sân</h5>
+                    </div>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <!-- Cot tieu de -->
+                <!--Dành cho kích thước màn hình lớn -->
+                <div class="modal-body d-none d-lg-block">
+                    <div class="container" style="background: #fdf9c9;border-radius: 20px; font-weight: 600 ">
+                        <div class="row">
+                            <div class="col-4 col-md-2" style="padding: 15px 0 15px 15px;">Thời Gian Đặt</div>
+                            <div class="col-4 col-md-2" style="padding: 15px 0 15px 0;">Tên Người Đặt</div>
+                            <div class="col-4 col-md-2" style="padding: 15px 0 15px 0;">Tên Sân</div>
+                            <div class="col-4 col-md-2" style="padding: 15px 0 15px 0;">Thời Lượng</div>
+                            <div class="col-4 col-md-2" style="padding: 15px 0 15px 0;">Trạng Thái</div>
+                            <div class="col-4 col-md-2" style="padding: 15px 0 15px 0;">Tổng Thanh Toán</div>
+
+                        </div>
+                    </div>
+                    <!-- Container header -->
+                    <div class="container mt-2 d-flex pt-2">
+                        <span style="font-weight: 700; font-size: 16px;">
+                            Thông tin
+                            đặt sân:
+                        </span>
+                    </div>
+                    <!-- Container body -->
+                    <!-- du lieu dat phong -->
+                    <div id="tblBodyLichSuDatPhong" class="mb-5">
+                        <!-- code js vao day -->
+                    </div>
+                </div>
+                <!-- dành cho kích thước màn hình nhỏ -->
+                <div class="modal-body d-lg-none">
+                    <h6 class="fw-bold text-center mb-3">Thông tin đặt sân</h6>
+                    <!-- Thêm thẻ div này để JS chèn các card vào -->
+                    <div id="cardThongTinDatSanMobile"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
 <!-- Phần gg map -->
 <div class="container-fluid" style="background-color: white;">
     <div class="mx-5 py-4">

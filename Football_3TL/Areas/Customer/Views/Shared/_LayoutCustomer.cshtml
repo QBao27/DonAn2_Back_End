@@ -38,6 +38,8 @@
     <!-- CSS -->
     <link rel="stylesheet" href="~/css/CssKhachHang/main.css">
     <link rel="stylesheet" href="~/css/CssKhachHang/DanhSachSan.css">
+    <link rel="stylesheet" href="~/css/CssKhachHang/DatSan.css">
+    <link rel="stylesheet" href="~/css/CssKhachHang/DanhGia.css">
     <title>Hệ Thống Sân Bóng 3TL</title>
 </head>
 
@@ -303,6 +305,7 @@
         </div>
     </footer>
     <!-- Boottrap js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.11.6/umd/popper.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.0.1/js/bootstrap.min.js"
             integrity="sha512-EKWWs1ZcA2ZY9lbLISPz8aGR2+L7JVYqBAYTq5AXgBkSjRSuQEGqWx8R1zAX16KdXPaCjOCaKE8MCpU0wcHlHA=="
             crossorigin="anonymous" referrerpolicy="no-referrer"></script>
@@ -329,6 +332,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/noty/3.1.4/noty.min.js"></script>
 
     <!-- js file -->
+    <script src="~/js/JsKhachHang/DanhGia.js"></script>
+    <script src="~/js/JsKhachHang/DatSan.js"></script>
     <script src="~/js/JsKhachHang/main.js"></script>
     <script src="~/js/JsKhachHang/danhSachSanBong.js"></script>
     <script src="~/js/JsKhachHang/Login.js"></script>
@@ -336,6 +341,14 @@
     <script src="~/js/JsKhachHang/traCuuDatSan.js"></script>
     <script src="~/js/JsKhachHang/loctinhhuyen.js"></script>
     <script src="~/js/ThongTinBaiDang.js"></script>
-</body>
 
-</html>
+    <!-- Flatpick -->
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <script>
+        flatpickr("#myID", {
+            dateFormat: "d-m-Y",
+            minDate: "today",
+            defaultDate: new Date(),
+        });
+    </script>
+</body>

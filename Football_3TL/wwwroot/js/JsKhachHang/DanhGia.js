@@ -263,13 +263,16 @@ function tinhTrungBinhSao() {
             if (response.success) {
                 $('#averageRating').text(response.soSaoTrungBinh);
                 $('#averageRating1').text(response.soSaoTrungBinh);
+                renderStars();
             } else {
                 $('#averageRating').text('0');
+                renderStars();
             }
         },
         error: function () {
             $('#averageRating').text('0');
             alert('Có lỗi khi tính trung bình sao');
+            renderStars();
         }
     });
 }
@@ -433,3 +436,27 @@ function GetThongTinChuSan() {
 }
 
 GetThongTinChuSan();
+
+function renderStars() {
+    var rawValue = document.getElementById('averageRating').textContent.trim().replace(',', '.');
+    var averageRating = parseFloat(rawValue);
+
+    if (isNaN(averageRating)) {
+        console.warn("⚠️ Không thể parse rating:", rawValue);
+        return;
+    }
+
+    var roundedRating = Math.round(averageRating); // hoặc Math.ceil / Math.floor nếu bạn muốn
+
+    var stars = document.querySelectorAll('.saoTrungBinh');
+    stars.forEach(function (star, index) {
+        if (index < roundedRating) {
+            star.classList.add('text-warning');
+        } else {
+            star.classList.remove('text-warning');
+        }
+    });
+}
+
+
+
