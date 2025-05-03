@@ -30,6 +30,7 @@ namespace Football_3TL.Areas.Admin.Controllers
                cs.Email,
                TrangThai = cs.TaiKhoans.FirstOrDefault().TrangThai // lấy tài khoản đầu tiên nếu có
              })
+             .Skip(1)
              .ToList();
             return Json(danhSach);
         }

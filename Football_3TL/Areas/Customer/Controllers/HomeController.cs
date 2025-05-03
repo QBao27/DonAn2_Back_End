@@ -50,6 +50,7 @@ namespace Football_3TL.Areas.Customer.Controllers
                           .Select(img => img.HinhAnh)
                           .FirstOrDefault()
                  })
+                 .Skip(1)
                  .ToListAsync();
 
                 var tongSoSan = await _db.ChuSans.CountAsync();

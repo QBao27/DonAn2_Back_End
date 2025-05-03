@@ -82,7 +82,7 @@ namespace Football_3TL.Areas.Customer.Controllers
                     MaChuSan = chuSan.MaChuSan,
                     MatKhau = password,
                     Quyen = 1,
-                    TrangThai = "Không khóa"
+                    TrangThai = "2"
                 };
 
                 await _db.TaiKhoans.AddAsync(taiKhoan);
