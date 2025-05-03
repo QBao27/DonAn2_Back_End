@@ -189,7 +189,7 @@ namespace Football_3TL.Areas.Customer.Controllers
                     return Json(new { success = false, checkPassword = false, message = $"Mật khẩu không đúng!"});
                 }
 
-                if(taiKhoan.TrangThai == "Đã khóa")
+                if(taiKhoan.TrangThai == "1")
                 {
                     return Json(new { success = false, checkPassword = false, message = $"Tài khoản đã bị khóa!"});
                 }
@@ -206,6 +206,7 @@ namespace Football_3TL.Areas.Customer.Controllers
 
                 if(taiKhoan.Quyen == 1)
                 {
+                    Console.WriteLine(taiKhoan.TrangThai);
                     return Json(new { success = true, redirectUrl = Url.Action("Index", "QuanLyDatSan", new { area = "ChuSanBong" }) });
                 }
                 else if(taiKhoan.Quyen == 2)

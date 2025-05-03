@@ -324,7 +324,7 @@
 
     <!-- select2 de chon tinh, huyen -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
-
+   
     <!-- Thư viện thông báo đẹp -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
@@ -332,8 +332,6 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/noty/3.1.4/noty.min.js"></script>
 
     <!-- js file -->
-    <script src="~/js/JsKhachHang/DanhGia.js"></script>
-    <script src="~/js/JsKhachHang/DatSan.js"></script>
     <script src="~/js/JsKhachHang/main.js"></script>
     <script src="~/js/JsKhachHang/danhSachSanBong.js"></script>
     <script src="~/js/JsKhachHang/Login.js"></script>
@@ -341,6 +339,7 @@
     <script src="~/js/JsKhachHang/traCuuDatSan.js"></script>
     <script src="~/js/JsKhachHang/loctinhhuyen.js"></script>
     <script src="~/js/ThongTinBaiDang.js"></script>
+    @RenderSection("Scripts", required: false)
 
     <!-- Flatpick -->
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
@@ -352,3 +351,4 @@
         });
     </script>
 </body>
+<</html>>

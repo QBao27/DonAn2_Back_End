@@ -1,6 +1,6 @@
 ﻿let chuSanList = [];
 let currentPage = 1;
-const itemsPerPage = 5;
+const itemsPerPage = 8;
 
 function loadChuSanData() {
     $.ajax({
@@ -58,7 +58,7 @@ function renderChuSanTable() {
     $.each(displayedItems, function (index, item) {
         // kiểm tra trạng thái
         let buttonAction = '';
-        if (item.trangThai == 'Ðã khóa') {
+        if (item.trangThai == '1') {
             buttonAction = `
                 <button type="button" style="width:143px" class="btn btn-success ms-2" data-id="${item.maChuSan}" onclick="MoTaiKhoan(${item.maChuSan})">
                     Mở tài khoản

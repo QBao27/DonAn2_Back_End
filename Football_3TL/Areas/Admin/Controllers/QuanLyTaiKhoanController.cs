@@ -69,7 +69,7 @@ namespace Football_3TL.Areas.Admin.Controllers
                 return Json(new { success = false, message = "Không tìm thấy tài khoản!" });
             }
 
-            taiKhoan.TrangThai = "Không khóa";
+            taiKhoan.TrangThai = "2";
             dbContext.SaveChanges();
 
             return Json(new { success = true, message = "Mở tài khoản thành công!" });
@@ -86,7 +86,7 @@ namespace Football_3TL.Areas.Admin.Controllers
                 return Json(new { success = false, message = "Không tìm thấy tài khoản!" });
             }
 
-            taiKhoan.TrangThai = "Đã khóa";
+            taiKhoan.TrangThai = "1";
             dbContext.SaveChanges();
 
             return Json(new { success = true, message = "Khóa tài khoản thành công!" });

@@ -7,7 +7,7 @@
             <!-- reponsive Phần Tên sân bóng + icon -->
             <div class="row">
                 <h4 class="fw-bold" id="TenSanBong">Sân bóng đá KAKA Sport khu đô thị Hòa Quý</h4>
-                
+
                 <div class="col-md-6 d-flex align-items-center flex-wrap">
                     <img src="~/Img/map-pin.svg" alt="" style="width: 24px; height: 27px;">
                     <div class="ms-2" id="DiaChi" style="font-size: large;">
@@ -104,7 +104,7 @@
                         <div class="Thongtinsan" style="font-size: x-large; font-weight: 700;">
                             Đặt sân theo yêu cầu
                         </div>
-                          <form method="POST" asp-area="Customer" asp-controller="Payment" asp-action="CreatePaymentUrlVnpay">
+                        <form method="POST" asp-area="Customer" asp-controller="Payment" asp-action="CreatePaymentUrlVnpay">
                             <input type="hidden" id="MaChuSan" name="MaChuSan" value="@Context.Request.Query["maChuSan"]" />
                             <div>
                                 <input type="text" id="hoten" name="hoTenKH" class="form-control mt-4 p-2" style="border-radius: 10px;" placeholder="Họ và tên">
@@ -172,7 +172,7 @@
                                     document.getElementById('thoiluong').value = selectedValue;
                                 });
                             </script>
-                            <button  id="btnDatSan" class="btn btn-success w-100 mt-3" style="height: 48px; border-radius: 10px;background-color: #0e2238;">Thanh toán VNPay</button>
+                            <button id="btnDatSan" class="btn btn-success w-100 mt-3" style="height: 48px; border-radius: 10px;background-color: #0e2238;">Thanh toán VNPay</button>
                         </form>
                     </div>
 
@@ -194,7 +194,6 @@
                                     </div>
                                 </div>
                                 <div class="row scroll-contents" id="khungGioContainer">
-                               
                                 </div>
                             </div>
 
@@ -213,7 +212,6 @@
                                     </div>
                                 </div>
                                 <div class="row scroll-contents" id="KhungGioDatle">
-                                 
                                 </div>
                             </div>
                         </div>
@@ -289,47 +287,6 @@
                     </div>
                     <hr class="mt-5">
                     <div class="mt-4 mb-4" id="bodyDanhGia">
-                        <div>
-                            <p>
-                                <b><span>Nguyễn Bảo Anh</span> : </b><b>
-                                    <span class="text-warning">
-                                        <span>5</span>
-                                        sao
-                                    </span>
-                                </b>
-                            </p>
-                            <p class="text-break">
-                                Đánh giá: "<span>Quá tuyệt vời !</span>"
-                            </p>
-                            <p class="text-muted" style="font-size: 0.9rem;">Thời gian: <span>12 : 30</span></p>
-                            <hr style="border: none;border-top: 1px dashed #ccc;">
-                        </div>
-                        <div>
-                            <p>
-                                <b><span>Nguyễn Bảo Anh</span> : </b><b>
-                                    <span class="text-warning">
-                                        <span>5</span>
-                                        sao
-                                    </span>
-                                </b>
-                            </p>
-                            <p class="text-break">
-                                Đánh giá: "<span>
-                                    Quá tuyệt vời Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                                    Laudantium omnis, labore ducimus repellat ipsum enim aliquam magni voluptas hic
-                                    quaerat placeat itaque voluptatibus! Saepe hic porro voluptatem! Animi sapiente
-                                    eaque ipsa, iusto ipsum ex. Iste dicta a ut sunt deserunt cupiditate, maiores
-                                    voluptatum culpa quo atque quia, ipsam esse quidem in iure velit rem architecto
-                                    perspiciatis illo saepe? Esse maiores, quo ut possimus laudantium quos tenetur
-                                    numquam enim ipsum aperiam blanditiis ducimus. Dicta, praesentium dolores quidem
-                                    accusantium obcaecati itaque provident qui expedita consequatur vero perspiciatis
-                                    non ipsa unde architecto quas culpa nesciunt modi pariatur. Consequatur atque
-                                    asperiores voluptatibus doloremque earum. !
-                                </span>"
-                            </p>
-                            <p class="text-muted" style="font-size: 0.9rem;">Thời gian: <span>12 : 30</span></p>
-                            <hr style="border: none;border-top: 1px dashed #ccc;">
-                        </div>
                     </div>
                 </div>
             </div>
@@ -498,4 +455,154 @@
             </div>
         </div>
     </div>
+    <!-- Modal đăng nhập -->
+    <div class="modal fade" id="modalDangNhap">
+        <div class="modal-dialog">
+            <div class="modal-content" style="border-radius: 10px;">
+                <div class="modal-body">
+                    <div class="text-end">
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
+                                onclick="resetDataLogin()"></button>
+                    </div>
+                    <div class="d-flex justify-content-center">
+                        <h5 class="modal-title fw-bold">ĐĂNG NHẬP</h5>
+                    </div>
+                    <div class="p-3">
+                        <div class="mt-3" id="boxDangNhap">
+                            <input type="text" class="form-control border-1 border-dark" id="taiKhoanDangNhap"
+                                   placeholder="Nhập tài khoản" style="border-radius: 10px; font-size: large;" />
+                            <span id="taiKhoanDangNhapError" class="text-danger error-Login"
+                                  style="font-size: 0.875rem;"></span>
+                        </div>
+                        <div class="mt-3">
+                            <input type="password" class="form-control border-1 border-dark" id="matKhauDangNhap"
+                                   placeholder="Nhập mật khẩu" style="border-radius: 10px; font-size: large;" />
+                            <span id="matKhauDangNhapError" class="text-danger error-Login"
+                                  style="font-size: 0.875rem;"></span>
+                        </div>
+                        <div class="text-danger mt-3">*Đăng nhập vào trang quản lý sân bóng!</div>
+                        <button class="btn w-100 text-light mt-3" id="btnLogin" onclick="checkDataLogin()"
+                                style="background-color: rgb(20, 34, 56); border-radius: 10px;">
+                            Đăng Nhập
+                        </button>
+                        <div class=" text-center mt-3">
+                            <span>
+                                Bạn chưa có tài khoản? <a href="#" class="fw-medium text-decoration-none"
+                                                          onclick="modalLogin(), modalSignUp()">
+                                    Đăng ký
+                                    tài khoản
+                                </a>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Modal đăng ký -->
+    <div class="modal fade" id="modalDangKy">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content" style="border-radius: 10px;">
+                <div class="modal-body">
+                    <div class="text-end">
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
+                                onclick="resetDataSignUp()"></button>
+                    </div>
+                    <div class="d-flex justify-content-center">
+                        <h5 class="modal-title fw-bold">ĐĂNG KÝ</h5>
+                    </div>
+                    <div class="p-3">
+                        <div class="row">
+                            <div class="col-6 mt-3">
+                                <input type="text" class="form-control border-1 border-dark" id="fullNameSignUp"
+                                       placeholder="Nhập họ và tên" style="border-radius: 10px;" />
+                                <span id="fullNameSignUpError" class="text-danger error-Login"
+                                      style="font-size: 0.875rem;"></span>
+                            </div>
+                            <div class="col-6 mt-3">
+                                <input type="text" class="form-control border-1 border-dark" id="phoneSignUp"
+                                       placeholder="Nhập số điện thoại" style="border-radius: 10px;" />
+                                <span id="phoneSignUpError" class="text-danger error-Login"
+                                      style="font-size: 0.875rem;"></span>
+                            </div>
+                            <div class="col-6 mt-3">
+                                <input type="email" class="form-control border-1 border-dark" id="emailSignUp"
+                                       placeholder="Nhập Email" style="border-radius: 10px;" />
+                                <span id="emailSignUpError" class="text-danger error-Login"
+                                      style="font-size: 0.875rem;"></span>
+                            </div>
+                            <div class="col-6 mt-3">
+                                <input type="email" class="form-control border-1 border-dark" id="sanBongNameSignUp"
+                                       placeholder="Nhập tên sân bóng" style="border-radius: 10px;" />
+                                <span id="sanBongNameSignUpError" class="text-danger error-Login"
+                                      style="font-size: 0.875rem;"></span>
+                            </div>
+                            <div class="col-6 mt-3">
+                                <input type="password" class="form-control border-1 border-dark" id="passWordSignUp"
+                                       placeholder="Nhập mật khẩu" style="border-radius: 10px;" />
+                                <span id="passWordSignUpError" class="text-danger error-Login"
+                                      style="font-size: 0.875rem;"></span>
+                            </div>
+                            <div class="col-6 mt-3">
+                                <input type="password" class="form-control border-1 border-dark" id="passWordSignUp2"
+                                       placeholder="Xác nhận mật khẩu" style="border-radius: 10px;" />
+                                <span id="passWordSignUp2Error" class="text-danger error-Login"
+                                      style="font-size: 0.875rem;"></span>
+                            </div>
+                            <div class="col-6 mt-3 mb-2">
+                                <select id="diaChiTinh" class="select2 form-select border-1 border-dark"
+                                        style="border-radius: 10px;">
+                                    <!-- code vao day -->
+                                </select>
+                                <span id="diaChiTinhError" class="text-danger error-Login"
+                                      style="font-size: 0.875rem;"></span>
+                            </div>
+                            <div class="col-6 mt-3 mb-2">
+                                <select id="diaChiHuyen" class="select2 form-select border-1 border-dark"
+                                        style="border-radius: 10px;">
+                                    <!-- code vao day -->
+                                </select>
+                                <span id="diaChiHuyenError" class="text-danger error-Login"
+                                      style="font-size: 0.875rem;"></span>
+                            </div>
+                            <div class="col-6 mt-3 mb-2">
+                                <select id="diaChiXa" class="select2 form-select border-1 border-dark"
+                                        style="border-radius: 10px;">
+                                    <!-- code vao day -->
+                                </select>
+                                <span id="diaChiXaError" class="text-danger error-Login"
+                                      style="font-size: 0.875rem;"></span>
+                            </div>
+                            <div class="col-6 mt-3 mb-2">
+                                <input type="text" class="form-control border-1 border-dark" id="diaChiCuThe"
+                                       placeholder="Địa chỉ sân cụ thể (tên đường, số nhà)*"
+                                       style="border-radius: 10px;" />
+                                <span id="diaChiCuTheError" class="text-danger error-Login"
+                                      style="font-size: 0.875rem;"></span>
+                            </div>
+                        </div>
+                        <div class="text-danger mt-3">*Đăng ký tài khoản dành cho chủ sân bóng!</div>
+                        <button class="btn w-100 text-light mt-3" id="btnSignUp" onclick="checkDataSignUp()"
+                                style="background-color: rgb(20, 34, 56); border-radius: 10px;">
+                            Đăng Ký
+                        </button>
+                        <div class="mt-3 text-center">
+                            <span>
+                                Bạn đã có tài khoản? <a id="chuyenHuong" href="#"
+                                                        class="fw-medium text-decoration-none" onclick="modalLogin(), modalSignUp()">
+                                    Đăng
+                                    Nhập
+                                </a>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    @section Scripts {
+        <script src="~/js/JsKhachHang/DanhGia.js"></script>
+        <script src="~/js/JsKhachHang/DatSan.js"></script>
+    }
 </body>
+
