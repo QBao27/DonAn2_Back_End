@@ -1003,9 +1003,21 @@ document.addEventListener("DOMContentLoaded", function () {
     // Hàm update Sân
     function updateSan() {
         var selectedOption = selectSan.options[selectSan.selectedIndex];
-        hiddenTenSan.value = selectedOption.value; // số
-        hiddenMaSan.value = selectedOption.value;  // số
+
+        if (selectedOption.value !== "") {
+            var text = selectedOption.text.trim(); // "Sân: Sân 4 - 200000đ"
+
+            // Lấy tên sân từ chuỗi hiển thị, loại bỏ "Sân: " và phần sau dấu "-"
+            var tenSan = text.split('-')[0].replace("Sân:", "").trim(); // Kết quả: "Sân 4"
+
+            hiddenTenSan.value = tenSan;
+            hiddenMaSan.value = selectedOption.value;
+        } else {
+            hiddenTenSan.value = "";
+            hiddenMaSan.value = "";
+        }
     }
+
 
     // Hàm update Thời lượng
     function updateThoiLuong() {

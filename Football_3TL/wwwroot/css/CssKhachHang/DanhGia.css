@@ -35,3 +35,8 @@
 .thongKeDanhGia{
     border-radius: 5px;
 }
+
+.scroll-contents-DanhGia {
+    height: 260px;
+    overflow-y: scroll;
+}

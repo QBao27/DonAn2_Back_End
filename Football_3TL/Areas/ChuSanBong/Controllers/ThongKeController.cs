@@ -122,6 +122,10 @@ namespace Football_3TL.Areas.ChuSanBong.Controllers
                 })
                 .OrderBy(g => g.Thang)
                 .ToList();
+            foreach (var ds in doanhThuSan)
+            {
+                Console.WriteLine($"TenSan = {ds.TenSan}");
+            }
 
             return Json(doanhThuSan);
         }

@@ -126,6 +126,25 @@ namespace Football_3TL.Areas.Customer.Controllers
                 };
                 HttpContext.Session.SetObjectAsJson("ThongTinDatSanTam", thongTinDatSanTam);
 
+                var thongTinInRa = HttpContext.Session.GetObjectFromJson<ThongTinDatSanTam>("ThongTinDatSanTam");
+                if (thongTinInRa != null)
+                {
+                    Console.WriteLine("=== Thông tin đặt sân từ session ===");
+                    Console.WriteLine($"Mã chủ sân: {thongTinInRa.MaChuSan}");
+                    Console.WriteLine($"Ngày đặt: {thongTinInRa.NgayDat}");
+                    Console.WriteLine($"Giờ đặt: {thongTinInRa.GioDat}");
+                    Console.WriteLine($"Thời lượng: {thongTinInRa.ThoiLuong}");
+                    Console.WriteLine($"Mã sân: {thongTinInRa.MaSan}");
+                    Console.WriteLine($"Tên sân: {thongTinInRa.TenSan}");
+                    Console.WriteLine($"Ghi chú: {thongTinInRa.GhiChu}");
+                    Console.WriteLine($"Họ tên KH: {thongTinInRa.HoTenKH}");
+                    Console.WriteLine($"SĐT KH: {thongTinInRa.SoDienThoaiKH}");
+                }
+                else
+                {
+                    Console.WriteLine("Không lấy được thông tin từ session.");
+                }
+
                 // Tạo URL thanh toán VNPay
                 var url = _vnPayService.CreatePaymentUrl(model, HttpContext);
 

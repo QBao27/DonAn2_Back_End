@@ -75,6 +75,7 @@ function loadDoanhThuSan() {
         type: "GET",
         dataType: "json",
         success: function (data) {
+            console.log(data)
 
             if (!Array.isArray(data)) {
                 data = Object.values(data);
