@@ -1,0 +1,209 @@
+﻿<div class="main" id="content">
+    <nav class="navbar navbar-expand px-4 py-3">
+        <div class="container-fluid">
+            <div class="navbar-collapse collapse">
+                <ul class="navbar-nav justify-content-between w-100 flex-wrap">
+                    <li>
+                        <h2 class="fw-bold">Chương trình khuyến mãi</h2>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a href="#" data-bs-toggle="dropdown" class="nav-icon pe-md-0">
+                            <img src="~/Img/account.png" class="avatar img-fluid" alt="">
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-end rounded" style="width: 180px;">
+                            <div class="row">
+                                <h4 style="font-weight: 600; font-size: larger;" class="ms-2">
+                                    @Context.Session.GetString("tenChuSan")
+                                </h4>
+                            </div>
+                            <div class="d-flex">
+                                <a class="ms-2 cusor" style="color: red;" href="/Customer/Account/Logout">Đăng xuất</a>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <main class="content px-3 py-3">
+        <div class="container-fluid">
+            <div>
+                <div class="row justify-content-between mx-1 mb-4">
+                    <div class="col-12 col-md-4">
+                        <div class="align-items-center w-100">
+                            <a class="btn btn-primary" asp-controller="DangThongTinSan" asp-action="Index">
+                               Quản lý bài đăng
+                           </a>
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-auto mt-2 mt-md-0">
+                        <button type="button" class="btn btn-success w-100 w-md-auto" data-bs-toggle="modal"
+                                data-bs-target="#themKhuyenMaiModal" data-bs-dismiss="modal">
+                            Thêm khuyến mãi
+                        </button>
+                    </div>
+                </div>
+
+                <div class="row mt-2">
+                    <div class="col-12">
+                        <div class="table-responsive">
+                            <table class="table">
+                                <thead style="background: #0e2238;">
+                                    <tr>
+                                        <th scope="col" class="col-1">STT</th>
+                                        <th scope="col" class="col-2"><span>Tên chương trình</span></th>
+                                        <th scope="col" class="col-2">Ngày bắt đầu</th>
+                                        <th scope="col" class="col-2">Ngày kết thúc</th>
+                                        <th scope="col" class="col-2">Giảm giá</th>
+                                        <th scope="col" class="col-2">Trạng thái</th>
+                                        <th scope="col" class="col-1"></th>
+                                    </tr>
+                                </thead>
+                                <tbody id="tableChuongTrinhKhuyenMai">
+                                    <tr>
+                                        <th scope="row">1</th>
+                                        <td>Lễ 30 tháng 4</td>
+                                        <td>12/10/2025</td>
+                                        <td>20/10/2025</td>
+                                        <td>25 %</td>
+                                        <td>Chưa bắt đầu</td>
+                                        <td class="d-flex justify-content-end">
+                                            <button type="button" class="btn btn-warning me-2" onclick="suaChuongTrinhKhuiyenMaiModal()">
+                                                Sửa
+                                            </button>
+                                            <button type="button" class="btn btn-danger" onclick="">Xóa</button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    
+    <!-- Modal thêm -->
+    <div class="modal fade" id="themKhuyenMaiModal" tabindex="-1" aria-labelledby="themKhuyenMaiModal" aria-hidden="true">
+        <div class="modal-dialog modal-fullscreen-xl-down">
+            <div class="modal-content" style="border-radius: 20px;">
+                <div class="modal-header d-flex justify-content-center text-center">
+                    <div>
+                        <h5 style="font-weight: bolder;">Thêm chương trình</h5>
+                    </div>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-12">
+                                <label for="tenSan" class="ms-1 mb-1 label-modal">Tên chương trình</label>
+                                <input type="text" id="tenChuongTrinhKhuyenMai" class="form-control" placeholder="Nhập chương trình">
+                                <span id="errortenChuongTrinhKhuyenMai" class="text-danger"></span>
+                            </div>                      
+                        </div>
+                        <div class="row mt-3">
+                            <div class="col-6">
+                                <label for="ngayBatDauChuongTrinh" class="ms-1 mb-1 label-modal">Ngày bắt đầu</label>
+                                <input class="form-control ngayKhuyenMai" style="border-radius: 10px; background-color: white;"
+                                placeholder="Ngày bắt đầu">
+                                <span id="ngayBatDauChuongTrinh" class="text-danger"></span>
+                            </div>
+                            <div class="col-6">
+                                <label for="ngayKetThucChuongTrinh" class="ms-1 mb-1 label-modal">Ngày kết thúc</label>
+                                <input class="form-control ngayKhuyenMai" style="border-radius: 10px; background-color: white;"
+                                       placeholder="Ngày kết thúc">
+                                <span id="ngayKetThucChuongTrinh" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="row mt-3">
+                            <div class="col-12">
+                                <label class="mb-1 ms-1 label-modal">Giảm giá</label>
+                                <input type="text" id="giamGia" class="form-control" placeholder="Nhập % giảm giá">
+                                <span class="error text-danger" id="ErrorgiamGia"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Nút thêm -->
+                    <div class="container mt-4">
+                        <div class="row" style="justify-content: flex-end;">
+                            <div class="col-12 d-flex justify-content-end" style="width: 160px;">
+                                <button type="button" id="btnDongYKhuyenMai" class="btn btn-success w-100 w-md-auto"
+                                        style="font-size: small;" onclick="">
+                                    Đồng ý
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Modal sửa -->
+    <div class="modal fade" id="suaKhuyenMaiModal" tabindex="-1" aria-labelledby="suaKhuyenMaiModal" aria-hidden="true">
+        <div class="modal-dialog modal-fullscreen-xl-down">
+            <div class="modal-content" style="border-radius: 20px;">
+                <div class="modal-header d-flex justify-content-center text-center">
+                    <div>
+                        <h5 style="font-weight: bolder;">Sửa chương trình</h5>
+                    </div>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-12">
+                                <label for="tenSan" class="ms-1 mb-1 label-modal">Tên chương trình</label>
+                                <input type="text" id="tenChuongTrinhKhuyenMaiSua" class="form-control" placeholder="Nhập chương trình">
+                                <span id="errortenChuongTrinhKhuyenMaiSua" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="row mt-3">
+                            <div class="col-6">
+                                <label for="ngayBatDauChuongTrinhSua" class="ms-1 mb-1 label-modal">Ngày bắt đầu</label>
+                                <input class="form-control ngayKhuyenMai" style="border-radius: 10px; background-color: white;"
+                                       placeholder="Ngày bắt đầu">
+                                <span id="ngayBatDauChuongTrinhSua" class="text-danger"></span>
+                            </div>
+                            <div class="col-6">
+                                <label for="ngayKetThucChuongTrinhSua" class="ms-1 mb-1 label-modal">Ngày kết thúc</label>
+                                <input class="form-control ngayKhuyenMai" style="border-radius: 10px; background-color: white;"
+                                       placeholder="Ngày kết thúc">
+                                <span id="ngayKetThucChuongTrinhSua" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="row mt-3">
+                            <div class="col-12">
+                                <label class="mb-1 ms-1 label-modal">Giảm giá</label>
+                                <input type="text" id="giamGiaSua" class="form-control" placeholder="Nhập % giảm giá">
+                                <span class="error text-danger" id="ErrorgiamGia"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Nút thêm -->
+                    <div class="container mt-4">
+                        <div class="row" style="justify-content: flex-end;">
+                            <div class="col-12 d-flex justify-content-end" style="width: 160px;">
+                                <button type="button" id="btnDongYKhuyenMaiSua" class="btn btn-success w-100 w-md-auto"
+                                        style="font-size: small;" onclick="">
+                                    Đồng ý
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Nhúng flatpickr -->
+<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+<script>
+    flatpickr(".ngayKhuyenMai", {
+        dateFormat: "d-m-Y",
+        minDate: "today"
+    });
+</script>

@@ -113,3 +113,22 @@ function Login() {
 
     });
 }
+//Modal quên mật khẩu
+function modalFogetPassword() {
+    $('#forgotPasswordModal').modal('toggle');
+}
+
+//modal xác nhận 
+function confirmModal() {
+    $("#modalCodeXacNhan").modal('toggle');
+}
+
+//modal xac nhận mật khẩu 
+function newPassWordModal() {
+    $("#modalNhapmatkhaumoi").modal('toggle');
+}
+
+//Modal các gói đăng ký
+function cacGoiDangKyModal() {
+    $("#modalCacGoiDangKy").modal('toggle');
+}

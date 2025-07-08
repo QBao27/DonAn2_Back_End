@@ -173,4 +173,7 @@ function showThongTinBaiDang() {
     });
 }
 
-
+//Modal sửa chương trình 
+function suaChuongTrinhKhuiyenMaiModal() {
+    $("#suaKhuyenMaiModal").modal('toggle');
+}
