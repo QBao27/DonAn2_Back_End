@@ -75,7 +75,7 @@
                     </div>
                     <ul class="dropdown-menu" aria-labelledby="accountDropdown" style="border-radius: 10px;">
                         <li><a class="dropdown-item" onclick="modalLogin()">Đăng nhập</a></li>
-                        <li><a class="dropdown-item" onclick="modalSignUp()">Đăng ký</a></li>
+                        <li><a class="dropdown-item" onclick="cacGoiDangKyModal()">Đăng ký</a></li>
                     </ul>
                 </div>
                 <div class="icon-box"><i class="bi bi-facebook"></i><span>Facebook</span></div>
@@ -99,7 +99,7 @@
                             </a>
                         </li>
                         <li>
-                            <a class="dropdown-item" onclick="modalSignUp()">
+                            <a class="dropdown-item" onclick="cacGoiDangKyModal()">
                                 <i class="bi bi-person-plus-fill"></i> Đăng
                                 ký
                             </a>
@@ -142,12 +142,18 @@
                                 style="background-color: rgb(20, 34, 56); border-radius: 10px;">
                             Đăng Nhập
                         </button>
-                        <div class=" text-center mt-3">
+                        <div class=" text-center mt-3 d-flex justify-content-between">
                             <span>
-                                Bạn chưa có tài khoản? <a href="#" class="fw-medium text-decoration-none"
-                                                          onclick="modalLogin(), modalSignUp()">
+                                 <a href="#" class="fw-medium text-decoration-none"
+                                   onclick="modalLogin(), cacGoiDangKyModal()">
                                     Đăng ký
-                                    tài khoản
+                                    tài khoản?
+                                </a>
+                            </span> 
+                            <span>
+                                <a href="#" class="fw-medium text-decoration-none"
+                                   onclick="modalFogetPassword(), modalLogin()">
+                                    Quên mật khẩu?
                                 </a>
                             </span>
                         </div>
@@ -165,10 +171,11 @@
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
                                 onclick="resetDataSignUp()"></button>
                     </div>
-                    <div class="d-flex justify-content-center">
-                        <h5 class="modal-title fw-bold">ĐĂNG KÝ</h5>
+                    <div class="d-flex flex-column justify-content-center align-items-center">
+                        <h5 class="fw-bold modal-title">ĐĂNG KÝ</h5>
+                        <h6 class="text-muted">Gói: 575.000 VND / 6 tháng</h6>
                     </div>
-                    <div class="p-3">
+                    <div class="p-3 pt-1">
                         <div class="row">
                             <div class="col-6 mt-3">
                                 <input type="text" class="form-control border-1 border-dark" id="fullNameSignUp"
@@ -238,10 +245,10 @@
                                       style="font-size: 0.875rem;"></span>
                             </div>
                         </div>
-                        <div class="text-danger mt-3">*Đăng ký tài khoản dành cho chủ sân bóng!</div>
+                        <div class="text-danger mt-2">*Đăng ký tài khoản dành cho chủ sân bóng!</div>
                         <button class="btn w-100 text-light mt-3" id="btnSignUp" onclick="checkDataSignUp()"
                                 style="background-color: rgb(20, 34, 56); border-radius: 10px;">
-                            Đăng Ký
+                            Thanh Toán
                         </button>
                         <div class="mt-3 text-center">
                             <span>
@@ -252,6 +259,153 @@
                                 </a>
                             </span>
                         </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Modal các gói đăng ký -->
+    <div class="modal fade" id="modalCacGoiDangKy">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content" style="border-radius: 10px;">
+                <div class="modal-body">
+                    <div class="text-end">
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
+                                onclick=""></button>
+                    </div>
+                    <div class="d-flex justify-content-center">
+                        <h5 class="modal-title fw-bold">CHỌN GÓI ĐĂNG KÝ</h5>
+                    </div>
+                        <div class="list-group m-4">
+                        <div class="row">
+                            <div class="col-6 px-2">
+                                <button type="button" class="btn text-light btn-lg w-100 py-3 shadow" onclick="modalSignUp(), cacGoiDangKyModal()" style="background-color: rgb(20, 34, 56); border-radius: 10px;">
+                                    <div class="fw-bold">Gói 3 tháng</div>
+                                    <div>300.000 VND</div>
+                                </button>
+                            </div>
+                            <div class="col-6 px-2">
+                                <button type="button" class="btn  text-light btn-lg w-100 py-3 shadow" onclick="modalSignUp(), cacGoiDangKyModal()" style="background-color: rgb(20, 34, 56); border-radius: 10px;">
+                                    <div class="fw-bold">Gói 6 tháng</div>
+                                    <div class="">575.000 VND</div>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="row mt-3">
+                            <div class="col-6 px-2">
+                                <button type="button" class="btn text-light btn-lg w-100 py-3 shadow" onclick="modalSignUp(), cacGoiDangKyModal()" style="background-color: rgb(20, 34, 56); border-radius: 10px;">
+                                    <div class="fw-bold">Gói 9 tháng</div>
+                                    <div>850.000 VND</div>
+                                </button>
+                            </div>
+                            <div class="col-6 px-2">
+                                <button type="button" class="btn text-light btn-lg w-100 py-3 shadow" onclick="modalSignUp(), cacGoiDangKyModal()" style="background-color: rgb(20, 34, 56); border-radius: 10px;">
+                                    <div class="fw-bold">Gói 12 tháng</div>
+                                    <div class="">1.100.000 VND</div>
+                                </button>
+                            </div>
+                        </div>
+                        </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--Modal quên mật khẩu-->
+    <div class="modal fade" id="forgotPasswordModal">
+        <div class="modal-dialog">
+            <div class="modal-content" style="border-radius: 10px;">
+                <div class="modal-body">
+                    <div class="text-end">
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
+                                onclick=""></button>
+                    </div>
+                    <div class="d-flex justify-content-center">
+                        <h5 class="modal-title fw-bold">QUÊN MẬT KHẨU</h5>
+                    </div>
+                    <div class="mt-3 mb-2" id="boxDangNhap">
+                        <label>Nhập Email đã đăng ký tài khoản!</label>
+                        <input type="text" class="form-control border-1 border-dark mt-2" id="emailFogetPassword"
+                               placeholder="example@gmail.com" style="border-radius: 10px; font-size: large;" />
+                        <span id="emailFogetPasswordError" class="text-danger error-Login"
+                              style="font-size: 0.875rem;"></span>
+                         <div class="mt-2">Chúng tôi sẽ gửi mã xác nhận đến email của bạn!.</div>
+                    </div>
+
+                    <div class="d-flex mt-3 mb-2">
+                        <button type="button" class="btn text-light w-100" style="background-color: rgb(20, 34, 56); border-radius: 10px;" onclick="confirmModal(), modalFogetPassword()">Gửi Yêu Cầu</button>
+                    </div>
+      
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- modal xac nhan -->
+    <div class="modal fade" id="modalCodeXacNhan"
+        onclick="">
+        <div class="modal-dialog">
+            <div class="modal-content" style="border-radius: 20px;">
+
+                <div class="modal-header d-flex justify-content-center">
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+
+                <div class=" modal-body">
+                    <div class="row justify-content-center">
+                        <div class="col-12 col-md-6 col-lg-4" style="min-width: 500px;">
+                            <div class="card bg-white border-0"
+                                style="box-shadow: 0 12px 15px rgba(0, 0, 0, 0.02);">
+                                <div class="card-body text-center">
+                                    <h4>Nhập mã xác nhận </h4>
+                                    <p>Mã xác nhận đã được gửi qua email của bạn!.</p>
+                                    <div class="otp-field mb-3">
+                                        <input type="number" maxlength="1" class="otp-input" />
+                                        <input type="number" maxlength="1" class="otp-input" />
+                                        <input type="number" maxlength="1" class="otp-input" />
+                                        <input type="number" maxlength="1" class="otp-input" />
+                                        <input type="number" maxlength="1" class="otp-input" />
+                                        <input type="number" maxlength="1" class="otp-input" />
+                                    </div>
+                                    <div id="otpError" class="text-danger pb-2"></div>
+                                    <a class="btn text-light w-50" onclick="newPassWordModal(), confirmModal()" style="background-color: rgb(20, 34, 56); border-radius: 10px;">
+                                        Xác Nhận
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div> 
+    <!--Modal nhập mật khẩu mới-->
+    <div class="modal fade" id="modalNhapmatkhaumoi">
+        <div class="modal-dialog">
+            <div class="modal-content" style="border-radius: 10px;">
+                <div class="modal-body">
+                    <div class="text-end">
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
+                                onclick=""></button>
+                    </div>
+                    <div class="d-flex justify-content-center">
+                        <h5 class="modal-title fw-bold">MẬT KHẨU MỚI</h5>
+                    </div>
+                    <div class="p-3">
+                        <div class="mt-3">
+                            <input type="password" class="form-control border-1 border-dark" id="matKhauMoi_QMK"
+                                   placeholder="Nhập mật khẩu mới" style="border-radius: 10px; font-size: large;" />
+                            <span id="matKhauMoi_QMKError" class="text-danger error-Login"
+                                  style="font-size: 0.875rem;"></span>
+                        </div>
+                        <div class="mt-3">
+                            <input type="password" class="form-control border-1 border-dark" id="xacNhanMatKhauMoi_QMK"
+                                   placeholder="Xác nhận mật khẩu" style="border-radius: 10px; font-size: large;" />
+                            <span id="xacNhanMatKhauMoi_QMKError" class="text-danger error-Login"
+                                  style="font-size: 0.875rem;"></span>
+                        </div>
+                        <button class="btn w-100 text-light mt-4" id="" onclick="modalLogin(), newPassWordModal()"
+                                style="background-color: rgb(20, 34, 56); border-radius: 10px;">
+                           Xác Nhận
+                        </button>
                     </div>
                 </div>
             </div>

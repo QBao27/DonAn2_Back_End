@@ -124,7 +124,6 @@
                                 </div>
                             </div>
                         </div>
-
                         <div class="row mt-3">
                             <div class="col-6 fw-medium fw-bold">Giờ mở cửa: </div>
                             <div class="col-6 text-end fw-bold"><span id="gioMoCuaBD"></span>h - <span id="gioDongCuaBD"></span>h</div>
@@ -161,7 +160,8 @@
                             </div>
                         </div>
                     </div>
-                    <div class="d-flex justify-content-end pb-3">
+                    <div class="d-flex justify-content-between pb-3">
+                        <a class="btn btn-warning text-light" style="width: 150px; font-size: small;" id="btnthemKhuyenMai" asp-controller="KhuyenMai" asp-action="Index">Khuyến mãi</a>
                         <button type="button" class="btn btn-success" style="width: 150px; font-size: small;" id="BtnDongY" onclick="updateImages()" >Đồng ý</button>
                     </div>
                 </div>
