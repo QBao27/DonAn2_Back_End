@@ -1,0 +1,59 @@
+﻿<li class="nav-item dropdown">
+    <a href="#" data-bs-toggle="dropdown" class="nav-icon pe-md-0">
+        <img src="~/Img/account.png" class="avatar img-fluid" alt="">
+    </a>
+    <div class="dropdown-menu dropdown-menu-end rounded" style="width: 210px;">
+        <div class="row">
+            <h4 style="font-weight: 600; font-size: larger;" class="ms-2">
+                @Context.Session.GetString("tenChuSan")
+            </h4>
+        </div>
+        <div class="d-flex">
+            <a class="ms-2 cusor text-success fw-bold" data-bs-toggle="modal" data-bs-target="#doimk">Thời gian: </a>
+            <span class="ms-2 fw-bold"> 12 tháng</span>
+        </div>
+        <div class="d-flex">
+            <a class="ms-2 cusor" style="color: blue;" data-bs-toggle="modal" data-bs-target="#doimk">Đổi mật khẩu</a>
+        </div>
+        <div class="d-flex">
+            <a class="ms-2 cusor" style="color: red;" href="/Customer/Account/Logout">Đăng xuất</a>
+        </div>
+    </div>
+</li>
+
+<div class="modal fade" id="doimk" tabindex="-1" aria-labelledby="doimkLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content" style="border-radius: 20px;">
+            <div class="modal-header d-flex justify-content-center">
+                <h5 class="modal-title fw-bold">Đổi mật khẩu</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="container px-5">
+                    <form id="changePasswordForm">
+                        <div class="mb-3">
+                            <label for="mkHienTai" class="form-label">Mật khẩu hiện tại</label>
+                            <input type="password" class="form-control" id="mkHienTai" name="CurrentPassword" required>
+                            <span id="mkHienTaiError" class="text-danger"></span>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="mkMoi" class="form-label">Mật khẩu mới</label>
+                            <input type="password" class="form-control" id="mkMoi" name="NewPassword" required>
+                            <span id="mkMoiError" class="text-danger"></span>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="mkMoi1" class="form-label">Nhập lại mật khẩu mới</label>
+                            <input type="password" class="form-control" id="mkMoi1" name="ConfirmNewPassword" required>
+                            <span id="mkMoi1Error" class="text-danger"></span>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-success text-white" id="doimatkhau">Đổi mật khẩu</button>
+            </div>
+        </div>
+    </div>
+</div>
