@@ -5,7 +5,21 @@
                 <li>
                     <h2 style="font-weight: bolder;">Thống kê</h2>
                 </li>
-                @await Html.PartialAsync("~/Areas/ChuSanBong/Views/ThongTinChuSan/Index.cshtml")
+                <li class="nav-item dropdown">
+                    <a href="#" data-bs-toggle="dropdown" class="nav-icon pe-md-0">
+                        <img src="~/Img/account.png" class="avatar img-fluid" alt="">
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-end rounded" style="width: 180px;">
+                        <div class="row">
+                            <h4 style="font-weight: 600; font-size: larger;" class="ms-2">
+                                @Context.Session.GetString("tenChuSan")
+                            </h4>
+                        </div>
+                        <div class="d-flex">
+                            <a class="ms-2 cusor" style="color: red;" href="/Customer/Account/Logout">Đăng xuất</a>
+                        </div>
+                    </div>
+                </li>
             </ul>
         </div>
     </nav>
@@ -35,7 +49,7 @@
                 <div class="col-3">
                     <div class="p-2 bg-color">
                         <div class="pt-2 d-flex justify-content-center">
-                            <h5 class="fw-bolder"> Số sân </h5>
+                            <h5 class="fw-bolder"> Tổng chủ sân </h5>
                         </div>
                         <div class="d-flex justify-content-center">
                             <h5 style="color: blue;" id="SoLuongSanThonKe"> </h5>
@@ -45,7 +59,7 @@
                 <div class="col-3">
                     <div class="p-2 bg-color">
                         <div class="pt-2 d-flex justify-content-center">
-                            <h5 class="fw-bolder">Đánh giá </h5>
+                            <h5 class="fw-bolder"> Tổng số sân </h5>
                         </div>
                         <div class="d-flex justify-content-center">
                             <h5 style="color: blue;" id="SoLuongDanhGia"> </h5>

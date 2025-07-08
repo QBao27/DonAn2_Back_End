@@ -94,3 +94,9 @@
         TimKiemKhachHang();
     });
 });
+
+function showWarning() {
+    toastr.warning("Bạn chưa nhập thông tin!", "", {
+        timeOut: 1000 // Hiển thị trong 1 giây
+    });
+}
