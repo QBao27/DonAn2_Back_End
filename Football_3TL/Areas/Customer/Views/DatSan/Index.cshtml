@@ -308,6 +308,7 @@
                                    placeholder="Nhập họ tên của bạn" aria-label="Full name" required>
                             <div id="fullNameError" class="text-danger" style="font-size: 0.875rem;"></div>
                         </div>
+
                         <div class="mb-3">
                             <label for="PhoneNumberAssess" class="form-label">Số Điện Thoại</label>
                             <input type="tel" class="form-control Assess" id="PhoneNumberAssess"
@@ -315,6 +316,17 @@
                                    pattern="[0-9]{10}" title="Số điện thoại gồm 10 chữ số" required>
                             <div id="phoneNumberError" class="text-danger" style="font-size: 0.875rem;"></div>
                         </div>
+                        <div class="mb-3">
+                            <label for="emailAssess" class="form-label">Email</label>
+                            <input type="email"
+                                   class="form-control Assess"
+                                   id="emailAssess"
+                                   aria-describedby="emailHelp"
+                                   placeholder="Nhập email của bạn"
+                                   required>
+                            <div id="emailAssess" class="text-danger" style="font-size: 0.875rem;"></div>
+                        </div>
+
                         <div class="mb-3">
                             <label for="ContentAssess" class="form-label">Nội Dung Đánh Giá</label>
                             <textarea class="form-control Assess" id="ContentAssess" rows="3"
