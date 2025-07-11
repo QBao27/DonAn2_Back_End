@@ -10,6 +10,7 @@ public partial class HinhAnhBaiDang
     public string? MaBaiDang { get; set; }
 
     public string? HinhAnh { get; set; }
+
     public int? ThuTu { get; set; }
 
     public virtual ThongTinBaiDang? MaBaiDangNavigation { get; set; }

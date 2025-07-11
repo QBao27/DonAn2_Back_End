@@ -10,6 +10,7 @@ public partial class ThongTinBaiDang
     public int? GioMoCua { get; set; }
 
     public int? MaChuSan { get; set; }
+
     public int? GioDongCua { get; set; }
 
     public virtual ICollection<HinhAnhBaiDang> HinhAnhBaiDangs { get; set; } = new List<HinhAnhBaiDang>();
