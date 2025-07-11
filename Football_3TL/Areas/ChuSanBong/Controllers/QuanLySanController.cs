@@ -86,32 +86,63 @@ namespace Football_3TL.Areas.ChuSanBong.Controllers
         [HttpPost]
         public async Task<IActionResult> SuaSanBong([FromBody] SanBongModel model)
         {
-            if (model.MaSan <= 0 || string.IsNullOrEmpty(model.TenSan) || model.Gia <= 0 || string.IsNullOrEmpty(model.LoaiSan))
+            var maChuSan = HttpContext.Session.GetInt32("maChuSan");
+            try
             {
-                return Json(new { success = false, message = "Vui lòng nhập đầy đủ thông tin." });
-            }
+                if (model.MaSan <= 0 || string.IsNullOrEmpty(model.TenSan) || model.Gia <= 0 || string.IsNullOrEmpty(model.LoaiSan))
+                {
+                    return Json(new { success = false, message = "Vui lòng nhập đầy đủ thông tin." });
+                }
 
-            var sanBong = await dbContext.SanBongs.FindAsync(model.MaSan);
-            if (sanBong == null)
+                var sanBong = await dbContext.SanBongs.FindAsync(model.MaSan);
+                if (sanBong == null)
+                {
+                    return Json(new { success = false, message = "Sân bóng không tồn tại." });
+                }
+
+                // Kiểm tra tên sân có trùng không (trừ chính nó)
+                bool isDuplicate = dbContext.SanBongs.Any(s => s.TenSan == model.TenSan && s.MaSan != model.MaSan && s.MaChuSan == maChuSan);
+                if (isDuplicate)
+                {
+                    return Json(new { success = false, message = "Tên sân đã tồn tại. Vui lòng chọn tên khác." });
+                }
+
+                // 1. Lọc xuống chỉ các booking của sân cần sửa
+                var bookings = dbContext.ThongTinDatSans
+                    .Where(d => d.MaSan == model.MaSan);
+
+                // 2. Kiểm tra tất cả booking có trạng thái "Trống" hoặc "Hết giờ"
+                bool canEdit = await bookings
+                    .AllAsync(d =>
+                        string.Equals(d.TrangThaiSan, "Trống")
+                        || string.Equals(d.TrangThaiSan, "Hết giờ")
+                    );
+
+                // 3. Nếu có ít nhất một booking không thỏa, chặn sửa
+                if (!canEdit)
+                {
+                    return Json(new
+                    {
+                        success = false,
+                        message = "Không thể sửa sân vì còn lượt đặt hoặc chưa hết giờ!"
+                    });
+                }
+
+
+                // Cập nhật thông tin sân
+                sanBong.TenSan = model.TenSan;
+                sanBong.Gia = model.Gia;
+                sanBong.LoaiSan = model.LoaiSan;
+
+                await dbContext.SaveChangesAsync();
+
+                return Json(new { success = true, message = "Cập nhật sân thành công!", data = sanBong });
+            }
+            catch 
             {
-                return Json(new { success = false, message = "Sân bóng không tồn tại." });
+                return Json(new { success = false, message = "Không thể sửa sân này vì nó đang hoạt động!" });
             }
-
-            // Kiểm tra tên sân có trùng không (trừ chính nó)
-            bool isDuplicate = dbContext.SanBongs.Any(s => s.TenSan == model.TenSan && s.MaSan != model.MaSan);
-            if (isDuplicate)
-            {
-                return Json(new { success = false, message = "Tên sân đã tồn tại. Vui lòng chọn tên khác." });
-            }
-
-            // Cập nhật thông tin sân
-            sanBong.TenSan = model.TenSan;
-            sanBong.Gia = model.Gia;
-            sanBong.LoaiSan = model.LoaiSan;
-
-            await dbContext.SaveChangesAsync();
-
-            return Json(new { success = true, message = "Cập nhật sân thành công!", data = sanBong });
+            
         }
 
         [HttpGet]
@@ -129,19 +160,24 @@ namespace Football_3TL.Areas.ChuSanBong.Controllers
         [HttpPost]
         public async Task<IActionResult> XoaSanBong(int maSan)
         {
-            var sanBong = await dbContext.SanBongs.FindAsync(maSan);
-            if (sanBong == null)
+            try
             {
-                return Json(new { success = false, message = "Không tìm thấy sân bóng!" });
+                var sanBong = await dbContext.SanBongs.FindAsync(maSan);
+                if (sanBong == null)
+                {
+                    return Json(new { success = false, message = "Không tìm thấy sân bóng!" });
+                }
+
+                dbContext.SanBongs.Remove(sanBong);
+                await dbContext.SaveChangesAsync();
+
+                return Json(new { success = true, message = "Xóa sân bóng thành công!" });
             }
-
-            dbContext.SanBongs.Remove(sanBong);
-            await dbContext.SaveChangesAsync();
-
-            return Json(new { success = true, message = "Xóa sân bóng thành công!" });
+            catch 
+            {
+                return Json(new { success = false, message = "Không thể xóa sân này vì nó đang hoạt động!" });
+            }
+           
         }
-
-
-
     }
 }
