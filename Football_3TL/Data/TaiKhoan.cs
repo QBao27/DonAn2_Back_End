@@ -16,4 +16,6 @@ public partial class TaiKhoan
     public string? TrangThai { get; set; }
 
     public virtual ChuSan? MaChuSanNavigation { get; set; }
+
+    public virtual ICollection<TaiKhoanOtp> TaiKhoanOtps { get; set; } = new List<TaiKhoanOtp>();
 }
