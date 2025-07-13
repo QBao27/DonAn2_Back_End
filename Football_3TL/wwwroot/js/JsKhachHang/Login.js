@@ -113,10 +113,268 @@ function Login() {
 
     });
 }
+
 //Modal quên mật khẩu
 function modalFogetPassword() {
     $('#forgotPasswordModal').modal('toggle');
 }
+
+//function KiemTraEmail() {
+//    var email = $("#emailFogetPassword").val().trim();
+//    if (email == "") {
+//        $("#emailFogetPasswordError").text("Vui lòng nhập email.");
+//        return;
+//    }
+
+//    $.ajax({
+//        url: '/Customer/MailTest/ForgotPassword_CheckEmail',
+//        type: 'POST',
+//        data: { email: email },
+//        success: function (res) {
+//            if (res.success) {
+//                alert(res.message);
+//                modalFogetPassword()
+//                confirmModal()
+//            } else {
+//                $("#emailFogetPasswordError").text(res.message);
+//            }
+//        },
+//        error: function () {
+//            alert("Có lỗi xảy ra!");
+//        }
+//    });
+//}
+
+function KiemTraEmail() {
+    var email = $("#emailFogetPassword").val().trim();
+    if (email == "") {
+        $("#emailFogetPasswordError").text("Vui lòng nhập email.");
+        return;
+    }
+
+    $.ajax({
+        url: '/Customer/MailTest/ForgotPassword_CheckEmail',
+        type: 'POST',
+        data: { email: email },
+        success: function (res) {
+            if (res.success) {
+                // ✅ Dùng SweetAlert thay alert()
+                Swal.fire({
+                    title: 'Đã gửi Email!',
+                    text: res.message,
+                    icon: 'success',
+                    confirmButtonText: 'OK'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        modalFogetPassword();
+                        confirmModal();
+                    }
+                });
+            } else {
+                $("#emailFogetPasswordError").text(res.message);
+            }
+        },
+        error: function () {
+            Swal.fire({
+                title: 'Lỗi!',
+                text: 'Có lỗi xảy ra!',
+                icon: 'error',
+                confirmButtonText: 'OK'
+            });
+        }
+    });
+}
+
+
+//function KiemTraOtp() {
+//    // Lấy tất cả input OTP
+//    var otpInputs = document.querySelectorAll('.otp-input');
+//    var otp = "";
+//    otpInputs.forEach(input => {
+//        otp += input.value.trim();
+//    });
+
+//    if (otp.length !== 6) {
+//        $("#otpError").text("Vui lòng nhập đủ 6 số OTP!");
+//        return;
+//    }
+
+//    $.ajax({
+//        url: '/Customer/MailTest/VerifyOtp',
+//        type: 'POST',
+//        data: { otp: otp },
+//        success: function (res) {
+//            if (res.success) {
+//                alert(res.message);
+//                // Đóng modal OTP & mở modal đổi mật khẩu
+//                confirmModal()
+//                newPassWordModal()
+//            } else {
+//                $("#otpError").text(res.message);
+//            }
+//        },
+//        error: function () {
+//            alert("Có lỗi xảy ra khi kiểm tra OTP.");
+//        }
+//    });
+//}
+
+function KiemTraOtp() {
+    // Lấy tất cả input OTP
+    var otpInputs = document.querySelectorAll('.otp-input');
+    var otp = "";
+    otpInputs.forEach(input => {
+        otp += input.value.trim();
+    });
+
+    if (otp.length !== 6) {
+        $("#otpError").text("Vui lòng nhập đủ 6 số OTP!");
+        return;
+    }
+
+    $.ajax({
+        url: '/Customer/MailTest/VerifyOtp',
+        type: 'POST',
+        data: { otp: otp },
+        success: function (res) {
+            if (res.success) {
+                Swal.fire({
+                    title: 'Xác nhận thành công!',
+                    text: res.message,
+                    icon: 'success',
+                    confirmButtonText: 'OK'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        // Đóng modal OTP & mở modal đổi mật khẩu
+                        confirmModal();
+                        newPassWordModal();
+                    }
+                });
+            } else {
+                $("#otpError").text(res.message);
+            }
+        },
+        error: function () {
+            Swal.fire({
+                title: 'Lỗi!',
+                text: 'Có lỗi xảy ra khi kiểm tra OTP.',
+                icon: 'error',
+                confirmButtonText: 'OK'
+            });
+        }
+    });
+}
+
+
+//function DoiMatKhauMoi() {
+//    var mkMoi = $("#matKhauMoi_QMK").val().trim();
+//    var mkXacNhan = $("#xacNhanMatKhauMoi_QMK").val().trim();
+
+//    var isValid = true;
+
+//    $("#matKhauMoi_QMKError").text("");
+//    $("#xacNhanMatKhauMoi_QMKError").text("");
+
+//    // Kiểm tra nhập trống
+//    if (mkMoi === "") {
+//        $("#matKhauMoi_QMKError").text("Vui lòng nhập mật khẩu mới.");
+//        isValid = false;
+//    }
+//    if (mkXacNhan === "") {
+//        $("#xacNhanMatKhauMoi_QMKError").text("Vui lòng xác nhận mật khẩu.");
+//        isValid = false;
+//    }
+//    if (mkMoi !== "" && mkXacNhan !== "" && mkMoi !== mkXacNhan) {
+//        $("#xacNhanMatKhauMoi_QMKError").text("Mật khẩu xác nhận không khớp.");
+//        isValid = false;
+//    }
+
+//    if (!isValid) return;
+
+//    // Gửi AJAX
+//    $.ajax({
+//        url: '/Customer/MailTest/ResetPassword',
+//        type: 'POST',
+//        data: { newPassword: mkMoi },
+//        success: function (res) {
+//            if (res.success) {
+//                alert(res.message);
+//                modalLogin()
+//                newPassWordModal()
+
+//            } else {
+//                alert(res.message);
+//            }
+//        },
+//        error: function () {
+//            alert("Có lỗi xảy ra khi đổi mật khẩu.");
+//        }
+//    });
+//}
+
+function DoiMatKhauMoi() {
+    var mkMoi = $("#matKhauMoi_QMK").val().trim();
+    var mkXacNhan = $("#xacNhanMatKhauMoi_QMK").val().trim();
+
+    var isValid = true;
+
+    $("#matKhauMoi_QMKError").text("");
+    $("#xacNhanMatKhauMoi_QMKError").text("");
+
+    // Kiểm tra nhập trống
+    if (mkMoi === "") {
+        $("#matKhauMoi_QMKError").text("Vui lòng nhập mật khẩu mới.");
+        isValid = false;
+    }
+    if (mkXacNhan === "") {
+        $("#xacNhanMatKhauMoi_QMKError").text("Vui lòng xác nhận mật khẩu.");
+        isValid = false;
+    }
+    if (mkMoi !== "" && mkXacNhan !== "" && mkMoi !== mkXacNhan) {
+        $("#xacNhanMatKhauMoi_QMKError").text("Mật khẩu xác nhận không khớp.");
+        isValid = false;
+    }
+
+    if (!isValid) return;
+
+    // Gửi AJAX
+    $.ajax({
+        url: '/Customer/MailTest/ResetPassword',
+        type: 'POST',
+        data: { newPassword: mkMoi },
+        success: function (res) {
+            if (res.success) {
+                Swal.fire({
+                    title: 'Thành công!',
+                    text: res.message,
+                    icon: 'success',
+                    confirmButtonText: 'OK'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        modalLogin();
+                        newPassWordModal();
+                    }
+                });
+            } else {
+                Swal.fire({
+                    title: 'Lỗi!',
+                    text: res.message,
+                    icon: 'error',
+                    confirmButtonText: 'OK'
+                });
+            }
+        },
+        error: function () {
+            Swal.fire({
+                title: 'Lỗi!',
+                text: 'Có lỗi xảy ra khi đổi mật khẩu.',
+                icon: 'error',
+                confirmButtonText: 'OK'
+            });
+        }
+    });
+}
+
 
 //modal xác nhận 
 function confirmModal() {

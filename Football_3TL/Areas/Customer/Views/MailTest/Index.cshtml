@@ -1,0 +1,15 @@
+﻿@{
+    ViewData["Title"] = "Gửi Mail";
+}
+
+<h2>Gửi Email Test</h2>
+
+<form asp-action="SendMail" method="post">
+    <input type="email" name="toEmail" placeholder="Nhập email người nhận" required />
+    <button type="submit">Gửi Email</button>
+</form>
+
+@if (ViewBag.Status != null)
+{
+    <p>@ViewBag.Status</p>
+}

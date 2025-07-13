@@ -37,6 +37,8 @@ public partial class Football3tlContext : DbContext
 
     public virtual DbSet<TaiKhoan> TaiKhoans { get; set; }
 
+    public virtual DbSet<TaiKhoanOtp> TaiKhoanOtps { get; set; }
+
     public virtual DbSet<ThongTinBaiDang> ThongTinBaiDangs { get; set; }
 
     public virtual DbSet<ThongTinDangKy> ThongTinDangKies { get; set; }
@@ -209,6 +211,24 @@ public partial class Football3tlContext : DbContext
             entity.HasOne(d => d.MaChuSanNavigation).WithMany(p => p.TaiKhoans)
                 .HasForeignKey(d => d.MaChuSan)
                 .HasConstraintName("FK_TaiKhoan_ChuSan");
+        });
+
+        modelBuilder.Entity<TaiKhoanOtp>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("PK__TaiKhoan__3214EC07E413BDDB");
+
+            entity.ToTable("TaiKhoan_OTP");
+
+            entity.Property(e => e.Hsd)
+                .HasColumnType("datetime")
+                .HasColumnName("HSD");
+            entity.Property(e => e.Otp)
+                .HasMaxLength(6)
+                .HasColumnName("OTP");
+
+            entity.HasOne(d => d.MaTaiKhoanNavigation).WithMany(p => p.TaiKhoanOtps)
+                .HasForeignKey(d => d.MaTaiKhoan)
+                .HasConstraintName("FK__TaiKhoan___MaTai__160F4887");
         });
 
         modelBuilder.Entity<ThongTinBaiDang>(entity =>
