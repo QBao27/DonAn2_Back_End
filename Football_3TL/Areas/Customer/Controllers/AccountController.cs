@@ -6,6 +6,7 @@ using Microsoft.DotNet.Scaffolding.Shared.Messaging;
 using Microsoft.IdentityModel.Tokens;
 using BCrypt.Net;
 using Microsoft.EntityFrameworkCore;
+using Football_3TL.Services.Vnpay;
 
 
 namespace Football_3TL.Areas.Customer.Controllers
@@ -18,11 +19,14 @@ namespace Football_3TL.Areas.Customer.Controllers
         //tạo logger để ghi log để dễ kiểm tra lỗi
         private readonly ILogger<AccountController> _log;
 
+        private readonly IVnPayService _vnPayService;
+
         //tạo contructor 
-        public AccountController(Football3tlContext db, ILogger<AccountController> log)
+        public AccountController(Football3tlContext db, ILogger<AccountController> log, IVnPayService vnPayService)
         {
             _db = db;
-            _log = log; 
+            _log = log;
+            _vnPayService = vnPayService;
         }
 
         //Hàm đăng ký

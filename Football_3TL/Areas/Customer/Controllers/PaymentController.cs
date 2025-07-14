@@ -299,10 +299,6 @@ namespace Football_3TL.Areas.Customer.Controllers
                 return RedirectToAction("LoiHeThong", "Error");
             }
         }
-
-
-
-
     }
 
 }

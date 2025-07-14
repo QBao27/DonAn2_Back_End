@@ -113,51 +113,6 @@
                                 </div>
                             </div>
                         </div>
-
-                        <!-- Modal chỉnh khuyến mãi -->
-                        <div class="modal fade" id="editKM" tabindex="-1" aria-labelledby="editKM" aria-hidden="true">
-                            <div class="modal-dialog modal-sm">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title fw-bold" id="editKM">Chỉnh sửa khuyễn mãi</h5>
-                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Đóng"></button>
-                                    </div>
-                                    <div class="modal-body">
-                                        <form id="editTimeForm">
-                                            <div class="mb-3">
-                                                <label for="openingTime" class="form-label fw-bold">Khuyến mãi %</label>
-                                                <input type="text" id="KM" class="form-control" placeholder="Nhập khuyến mãi">
-                                            </div>
-                                            <div class="mb-3">
-                                                <label for="openingTime" class="form-label fw-bold">Giờ bắt đầu</label>
-                                                <select class="form-select" id="GioBatDau" name="GioBatDau" required>
-                                                    @for (int i = 0; i <= 24; i++)
-
-                                                    {
-                                                        <option value="@i">@i:00</option>
-                                                    }
-                                                </select>
-                                            </div>
-                                            <div class="mb-3">
-                                                <label for="closingTime" class="form-label fw-bold">Giờ kết thúc</label>
-                                                <select class="form-select" id="GioKetThuc" name="GioKetThuc" required>
-                                                    @for (int i = 0; i <= 24; i++)
-
-                                                    {
-                                                        <option value="@i">@i:00</option>
-                                                    }
-                                                </select>
-                                            </div>
-                                        </form>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
-                                        <button class="btn btn-primary" onclick="updateTime()">Lưu</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
                         <div class="row mt-3">
                             <div class="col-6 fw-medium fw-bold">Giờ mở cửa: </div>
                             <div class="col-6 text-end fw-bold"><span id="gioMoCuaBD"></span>h - <span id="gioDongCuaBD"></span>h</div>
@@ -196,8 +151,7 @@
                     </div>
                     <div class="d-flex justify-content-between pb-3">
                         <a class="btn btn-warning text-light" style="width: 150px; font-size: small;" id="btnthemKhuyenMai" asp-controller="KhuyenMai" asp-action="Index">Khuyến mãi mới</a>
-                        <button type="button" class="btn btn-warning text-light" style="width: 150px; font-size: small;" id="BtnCapNhat" data-bs-toggle="modal"
-                                    data-bs-target="#editKM" >Giá khuyến mãi</button>
+                        <a class="btn btn-warning text-light" style="width: 150px; font-size: small;" id="BtnCapNhat" asp-controller="GiaKhuyenMai" asp-action="Index">Giá khuyến mãi</a>
                     </div>
                 </div>
             </div>

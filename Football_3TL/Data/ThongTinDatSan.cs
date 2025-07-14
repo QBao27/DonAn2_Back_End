@@ -29,6 +29,8 @@ public partial class ThongTinDatSan
 
     public string? TrangThaiSan { get; set; }
 
+    public decimal TongThanhToan { get; set; }
+
     public virtual ICollection<HoaDon> HoaDons { get; set; } = new List<HoaDon>();
 
     public virtual ChuSan? MaChuSanNavigation { get; set; }

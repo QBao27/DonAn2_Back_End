@@ -19,5 +19,7 @@ public partial class DanhGia
 
     public int? SoSao { get; set; }
 
+    public string? Email { get; set; }
+
     public virtual ChuSan? MaChuSanNavigation { get; set; }
 }
