@@ -1,4 +1,5 @@
-﻿using Football_3TL.Areas.Customer.Models.Vnpay;
+﻿using Football_3TL.Areas.Customer.Models;
+using Football_3TL.Areas.Customer.Models.Vnpay;
 using Football_3TL.Libraries;
 using System.Net;
 using System.Web;
@@ -69,6 +70,58 @@ namespace Football_3TL.Services.Vnpay
         }
 
 
+        public string CreateDangKyPaymentUrl(SignUpPaymentModel model, HttpContext context)
+        {
+ 
+            var timeZoneById = TimeZoneInfo.FindSystemTimeZoneById(_configuration["TimeZoneId"]);
+            var timeNow = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, timeZoneById);
+            var tick = DateTime.Now.Ticks.ToString();
+
+
+            var pay = new VnPayLibrary();
+
+            var urlCallBack = _configuration["Vnpay:DangKyReturnUrl"];
+
+
+            pay.AddRequestData("vnp_Version", _configuration["Vnpay:Version"]);
+            pay.AddRequestData("vnp_Command", _configuration["Vnpay:Command"]);
+            pay.AddRequestData("vnp_TmnCode", _configuration["Vnpay:TmnCode"]);
+
+            var amount = (int)Math.Round(model.SoTien * 100);
+            pay.AddRequestData("vnp_Amount", amount.ToString());
+
+            pay.AddRequestData("vnp_CreateDate", timeNow.ToString("yyyyMMddHHmmss"));
+
+            pay.AddRequestData("vnp_CurrCode", _configuration["Vnpay:CurrCode"]);
+
+
+            var ipAddr = pay.GetIpAddress(context);
+            pay.AddRequestData("vnp_IpAddr", ipAddr);
+
+
+            pay.AddRequestData("vnp_Locale", _configuration["Vnpay:Locale"]);
+
+
+            pay.AddRequestData("vnp_TxnRef", tick);
+
+            pay.AddRequestData("vnp_OrderType", "other");
+
+
+            var orderInfo = $"Thanh toán đăng ký gói {model.MaGoi} - {model.FullName} - {model.Phone} - {model.Email}";
+            pay.AddRequestData("vnp_OrderInfo", Uri.EscapeDataString(orderInfo));
+
+            pay.AddRequestData("vnp_ReturnUrl", urlCallBack);
+
+
+            var paymentUrl = pay.CreateRequestUrl(
+                _configuration["Vnpay:BaseUrl"],
+                _configuration["Vnpay:HashSecret"]
+            );
+
+            return paymentUrl;
+        }
+
+
 
         public PaymentResponseModel PaymentExecute(IQueryCollection collections)
         {
@@ -87,6 +140,8 @@ namespace Football_3TL.Services.Vnpay
 
             return response;
         }
+
+        
 
 
     }

@@ -12,5 +12,7 @@
         public string District { get; set; }
         public string Communes { get; set; }
         public string PecificAddress { get; set; }
+        public string MaGoi { get; set; } // ID gói dịch vụ
+        public double SoTien { get; set; } // Tổng tiền 
     }
 }
