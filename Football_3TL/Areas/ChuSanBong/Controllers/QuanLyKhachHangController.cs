@@ -43,7 +43,7 @@ namespace Football_3TL.Areas.ChuSanBong.Controllers
                     ThanhToan = (d.MaSanNavigation != null && d.ThoiLuong.HasValue)
                                 ? $"{((double)(d.MaSanNavigation.Gia * (d.ThoiLuong.Value / 60.0))).ToString("N0")} VND"
                                 : "Chưa có"
-
+    
                 }).ToList();
 
             return Json(danhSachDatSan);

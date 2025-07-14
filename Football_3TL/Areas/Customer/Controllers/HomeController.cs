@@ -32,39 +32,49 @@ namespace Football_3TL.Areas.Customer.Controllers
         {
             try
             {
+                // 1. Lấy danh sách các ChuSan có ít nhất 1 TaiKhoan.TrangThai == "1"
                 var list = await _db.ChuSans
-                 .AsNoTracking()
-                 .Include(c => c.ThongTinBaiDangs)
-                 .Include(c => c.SanBongs)
-                 .Select(c => new modelDanhSachSanBong
-                 {
-                     MaChuSan = c.MaChuSan,
-                     TenSanBong = c.TenSanBong,
-                     Huyen = c.Huyen,
-                     Tinh = c.Tinh,
-                     MaBaiDang = c.ThongTinBaiDangs.Select(b => b.MaBaiDang).FirstOrDefault(),
-                     SoSanBong = c.SanBongs.Count(),
-                     AnhBaiDang = c.ThongTinBaiDangs
-                          .SelectMany(b => b.HinhAnhBaiDangs)
-                          .Where(img => img.ThuTu == 1)
-                          .Select(img => img.HinhAnh)
-                          .FirstOrDefault()
-                 })
-                 .Skip(1)
-                 .ToListAsync();
+                    .AsNoTracking()
+                    .Include(c => c.TaiKhoans)         // load collection TaiKhoans
+                    .Include(c => c.ThongTinBaiDangs)
+                        .ThenInclude(b => b.HinhAnhBaiDangs)
+                    .Include(c => c.SanBongs)
+                    .Where(c => c.TaiKhoans.Any(tk => tk.TrangThai == "2"))
+                    .Select(c => new modelDanhSachSanBong
+                    {
+                        MaChuSan = c.MaChuSan,
+                        TenSanBong = c.TenSanBong,
+                        Huyen = c.Huyen,
+                        Tinh = c.Tinh,
+                        MaBaiDang = c.ThongTinBaiDangs
+                                        .Select(b => b.MaBaiDang)
+                                        .FirstOrDefault(),
+                        SoSanBong = c.SanBongs.Count(),
+                        AnhBaiDang = c.ThongTinBaiDangs
+                                        .SelectMany(b => b.HinhAnhBaiDangs)
+                                        .Where(img => img.ThuTu == 1)
+                                        .Select(img => img.HinhAnh)
+                                        .FirstOrDefault()
+                    })
+                     .Skip(1)  // Bỏ hoặc giữ tuỳ nhu cầu
+                    .ToListAsync();
 
-                var tongSoSan = await _db.ChuSans.CountAsync();
-                return Json(new { success = true, data = list, tongSan = tongSoSan });
+                // 2. Đếm tổng số ChuSan hợp lệ
+                var tongSoSan = await _db.ChuSans
+                    .Where(c => c.TaiKhoans.Any(tk => tk.TrangThai == "2"))
+                    .CountAsync();
+
+                return Json(new { success = true, data = list, tongSan = tongSoSan - 1 });
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-
-                return Json(new { success = false, message = "Lỗi server!" });
+                return Json(new { success = false, message = "Lỗi server: " + ex.Message });
             }
         }
 
-        //API tra cứu lịch sử đặt sân 
-        [HttpGet]
+
+    //API tra cứu lịch sử đặt sân 
+    [HttpGet]
         public async Task<IActionResult> TraCuuLichSu(string soDienThoai)
         {
             try

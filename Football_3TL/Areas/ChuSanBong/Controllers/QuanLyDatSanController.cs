@@ -361,6 +361,7 @@ namespace Football_3TL.Areas.ChuSanBong.Controllers
                     TenSan = model.TenSan,
                     TrangThaiThanhToan = "Chưa thanh toán",
                     TrangThaiSan = "Đã đặt"
+                    //thêm tổng thanh toán vào đây để lưu 
                 };
 
                 await _db.ThongTinDatSans.AddAsync(thongTinDatSan);
