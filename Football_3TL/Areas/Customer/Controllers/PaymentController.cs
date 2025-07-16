@@ -122,7 +122,9 @@ namespace Football_3TL.Areas.Customer.Controllers
                     TenSan = model.TenSan,
                     GhiChu = model.GhiChu,
                     HoTenKH = model.HoTenKH, // lưu thêm họ tên khách hàng
-                    SoDienThoaiKH = model.SoDienThoaiKH // lưu thêm số điện thoại khách hàng
+                    SoDienThoaiKH = model.SoDienThoaiKH,
+                    TongThanhToan = model.Amount
+                    // lưu thêm số điện thoại khách hàng
                 };
                 HttpContext.Session.SetObjectAsJson("ThongTinDatSanTam", thongTinDatSanTam);
 
@@ -139,6 +141,8 @@ namespace Football_3TL.Areas.Customer.Controllers
                     Console.WriteLine($"Ghi chú: {thongTinInRa.GhiChu}");
                     Console.WriteLine($"Họ tên KH: {thongTinInRa.HoTenKH}");
                     Console.WriteLine($"SĐT KH: {thongTinInRa.SoDienThoaiKH}");
+                    Console.WriteLine($"Tổng thanh toán: {thongTinInRa.TongThanhToan}");
+
                 }
                 else
                 {
@@ -256,6 +260,7 @@ namespace Football_3TL.Areas.Customer.Controllers
                         MaSan = thongTinDatSanTam.MaSan,
                         TenSan = thongTinDatSanTam.TenSan,
                         GhiChu = thongTinDatSanTam.GhiChu,
+                        TongThanhToan = thongTinDatSanTam.TongThanhToan,
                         ThoiGianDat = DateOnly.FromDateTime(DateTime.Now),
                         TrangThaiThanhToan = "Đã thanh toán",
                         TrangThaiSan = "Đã đặt"

@@ -350,7 +350,7 @@ function modalDatSanTrong(btn) {
     $('#ngayNhanDatSan').val(ngayNhan || "Chưa chọn ngày");
     $('#thoiLuongDatSan').val(soPhut + " Phút");
     $('#khungGioDatSan').val(khungGio || "Chưa chọn khung giờ");
-    $('#tongthanhToanDatSan').val(giaSan * Number(thoiLuong) + " VND");
+    $('#tongthanhToanDatSan').val(giaSan * Number(thoiLuong));
 
     // Gán maSan & tenSan vào nút "Đặt sân" trong modal
     $('#btnDatSanTrong').data('masan', maSan);
@@ -397,7 +397,6 @@ function getDataDatSan(id) {
         dataType: 'json',
         success: function (response) {
             if (response.success) {
-                var tongThanhToan = response.data.gia * (response.data.thoiLuong / 60);
                 // Gán dữ liệu cho modal "Xem Thông Tin"
                 $("#hoTenDaDat").val(response.data.hoVaTen);
                 $("#soDienThoaiDaDat").val(response.data.soDienThoai);
@@ -405,7 +404,7 @@ function getDataDatSan(id) {
                 $("#khungGioDaDat").val(response.data.gioDat);
                 $("#thoiLuongDaDat").val(response.data.thoiLuong);
                 $("#yeuCauDaDat").val(response.data.ghiChu);
-                $("#tongThanhToanDaDat").val(tongThanhToan + " VND");
+                $("#tongThanhToanDaDat").val(response.data.tongThanhToan);
 
                 // Gán dữ liệu cho modal "Thanh Toán"
                 $("#hoTenTT").val(response.data.hoVaTen);
@@ -414,7 +413,7 @@ function getDataDatSan(id) {
                 $("#khungGioTT").val(response.data.gioDat);
                 $("#thoiLuongTT").val(response.data.thoiLuong);
                 $("#yeuCauTT").val(response.data.ghiChu);
-                $("#tongThanhToanTT").val(tongThanhToan + " VND"); 
+                $("#tongThanhToanTT").val(response.data.tongThanhToan); 
 
                 $("#btnThanhToanDatSan").off("click").on("click", function () {
                     thanhToanDatSan(response.data.maDatSan);
@@ -512,6 +511,7 @@ function datSanTrong() {
     let gioNhanGui = gioNhan ? gioNhan + ':00' : null;
     let thoiLuong = parseFloat($('#selectThoiLuong').val().trim()) || 0;
     let ghiChu = $('#ghiChuDatSan').val().trim() || "Không có";
+    var thanhToan = $('#tongthanhToanDatSan').val();
 
     let btn = $('#btnDatSanTrong');
     let tenSan = btn.data('tensan');
@@ -531,7 +531,8 @@ function datSanTrong() {
         ThoiLuong: thoiLuongGui,
         GhiChu: ghiChu,
         MaSan: maSan,
-        TenSan: tenSan
+        TenSan: tenSan,
+        TongThanhToan: thanhToan
     };
     console.log(model);
 

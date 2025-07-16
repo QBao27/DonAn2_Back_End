@@ -10,5 +10,6 @@
         public string? GhiChu { get; set; }
         public string? TenSan { get; set; }
         public int? MaSan { get; set; }
+        public decimal TongThanhtoan { get; set; }
     }
 }
