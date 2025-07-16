@@ -92,8 +92,8 @@ namespace Football_3TL.Areas.ChuSanBong.Controllers
             }
 
             var tongGiaTri = dbContext.ThongTinDatSans
-                .Where(ds => ds.MaChuSan == maChuSan && ds.ThoiLuong.HasValue && ds.MaSanNavigation.Gia.HasValue)
-                .Sum(ds => (ds.ThoiLuong.Value / 60.0) * ds.MaSanNavigation.Gia.Value);
+                  .Where(ds => ds.MaChuSan == maChuSan)
+                 .Sum(ds => ds.TongThanhToan);
 
             string tongGiaTriFormat = tongGiaTri.ToString("N0");
 
@@ -118,7 +118,7 @@ namespace Football_3TL.Areas.ChuSanBong.Controllers
                 {
                     Thang = g.Key.Month,
                     TenSan = g.Key.TenSan,
-                    TongTien = g.Sum(ds => (ds.ThoiLuong.Value / 60.0) * ds.MaSanNavigation.Gia.Value)
+                    TongTien = g.Sum(ds => ds.TongThanhToan)
                 })
                 .OrderBy(g => g.Thang)
                 .ToList();
@@ -144,7 +144,7 @@ namespace Football_3TL.Areas.ChuSanBong.Controllers
            .Select(g => new
            {
               Thang = g.Key,
-              TongTien = g.Sum(ds => (ds.ThoiLuong.Value / 60.0) * ds.MaSanNavigation!.Gia.Value) // Dùng ! để đảm bảo không null
+              TongTien = g.Sum(ds => ds.TongThanhToan) // Dùng ! để đảm bảo không null
            })
            .OrderBy(g => g.Thang)
            .ToList();

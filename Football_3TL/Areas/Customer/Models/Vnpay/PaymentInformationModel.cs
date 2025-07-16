@@ -11,7 +11,7 @@
         public string GhiChu { get; set; }        // Ghi chú
         public string TenSan { get; set; }        // Tên sân
         public string MaSan { get; set; }         // Mã sân
-        public double Amount { get; set; }        // Tổng thanh toán
+        public decimal Amount { get; set; }        // Tổng thanh toán
         public string OrderType { get; set; }     // Loại đơn hàng (nếu có)
         public string OrderDescription { get; set; } // Mô tả đơn hàng (nếu có)
 

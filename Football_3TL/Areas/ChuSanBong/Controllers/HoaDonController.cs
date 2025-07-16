@@ -45,7 +45,7 @@ namespace Football_3TL.Areas.ChuSanBong.Controllers
                                 ? h.MaDatSanNavigation.NgayDat.Value.ToString("dd/MM/yyyy")
                                 : "Chưa có",
                     TongGiaTri = (h.MaDatSanNavigation.MaSanNavigation != null && h.MaDatSanNavigation.ThoiLuong.HasValue)
-                                ? $"{((double)(h.MaDatSanNavigation.MaSanNavigation.Gia * (h.MaDatSanNavigation.ThoiLuong.Value / 60.0))).ToString("N0")} VND"
+                                ? $"{((double)(h.MaDatSanNavigation.TongThanhToan)).ToString("N0")} VND"
                                 : "Chưa có",
                     ThoiGianLapHoaDon = h.ThoiGian.HasValue
                                 ? h.ThoiGian.Value.ToString("dd/MM/yyyy")

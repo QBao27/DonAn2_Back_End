@@ -41,8 +41,8 @@ namespace Football_3TL.Areas.ChuSanBong.Controllers
                     TenSan = d.MaSanNavigation != null ? d.MaSanNavigation.TenSan : "Chưa có",
                     TrangThai = !string.IsNullOrEmpty(d.TrangThaiThanhToan) ? d.TrangThaiThanhToan : "Chưa có",
                     ThanhToan = (d.MaSanNavigation != null && d.ThoiLuong.HasValue)
-                                ? $"{((double)(d.MaSanNavigation.Gia * (d.ThoiLuong.Value / 60.0))).ToString("N0")} VND"
-                                : "Chưa có"
+                                ? d.TongThanhToan
+                                : 0
     
                 }).ToList();
 

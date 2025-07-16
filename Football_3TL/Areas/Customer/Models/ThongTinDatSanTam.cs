@@ -9,7 +9,7 @@
             public int MaSan { get; set; }
             public string TenSan { get; set; }
             public string GhiChu { get; set; }
-
+            public decimal TongThanhToan { get; set; }
             public string HoTenKH { get; set; }   // thêm
             public string SoDienThoaiKH { get; set; } // thêm
     }

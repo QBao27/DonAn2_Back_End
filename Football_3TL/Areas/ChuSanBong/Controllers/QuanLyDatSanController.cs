@@ -243,7 +243,8 @@ namespace Football_3TL.Areas.ChuSanBong.Controllers
                     thongTin.ThoiLuong,
                     thongTin.GhiChu, 
                     thongTin.MaSanNavigation?.Gia,
-                    thongTin.MaDatSan
+                    thongTin.MaDatSan,
+                    thongTin.TongThanhToan
                 };
 
                 return Json(new { success = true, data = dataGet });
@@ -360,7 +361,8 @@ namespace Football_3TL.Areas.ChuSanBong.Controllers
                     MaSan = model.MaSan,
                     TenSan = model.TenSan,
                     TrangThaiThanhToan = "Chưa thanh toán",
-                    TrangThaiSan = "Đã đặt"
+                    TrangThaiSan = "Đã đặt",
+                    TongThanhToan = model.TongThanhtoan,
                     //thêm tổng thanh toán vào đây để lưu 
                 };
 
