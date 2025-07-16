@@ -145,12 +145,57 @@ function modalFogetPassword() {
 //    });
 //}
 
+//function KiemTraEmail() {
+//    var email = $("#emailFogetPassword").val().trim();
+//    if (email == "") {
+//        $("#emailFogetPasswordError").text("Vui lòng nhập email.");
+//        return;
+//    }
+
+//    $.ajax({
+//        url: '/Customer/MailTest/ForgotPassword_CheckEmail',
+//        type: 'POST',
+//        data: { email: email },
+//        success: function (res) {
+//            if (res.success) {
+//                // ✅ Dùng SweetAlert thay alert()
+//                Swal.fire({
+//                    title: 'Đã gửi Email!',
+//                    text: res.message,
+//                    icon: 'success',
+//                    confirmButtonText: 'OK'
+//                }).then((result) => {
+//                    if (result.isConfirmed) {
+//                        modalFogetPassword();
+//                        confirmModal();
+//                    }
+//                });
+//            } else {
+//                $("#emailFogetPasswordError").text(res.message);
+//            }
+//        },
+//        error: function () {
+//            Swal.fire({
+//                title: 'Lỗi!',
+//                text: 'Có lỗi xảy ra!',
+//                icon: 'error',
+//                confirmButtonText: 'OK'
+//            });
+//        }
+//    });
+//}
+
 function KiemTraEmail() {
     var email = $("#emailFogetPassword").val().trim();
+    var $button = $("button[onclick='KiemTraEmail()']");
+
     if (email == "") {
         $("#emailFogetPasswordError").text("Vui lòng nhập email.");
         return;
     }
+
+    // Disable nút
+    $button.prop('disabled', true);
 
     $.ajax({
         url: '/Customer/MailTest/ForgotPassword_CheckEmail',
@@ -158,7 +203,6 @@ function KiemTraEmail() {
         data: { email: email },
         success: function (res) {
             if (res.success) {
-                // ✅ Dùng SweetAlert thay alert()
                 Swal.fire({
                     title: 'Đã gửi Email!',
                     text: res.message,
@@ -181,10 +225,28 @@ function KiemTraEmail() {
                 icon: 'error',
                 confirmButtonText: 'OK'
             });
+        },
+        complete: function () {
+            // Mở lại nút sau khi hoàn tất bất kể thành công hay lỗi
+            $button.prop('disabled', false);
         }
     });
 }
 
+
+$('#forgotPasswordModal').on('hidden.bs.modal', function () {
+    // Xóa giá trị input
+    $('#emailFogetPassword').val('');
+
+    // Xóa thông báo lỗi
+    $('#emailFogetPasswordError').text('');
+});
+
+
+// Khi gõ vào ô email thì xóa lỗi
+$('#emailFogetPassword').on('input', function () {
+    $('#emailFogetPasswordError').text('');
+});
 
 //function KiemTraOtp() {
 //    // Lấy tất cả input OTP

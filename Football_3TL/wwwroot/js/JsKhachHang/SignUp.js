@@ -126,7 +126,7 @@ $(document).ready(function () {
         let emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         if (email && !emailPattern.test(email)) {
             $("#emailSignUpError").text("Email không hợp lệ!");
-            $("#emailSignUp").addClass("input-error");
+            $("#Email").addClass("input-error");
             isValid = false;
         }
 
@@ -134,13 +134,13 @@ $(document).ready(function () {
         let phonePattern = /^[0-9]{10}$/;
         if (phone && !phonePattern.test(phone)) {
             $("#phoneSignUpError").text("Số điện thoại không hợp lệ!");
-            $("#phoneSignUp").addClass("input-error");
+            $("#Phone").addClass("input-error");
             isValid = false;
         }
 
         if(password.length > 0 && password.length < 6){
             $('#passWordSignUpError').text("Mật khẩu phải có ít nhất 6 ký tự!");
-            $('#passWordSignUp').addClass("input-error");
+            $('#PassWord').addClass("input-error");
             isValid = false;
         }
 
@@ -158,7 +158,15 @@ $(document).ready(function () {
         }
 
         if (isValid) {
-            $('#DangKyTK').submit();
+            let formData = $('#DangKyTK').serialize(); // Lấy toàn bộ dữ liệu form
+
+            $.post('/Customer/Account/CreateDangKyPaymentUrl', formData, function (res) {
+                if (res.success) {
+                    window.location.href = res.url;
+                } else {
+                    toastr.warning(res.message);
+                }
+            });
         }
 
         return isValid;
@@ -262,36 +270,36 @@ $("#FullName, #Phone, #Email, #SanBongName, #PassWord, #passWordSignUp2, #diaChi
 //    });
 //}
 
-$('#btnSignUp').click(function (e) {
-    e.preventDefault();
+//$('#btnSignUp').click(function (e) {
+//    e.preventDefault();
 
-    var model = {
-        FullName: $('#FullName').val(),
-        Phone: $('#Phone').val(),
-        Email: $('#Email').val(),
-        SanBongName: $('#SanBongName').val(),
-        DiaChiTinh: $('#DiaChiTinh').val(),
-        DiaChiHuyen: $('#DiaChiHuyen').val(),
-        DiaChiXa: $('#DiaChiXa').val(),
-        DiaChiCuThe: $('#DiaChiCuThe').val(),
-        MaGoi: $('#MaGoi').val(),
-        SoTien: $('#SoTien').val()
-    };
+//    var model = {
+//        FullName: $('#FullName').val(),
+//        Phone: $('#Phone').val(),
+//        Email: $('#Email').val(),
+//        SanBongName: $('#SanBongName').val(),
+//        DiaChiTinh: $('#DiaChiTinh').val(),
+//        DiaChiHuyen: $('#DiaChiHuyen').val(),
+//        DiaChiXa: $('#DiaChiXa').val(),
+//        DiaChiCuThe: $('#DiaChiCuThe').val(),
+//        MaGoi: $('#MaGoi').val(),
+//        SoTien: $('#SoTien').val()
+//    };
 
-    $.ajax({
-        url: '/Customer/Account/CreateDangKyPaymentUrl',
-        type: 'POST',
-        data: model,
-        success: function (result) {
-            if (result.success) {
-                window.location.href = result.url; // Chuyển sang VNPay
-            } else {
-                toastr.warning(result.message, "", { timeOut: 2000 }); // Thông báo lỗi
-            }
-        },
-        error: function () {
-            toastr.error("Có lỗi xảy ra!", "", { timeOut: 2000 }); // Lỗi AJAX
-        }
-    });
-});
+//    $.ajax({
+//        url: '/Customer/Account/CreateDangKyPaymentUrl',
+//        type: 'POST',
+//        data: model,
+//        success: function (result) {
+//            if (result.success) {
+//                window.location.href = result.url; // Chuyển sang VNPay
+//            } else {
+//                toastr.warning(result.message, "", { timeOut: 2000 }); // Thông báo lỗi
+//            }
+//        },
+//        error: function () {
+//            toastr.error("Có lỗi xảy ra!", "", { timeOut: 2000 }); // Lỗi AJAX
+//        }
+//    });
+//});
 

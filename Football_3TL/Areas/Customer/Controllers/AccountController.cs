@@ -9,6 +9,7 @@ using Microsoft.EntityFrameworkCore;
 using Football_3TL.Services.Vnpay;
 using Football_3TL.Helper;
 using Microsoft.VisualStudio.Web.CodeGenerators.Mvc.Templates.BlazorIdentity.Pages.Manage;
+using Football_3TL.Services.Email;
 
 
 namespace Football_3TL.Areas.Customer.Controllers
@@ -23,12 +24,15 @@ namespace Football_3TL.Areas.Customer.Controllers
 
         private readonly IVnPayService _vnPayService;
 
+        private readonly IEmailService _emailService;
+
         //tạo contructor 
-        public AccountController(Football3tlContext db, ILogger<AccountController> log, IVnPayService vnPayService)
+        public AccountController(Football3tlContext db, ILogger<AccountController> log, IVnPayService vnPayService, IEmailService emailService)
         {
             _db = db;
             _log = log;
             _vnPayService = vnPayService;
+            _emailService = emailService;
         }
 
         [HttpPost]
@@ -55,13 +59,22 @@ namespace Football_3TL.Areas.Customer.Controllers
                 {
                     return Json(new { success = false, message = "Thông tin đăng ký không hợp lệ." });
                 }
+                var emailTrung = await _db.ChuSans.AnyAsync(x => x.Email.ToLower() == model.Email.ToLower());
 
-                var exist = await _db.ChuSans
-                .FirstOrDefaultAsync(x => x.SoDienThoai == model.Phone || x.Email.ToLower() == model.Email.ToLower());
+                var sdtTrung = await _db.ChuSans
+                    .AnyAsync(x => x.SoDienThoai == model.Phone);
 
-                if (exist != null)
+                if (emailTrung && sdtTrung)
                 {
-                    return Json(new { success = false, message = "Số điện thoại hoặc Email đã tồn tại!" });
+                    return Json(new { success = false, message = "Email và số điện thoại đã tồn tại!" });
+                }
+                else if (emailTrung)
+                {
+                    return Json(new { success = false, message = "Email đã tồn tại!" });
+                }
+                else if (sdtTrung)
+                {
+                    return Json(new { success = false, message = "Số điện thoại đã tồn tại!" });
                 }
                 // Lưu thông tin ĐĂNG KÝ vào Session
                 HttpContext.Session.SetObjectAsJson("ThongTinDangKyTam", model);
@@ -312,6 +325,27 @@ namespace Football_3TL.Areas.Customer.Controllers
             await _db.LichSus.AddAsync(lichSu);
 
             await _db.SaveChangesAsync();
+
+            // Gửi email xác nhận đăng ký
+            string subject = "Xác nhận đăng ký chủ sân thành công";
+            string body = $@"
+                    <p>Xin chào <strong>{chuSan.HoVaTen}</strong>,</p>
+                    <p>Chúc mừng bạn đã đăng ký thành công sân bóng <strong>{chuSan.TenSanBong}</strong>.</p>
+                    <p><strong>Thời hạn gói:</strong> {thongTinDangKy.NgayBd:dd/MM/yyyy} - {thongTinDangKy.NgayKt:dd/MM/yyyy}</p>
+                    <p><strong>Số tiền đã thanh toán:</strong> {model.SoTien:N0} VND</p>
+                    <p>Bạn có thể sử dụng <b> Số điện thoại </b> hoặc <b> Gmail </b>  để đăng nhập vào hệ thống</p>
+                    <p>Mật khẩu của bạn là: <b> {model.PassWord} </b> </p>
+                    <p>Hệ thống sân bóng <b> FootBall 3Tl</b> xin cảm ơn!</p>
+                ";
+
+            try
+            {
+                await _emailService.SendEmailAsync(chuSan.Email, subject, body);
+            }
+            catch (Exception ex)
+            {
+                _log.LogWarning($"Gửi email thất bại: {ex.Message}");
+            }
 
             return View("~/Areas/Customer/Views/VNPAY/ThanhCong.cshtml");
         }
