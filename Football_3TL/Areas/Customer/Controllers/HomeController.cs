@@ -27,18 +27,65 @@ namespace Football_3TL.Areas.Customer.Controllers
         }
 
         //API lấy danh sách sân bóng
+        //[HttpGet]
+        //public async Task<IActionResult> getDanhSachSan()
+        //{
+        //    try
+        //    {
+        //        // 1. Lấy danh sách các ChuSan có ít nhất 1 TaiKhoan.TrangThai == "1"
+        //        var list = await _db.ChuSans
+        //            .AsNoTracking()
+        //            .Include(c => c.TaiKhoans)         // load collection TaiKhoans
+        //            .Include(c => c.ThongTinBaiDangs)
+        //                .ThenInclude(b => b.HinhAnhBaiDangs)
+        //            .Include(c => c.SanBongs)
+        //            .Where(c => c.TaiKhoans.Any(tk => tk.TrangThai == "2"))
+        //            .Select(c => new modelDanhSachSanBong
+        //            {
+        //                MaChuSan = c.MaChuSan,
+        //                TenSanBong = c.TenSanBong,
+        //                Huyen = c.Huyen,
+        //                Tinh = c.Tinh,
+        //                MaBaiDang = c.ThongTinBaiDangs
+        //                                .Select(b => b.MaBaiDang)
+        //                                .FirstOrDefault(),
+        //                SoSanBong = c.SanBongs.Count(),
+        //                AnhBaiDang = c.ThongTinBaiDangs
+        //                                .SelectMany(b => b.HinhAnhBaiDangs)
+        //                                .Where(img => img.ThuTu == 1)
+        //                                .Select(img => img.HinhAnh)
+        //                                .FirstOrDefault()
+        //            })
+        //             .Skip(1)  // Bỏ hoặc giữ tuỳ nhu cầu
+        //            .ToListAsync();
+
+        //        // 2. Đếm tổng số ChuSan hợp lệ
+        //        var tongSoSan = await _db.ChuSans
+        //            .Where(c => c.TaiKhoans.Any(tk => tk.TrangThai == "2"))
+        //            .CountAsync();
+
+        //        return Json(new { success = true, data = list, tongSan = tongSoSan - 1 });
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        return Json(new { success = false, message = "Lỗi server: " + ex.Message });
+        //    }
+        //}
+
+        // API lấy danh sách sân bóng + Tính số sao TB & số lượng đánh giá
         [HttpGet]
         public async Task<IActionResult> getDanhSachSan()
         {
             try
             {
-                // 1. Lấy danh sách các ChuSan có ít nhất 1 TaiKhoan.TrangThai == "1"
+                // 1. Lấy danh sách ChuSan có ít nhất 1 TaiKhoan.TrangThai == "2"
                 var list = await _db.ChuSans
                     .AsNoTracking()
-                    .Include(c => c.TaiKhoans)         // load collection TaiKhoans
+                    .Include(c => c.TaiKhoans)
                     .Include(c => c.ThongTinBaiDangs)
                         .ThenInclude(b => b.HinhAnhBaiDangs)
                     .Include(c => c.SanBongs)
+                    .Include(c => c.DanhGia) // ✅ Bổ sung Include
                     .Where(c => c.TaiKhoans.Any(tk => tk.TrangThai == "2"))
                     .Select(c => new modelDanhSachSanBong
                     {
@@ -54,9 +101,17 @@ namespace Football_3TL.Areas.Customer.Controllers
                                         .SelectMany(b => b.HinhAnhBaiDangs)
                                         .Where(img => img.ThuTu == 1)
                                         .Select(img => img.HinhAnh)
-                                        .FirstOrDefault()
+                                        .FirstOrDefault(),
+
+                        // ✅ Số sao trung bình
+                        SoSaoTB = c.DanhGia.Any()
+                                    ? c.DanhGia.Average(dg => dg.SoSao) ?? 0
+                                    : 0,
+
+                        // ✅ Số lượng đánh giá
+                        SoDanhGia = c.DanhGia.Count()
                     })
-                     .Skip(1)  // Bỏ hoặc giữ tuỳ nhu cầu
+                    .Skip(1)
                     .ToListAsync();
 
                 // 2. Đếm tổng số ChuSan hợp lệ
@@ -64,7 +119,7 @@ namespace Football_3TL.Areas.Customer.Controllers
                     .Where(c => c.TaiKhoans.Any(tk => tk.TrangThai == "2"))
                     .CountAsync();
 
-                return Json(new { success = true, data = list, tongSan = tongSoSan - 1 });
+                return Json(new { success = true, data = list, tongSan = tongSoSan });
             }
             catch (Exception ex)
             {
@@ -73,8 +128,9 @@ namespace Football_3TL.Areas.Customer.Controllers
         }
 
 
-    //API tra cứu lịch sử đặt sân 
-    [HttpGet]
+
+        //API tra cứu lịch sử đặt sân 
+        [HttpGet]
         public async Task<IActionResult> TraCuuLichSu(string soDienThoai)
         {
             try
