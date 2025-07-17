@@ -25,7 +25,7 @@
                     </div>
                     <div class="col-12 col-md-auto mt-2 mt-md-0">
                         <button type="button" class="btn btn-success w-100 w-md-auto" data-bs-toggle="modal"
-                                data-bs-target="#themKhuyenMaiModal" data-bs-dismiss="modal">
+                                data-bs-target="#themKhuyenMaiModal" data-bs-dismiss="modal" onclick="resetDataThemKM()">
                             Thêm khuyến mãi
                         </button>
                     </div>
@@ -47,20 +47,7 @@
                                     </tr>
                                 </thead>
                                 <tbody id="tableChuongTrinhKhuyenMai">
-                                    <tr>
-                                        <th scope="row">1</th>
-                                        <td>Lễ 30 tháng 4</td>
-                                        <td>12/10/2025</td>
-                                        <td>20/10/2025</td>
-                                        <td>25 %</td>
-                                        <td>Chưa bắt đầu</td>
-                                        <td class="d-flex justify-content-end">
-                                            <button type="button" class="btn btn-warning me-2" onclick="suaChuongTrinhKhuiyenMaiModal()">
-                                                Sửa
-                                            </button>
-                                            <button type="button" class="btn btn-danger" onclick="">Xóa</button>
-                                        </td>
-                                    </tr>
+                                   
                                 </tbody>
                             </table>
                         </div>
@@ -92,22 +79,22 @@
                         <div class="row mt-3">
                             <div class="col-6">
                                 <label for="ngayBatDauChuongTrinh" class="ms-1 mb-1 label-modal">Ngày bắt đầu</label>
-                                <input class="form-control ngayKhuyenMai" style="border-radius: 10px; background-color: white;"
+                                <input class="form-control ngayKhuyenMai" id="ngayBatDauChuongTrinh" style="border-radius: 10px; background-color: white;"
                                 placeholder="Ngày bắt đầu">
-                                <span id="ngayBatDauChuongTrinh" class="text-danger"></span>
+                                <span id="errorNgayBatDauChuongTrinh" class="text-danger"></span>
                             </div>
                             <div class="col-6">
                                 <label for="ngayKetThucChuongTrinh" class="ms-1 mb-1 label-modal">Ngày kết thúc</label>
-                                <input class="form-control ngayKhuyenMai" style="border-radius: 10px; background-color: white;"
+                                <input class="form-control ngayKhuyenMai" id="ngayKetThucChuongTrinh" style="border-radius: 10px; background-color: white;"
                                        placeholder="Ngày kết thúc">
-                                <span id="ngayKetThucChuongTrinh" class="text-danger"></span>
+                                <span id="errorNgayKetThucChuongTrinh" class="text-danger"></span>
                             </div>
                         </div>
                         <div class="row mt-3">
                             <div class="col-12">
                                 <label class="mb-1 ms-1 label-modal">Giảm giá</label>
-                                <input type="text" id="giamGia" class="form-control" placeholder="Nhập % giảm giá">
-                                <span class="error text-danger" id="ErrorgiamGia"></span>
+                                <input type="text" id="giamGiaKhuyenMai" class="form-control" placeholder="Nhập % giảm giá">
+                                <span class="error text-danger" id="errorGiamGiaKhuyenMai"></span>
                             </div>
                         </div>
                     </div>
@@ -116,7 +103,7 @@
                         <div class="row" style="justify-content: flex-end;">
                             <div class="col-12 d-flex justify-content-end" style="width: 160px;">
                                 <button type="button" id="btnDongYKhuyenMai" class="btn btn-success w-100 w-md-auto"
-                                        style="font-size: small;" onclick="">
+                                        style="font-size: small;" onclick="checkDataThemKM()">
                                     Đồng ý
                                 </button>
                             </div>
@@ -140,9 +127,10 @@
                 </div>
                 <div class="modal-body">
                     <div class="container-fluid">
+                        <input type="hidden" id="editMaKm">
                         <div class="row">
                             <div class="col-12">
-                                <label for="tenSan" class="ms-1 mb-1 label-modal">Tên chương trình</label>
+                                <label for="tenChuongTrinhKhuyenMaiSua" class="ms-1 mb-1 label-modal">Tên chương trình</label>
                                 <input type="text" id="tenChuongTrinhKhuyenMaiSua" class="form-control" placeholder="Nhập chương trình">
                                 <span id="errortenChuongTrinhKhuyenMaiSua" class="text-danger"></span>
                             </div>
@@ -150,22 +138,22 @@
                         <div class="row mt-3">
                             <div class="col-6">
                                 <label for="ngayBatDauChuongTrinhSua" class="ms-1 mb-1 label-modal">Ngày bắt đầu</label>
-                                <input class="form-control ngayKhuyenMai" style="border-radius: 10px; background-color: white;"
+                                <input class="form-control ngayKhuyenMai" id="ngayBatDauChuongTrinhSua" style="border-radius: 10px; background-color: white;"
                                        placeholder="Ngày bắt đầu">
-                                <span id="ngayBatDauChuongTrinhSua" class="text-danger"></span>
+                                <span id="errorNgayBatDauChuongTrinhSua" class="text-danger"></span>
                             </div>
                             <div class="col-6">
                                 <label for="ngayKetThucChuongTrinhSua" class="ms-1 mb-1 label-modal">Ngày kết thúc</label>
-                                <input class="form-control ngayKhuyenMai" style="border-radius: 10px; background-color: white;"
+                                <input class="form-control ngayKhuyenMai" id="ngayKetThucChuongTrinhSua" style="border-radius: 10px; background-color: white;"
                                        placeholder="Ngày kết thúc">
-                                <span id="ngayKetThucChuongTrinhSua" class="text-danger"></span>
+                                <span id="errorNgayKetThucChuongTrinhSua" class="text-danger"></span>
                             </div>
                         </div>
                         <div class="row mt-3">
                             <div class="col-12">
                                 <label class="mb-1 ms-1 label-modal">Giảm giá</label>
-                                <input type="text" id="giamGiaSua" class="form-control" placeholder="Nhập % giảm giá">
-                                <span class="error text-danger" id="ErrorgiamGia"></span>
+                                <input type="number" id="giamGiaSua" class="form-control" placeholder="Nhập % giảm giá">
+                                <span class="error text-danger" id="errorGiamGia"></span>
                             </div>
                         </div>
                     </div>
@@ -174,7 +162,7 @@
                         <div class="row" style="justify-content: flex-end;">
                             <div class="col-12 d-flex justify-content-end" style="width: 160px;">
                                 <button type="button" id="btnDongYKhuyenMaiSua" class="btn btn-success w-100 w-md-auto"
-                                        style="font-size: small;" onclick="">
+                                        style="font-size: small;" onclick="checkDataSuaKM()">
                                     Đồng ý
                                 </button>
                             </div>
@@ -189,7 +177,9 @@
 <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
 <script>
     flatpickr(".ngayKhuyenMai", {
-        dateFormat: "d-m-Y",
-        minDate: "today"
+      dateFormat: "Y-m-d",     // giá trị input: 2025-07-17 (ISO)
+      altInput: true,
+      altFormat: "d-m-Y",       // hiển thị: 17-07-2025
+      minDate: "today"
     });
 </script>
