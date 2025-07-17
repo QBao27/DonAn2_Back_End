@@ -1,0 +1,168 @@
+﻿<div class="main" id="content">
+    <nav class="navbar navbar-expand px-4 py-3">
+        <div class="navbar-collapse collapse">
+            <ul class="navbar-nav justify-content-between" style="width: 1380px;">
+                <li>
+                    <h2 style="font-weight: bolder;">Gói đăng ký</h2>
+                </li>
+                <li class="nav-item dropdown">
+                    <a href="#" data-bs-toggle="dropdown" class="nav-icon pe-md-0">
+                        <img src="~/Img/account.png" class="avatar img-fluid" alt="">
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-end rounded" style="width: 180px;">
+                        <div class="row">
+                            <h4 style="font-weight: 600; font-size: larger;" class="ms-2">
+                                @Context.Session.GetString("tenChuSan")
+                            </h4>
+                        </div>
+                        <div class="d-flex">
+                            <a class="ms-2 cusor" style="color: red;" href="/Customer/Account/Logout">Đăng xuất</a>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <main class="content px-3 py-3">
+        <div class="container-fluid">
+            <div>
+                <div class="row justify-content-between mx-1 mb-4">
+                    <div class="col-12 col-md-4">
+                        <div class="input-group align-items-center border border-dark rounded w-100">
+                            <i class="fa-solid fa-magnifying-glass fa-1x ms-2"></i>
+                            <input type="text" id="timKiemGoi" class="form-control input-border border-0" placeholder="Thông tin gói" onkeyup="TimKiemSan()">
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-auto mt-2 mt-md-0">
+                        <button type="button" class="btn btn-success w-100 w-md-auto" data-bs-toggle="modal"
+                                data-bs-target="#themGoiDangKy" data-bs-dismiss="modal" onclick="resetDataThemGoi()">
+                            Thêm gói
+                        </button>
+                    </div>
+                </div>
+
+                <div class="row mt-2">
+                    <div class="col-12">
+                        <div class="table-responsive">
+                            <table class="table">
+                                <thead style="background: #0e2238;">
+                                    <tr>
+                                        <th scope="col" class="col-2">STT</th>
+                                        <th scope="col" class="col-3"><span>Mã gói</span></th>
+                                        <th scope="col" class="col-3">Thời hạn</th>
+                                        <th scope="col" class="col-2">Giá</th>
+                                        <th scope="col" class="col-2"></th>
+                                    </tr>
+                                </thead>
+                                <tbody id="goiDangKyTable">
+                                    <tr>
+                                        <th scope="row">1</th>
+                                        <td>G001</td>
+                                        <td><span>9</span> tháng</></td>
+                                        <td><span>200.000</span> VND</td>
+                                        <td class="d-flex justify-content-end">
+                                            <button type="button" class="btn btn-warning me-2" data-bs-toggle="modal"
+                                                    data-bs-target="#suaGoiDangKy" data-bs-dismiss="modal" onclick="resetErrorDataSuaGoi()">
+                                                Sửa
+                                            </button>
+                                            <button type="button" class="btn btn-danger" onclick="">Xóa</button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    <!-- Phần điều hướng phân trang -->
+    <div class="d-flex justify-content-center">
+        <ul class="pagination" id="pagination"></ul>
+    </div>
+
+
+    <!-- Modal thêm -->
+    <div class="modal fade" id="themGoiDangKy" tabindex="-1" aria-labelledby="them" aria-hidden="true">
+        <div class="modal-dialog modal-fullscreen-xl-down">
+            <div class="modal-content" style="border-radius: 20px;">
+                <div class="modal-header d-flex justify-content-center text-center">
+                    <div>
+                        <h5 style="font-weight: bolder;">Thêm gói đăng ký</h5>
+                    </div>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-12">
+                                <label for="thoiHanGoi" class="ms-1 mb-1 label-modal">Thời hạn</label>
+                                <input type="number" id="thoiHanGoi" class="form-control" placeholder="Nhập số tháng (VD: 9)">
+                                <span id="thoiHanGoiError" class="text-danger"></span>
+                            </div>
+                            <div class="col-12 mt-3 mb-3">
+                                <label for="giaGoiDangKy" class="ms-1 mb-1 label-modal">Giá</label>
+                                <input type="number" id="giaGoiDangKy" class="form-control" placeholder="Nhập giá gói">
+                                <span id="giaGoiDangKyError" class="text-danger"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Nút thêm -->
+                    <div class="container">
+                        <div class="row" style="justify-content: flex-end;">
+                            <div class="col-12 d-flex justify-content-end" style="width: 160px;">
+                                <button type="button" id="btnThemGoiDangKy" class="btn btn-success w-100 w-md-auto"
+                                        style="font-size: small;" onclick="checkDataThemGoi()">
+                                    Thêm sân
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Modal sửa -->
+    <div class="modal fade" id="suaGoiDangKy" tabindex="-1" aria-labelledby="sua" aria-hidden="true">
+        <div class="modal-dialog modal-fullscreen-xl-down">
+            <div class="modal-content" style="border-radius: 20px;">
+                <div class="modal-header d-flex justify-content-center text-center">
+                    <div>
+                        <h5 style="font-weight: bolder;">Sửa gói đăng ký</h5>
+                    </div>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-12">
+                                <label for="thoiHanGoiSua" class="ms-1 mb-1 label-modal">Thời hạn</label>
+                                <input type="number" id="thoiHanGoiSua" class="form-control">
+                                <span id="thoiHanGoiSuaError" class="text-danger"></span>
+                            </div>
+                            <div class="col-12 mt-3">
+                                <label for="giaGoiDangKySua" class="ms-1 mb-1 label-modal">Giá</label>
+                                <input type="number" id="giaGoiDangKySua" class="form-control">
+                                <span id="giaGoiDangKySuaError" class="text-danger"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Footer -->
+                <div class="container my-3">
+                    <div class="row justify-content-end">
+                        <div class="col-12 d-flex justify-content-end" style="width: 160px;">
+                            <button type="button" id="btnSuaGoiDangKy" class="btn btn-success w-100 w-md-auto"
+                                    style="font-size: small;" onclick="checkDataSuaGoi()">
+                                Đồng ý
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
