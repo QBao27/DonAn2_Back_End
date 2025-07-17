@@ -56,19 +56,7 @@
                                     </tr>
                                 </thead>
                                 <tbody id="goiDangKyTable">
-                                    <tr>
-                                        <th scope="row">1</th>
-                                        <td>G001</td>
-                                        <td><span>9</span> tháng</></td>
-                                        <td><span>200.000</span> VND</td>
-                                        <td class="d-flex justify-content-end">
-                                            <button type="button" class="btn btn-warning me-2" data-bs-toggle="modal"
-                                                    data-bs-target="#suaGoiDangKy" data-bs-dismiss="modal" onclick="resetErrorDataSuaGoi()">
-                                                Sửa
-                                            </button>
-                                            <button type="button" class="btn btn-danger" onclick="">Xóa</button>
-                                        </td>
-                                    </tr>
+                                   
                                 </tbody>
                             </table>
                         </div>
@@ -137,7 +125,9 @@
                 </div>
                 <div class="modal-body">
                     <div class="container-fluid">
+
                         <div class="row">
+                            <input type="hidden" id="editMaGoi">
                             <div class="col-12">
                                 <label for="thoiHanGoiSua" class="ms-1 mb-1 label-modal">Thời hạn</label>
                                 <input type="number" id="thoiHanGoiSua" class="form-control">
