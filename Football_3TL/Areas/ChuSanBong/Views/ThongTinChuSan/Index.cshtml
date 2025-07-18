@@ -9,7 +9,7 @@
             </h4>
         </div>
         <div class="d-flex">
-            <a class="ms-2 cusor text-success fw-bold" data-bs-toggle="modal" data-bs-target="#doimk">Thời gian: </a>
+            <a class="ms-2 cusor" style="color: green;" onclick="cacGoiDangKyModal()">Gia hạn: </a>
             <span class="ms-2 fw-bold"> 12 tháng</span>
         </div>
         <div class="d-flex">
@@ -53,6 +53,26 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-success text-white" id="btn_DoiMatKhau" onclick="checkDataDoiMatKhau()">Đổi mật khẩu</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal các gói đăng ký -->
+<div class="modal fade" id="modalCacGoiDangKy">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content" style="border-radius: 10px;">
+            <div class="modal-body">
+                <div class="text-end">
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
+                            onclick=""></button>
+                </div>
+                <div class="d-flex justify-content-center">
+                    <h5 class="modal-title fw-bold">CHỌN GÓI GIA HẠN</h5>
+                </div>
+                <div class="list-group mx-4 mb-4 scroll-contents-GDK" id="listGoiDangKy">
+                    
+                </div>
             </div>
         </div>
     </div>

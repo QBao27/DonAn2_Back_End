@@ -187,3 +187,9 @@ white-space: nowrap;
 .size-gg{
     font-size: large;
 }
+
+.scroll-contents-GDK {
+    height: 320px;
+    overflow-y: scroll;
+    overflow-x: hidden;
+}

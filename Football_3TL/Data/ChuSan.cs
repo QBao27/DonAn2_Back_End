@@ -23,15 +23,13 @@ public partial class ChuSan
 
     public string? DiaChi { get; set; }
 
-    public int? MaKm { get; set; }
-
     public virtual ICollection<DanhGia> DanhGia { get; set; } = new List<DanhGia>();
 
     public virtual ICollection<GiamGiaTheoGio> GiamGiaTheoGios { get; set; } = new List<GiamGiaTheoGio>();
 
-    public virtual ICollection<LichSu> LichSus { get; set; } = new List<LichSu>();
+    public virtual ICollection<KhuyenMai> KhuyenMais { get; set; } = new List<KhuyenMai>();
 
-    public virtual KhuyenMai? MaKmNavigation { get; set; }
+    public virtual ICollection<LichSu> LichSus { get; set; } = new List<LichSu>();
 
     public virtual ICollection<SanBong> SanBongs { get; set; } = new List<SanBong>();
 

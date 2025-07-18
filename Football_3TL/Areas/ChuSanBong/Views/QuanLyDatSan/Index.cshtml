@@ -350,4 +350,34 @@
             updateTimeOptionsForToday();
         }
     });
+
+   
 </script>
+
+@section Scripts {
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        @if (TempData["Message"] != null)
+        {
+            <text>
+                    Swal.fire({
+                        title: 'Thành công!',
+                    text: '@Html.Raw(TempData["Message"])',
+                    icon: 'success',
+                    confirmButtonText: 'OK'
+                                            });
+            </text>
+        }
+        else if (TempData["Error"] != null)
+        {
+            <text>
+                    Swal.fire({
+                        title: 'Thất bại!',
+                    text: text: '@Html.Raw(TempData["Message"])',
+                    icon: 'error',
+                    confirmButtonText: 'OK'
+                                            });
+            </text>
+        }
+    </script>
+}
