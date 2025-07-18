@@ -418,6 +418,7 @@ namespace Football_3TL.Areas.Customer.Controllers
                 }
                 else if(taiKhoan.Quyen == 2)
                 {
+                    _log.LogInformation("Đăng nhập thành công với tài khoản admin");
                     return Json(new { success = true, redirectUrl = Url.Action("Index", "QuanLyTaiKhoan", new { area = "Admin" }) });
                 }
                 else
