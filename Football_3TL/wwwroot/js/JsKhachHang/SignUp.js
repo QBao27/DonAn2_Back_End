@@ -303,3 +303,63 @@ $("#FullName, #Phone, #Email, #SanBongName, #PassWord, #passWordSignUp2, #diaChi
 //    });
 //});
 
+function formatVND(number) {
+    return new Intl.NumberFormat('vi-VN').format(number);
+}
+$('#modalCacGoiDangKy').on('show.bs.modal', function () {
+    $.ajax({
+        url: "/ChuSanBong/GoiDangKy/GetAllGoiDangKy",
+        type: 'GET',
+        success: function (data) {
+            renderGoiDangKy(data);
+        },
+        error: function () {
+            alert('Không tải được gói đăng ký.');
+        }
+    });
+});
+
+function renderGoiDangKy(data) {
+    const $list = $('#listGoiDangKy');
+    $list.empty();
+
+    let html = '';
+    for (let i = 0; i < data.length; i++) {
+        if (i % 2 === 0) {
+            if (i !== 0) html += '</div>';
+            html += '<div class="row mt-3">';
+        }
+
+        html += `
+                <div class="col-6">
+                    <button type="button"
+                            class="btn text-light btn-lg w-100 py-3 shadow btn-chon-goi"
+                            style="background-color: rgb(20, 34, 56); border-radius: 10px;"
+                            data-ma-goi="${data[i].maGoi}"
+                            data-thoi-han="${data[i].thoiHan}"
+                            data-gia="${data[i].gia}">
+                        <input type="hidden" class="MaGoi" value="${data[i].maGoi}" />
+                        <div class="fw-bold">Gói ${data[i].thoiHan} tháng</div>
+                        <div class="Gia">${formatVND(data[i].gia)} VND</div>
+                    </button>
+                </div>
+            `;
+    }
+    html += '</div>';
+    $list.append(html);
+}
+
+$(document).on('click', '.btn-chon-goi', function () {
+    var maGoi = $(this).data('ma-goi');
+    var thoiHan = $(this).data('thoi-han');
+    var gia = $(this).data('gia');
+
+    // Gán giá trị qua modal đăng ký
+    $('#thongTinGoi').text(`Gói: ${formatVND(gia)} VND / ${thoiHan} tháng`);
+    $('#MaGoi').val(maGoi);
+    $('#SoTien').val(gia);
+
+    // Ẩn modal chọn gói, mở modal đăng ký
+    $('#modalCacGoiDangKy').modal('hide');
+    $('#modalDangKy').modal('show');
+});

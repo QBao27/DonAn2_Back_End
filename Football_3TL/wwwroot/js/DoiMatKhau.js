@@ -144,3 +144,88 @@ function doiMatKhau() {
         }
     });
 }
+
+function cacGoiDangKyModal() {
+    $("#modalCacGoiDangKy").modal('toggle');
+
+}
+
+$('#modalCacGoiDangKy').on('show.bs.modal', function () {
+    $.ajax({
+        url: "/ChuSanBong/GoiDangKy/GetAllGoiDangKy",
+        type: 'GET',
+        success: function (data) {
+            console.log("✅ Dữ liệu JSON trả về:", data); // LOG JSON
+            renderGoiDangKy(data);
+        },
+        error: function () {
+            alert('Không tải được gói đăng ký.');
+        }
+    });
+});
+
+function renderGoiDangKy(data) {
+    const $list = $('#listGoiDangKy');
+    $list.empty();
+
+    let html = '';
+    for (let i = 0; i < data.length; i++) {
+        if (i % 2 === 0) {
+            if (i !== 0) html += '</div>';
+            html += '<div class="row mt-3">';
+        }
+
+        html += `
+                <div class="col-6">
+                    <button type="button"
+                            class="btn btnGiaHan text-light btn-lg w-100 py-3 shadow"
+                            style="background-color: rgb(20, 34, 56); border-radius: 10px;"
+                            data-ma-goi="${data[i].maGoi}"
+                            data-thoi-han="${data[i].thoiHan}"
+                            data-gia="${data[i].gia}">
+                        <input type="hidden" class="MaGoi" value="${data[i].maGoi}" />
+                        <div class="fw-bold">Gói ${data[i].thoiHan} tháng</div>
+                        <div class="Gia">${formatVND(data[i].gia)} VND</div>
+                    </button>
+                </div>
+            `;
+    }
+    html += '</div>';
+    $list.append(html);
+}
+
+function formatVND(number) {
+    return new Intl.NumberFormat('vi-VN').format(number);
+}
+
+
+$(document).on('click', '.btnGiaHan', function () {
+    console.log('==> Click Gia Hạn');
+    const maGoi = $(this).data('ma-goi');
+    const thoiHan = $(this).data('thoi-han');
+    const gia = $(this).data('gia');
+
+    console.log({ maGoi, thoiHan, gia });
+
+    $.ajax({
+        url: "/ChuSanBong/GiaHan/CreateGiaHanPaymentUrl",
+        type: 'POST',
+        data: {
+            MaGoi: maGoi,
+            ThoiHan: thoiHan,
+            Gia: gia
+        },
+        success: function (res) {
+            console.log(res);
+            if (res.success) {
+                window.location.href = res.url;
+            } else {
+                alert(res.message || 'Có lỗi!');
+            }
+        },
+        error: function (xhr, status, error) {
+            console.error('AJAX error:', status, error);
+        }
+    });
+});
+

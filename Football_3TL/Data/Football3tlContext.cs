@@ -45,6 +45,8 @@ public partial class Football3tlContext : DbContext
 
     public virtual DbSet<ThongTinDatSan> ThongTinDatSans { get; set; }
 
+   
+
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<ChuSan>(entity =>
@@ -57,15 +59,10 @@ public partial class Football3tlContext : DbContext
             entity.Property(e => e.Email).HasMaxLength(255);
             entity.Property(e => e.HoVaTen).HasMaxLength(255);
             entity.Property(e => e.Huyen).HasMaxLength(100);
-            entity.Property(e => e.MaKm).HasColumnName("MaKM");
             entity.Property(e => e.SoDienThoai).HasMaxLength(20);
             entity.Property(e => e.TenSanBong).HasMaxLength(255);
             entity.Property(e => e.Tinh).HasMaxLength(100);
             entity.Property(e => e.Xa).HasMaxLength(100);
-
-            entity.HasOne(d => d.MaKmNavigation).WithMany(p => p.ChuSans)
-                .HasForeignKey(d => d.MaKm)
-                .HasConstraintName("FK_ChuSan_KhuyenMai");
         });
 
         modelBuilder.Entity<DanhGia>(entity =>
@@ -155,6 +152,10 @@ public partial class Football3tlContext : DbContext
                 .HasMaxLength(100)
                 .HasColumnName("TenKM");
             entity.Property(e => e.TrangThai).HasMaxLength(50);
+
+            entity.HasOne(d => d.MaChuSanNavigation).WithMany(p => p.KhuyenMais)
+                .HasForeignKey(d => d.MaChuSan)
+                .HasConstraintName("FK_KhuyenMai_ChuSan");
         });
 
         modelBuilder.Entity<LichSu>(entity =>

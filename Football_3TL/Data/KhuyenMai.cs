@@ -17,5 +17,7 @@ public partial class KhuyenMai
 
     public string TrangThai { get; set; } = null!;
 
-    public virtual ICollection<ChuSan> ChuSans { get; set; } = new List<ChuSan>();
+    public int? MaChuSan { get; set; }
+
+    public virtual ChuSan? MaChuSanNavigation { get; set; }
 }
