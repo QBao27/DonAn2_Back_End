@@ -464,6 +464,24 @@ function UpdateKM() {
     });
 }
 
+//hàm update trạng thái KM
+function updateTrangKhuyenMai() {
+    $.ajax({
+        url: '/ChuSanBong/KhuyenMai/ChangeStatusAllKhuyenMai', // Đường dẫn API của bạn
+        type: 'POST',
+        success: function (response) {
+            hienThiDanhSachKM();
+        },
+        error: function (xhr, error) {
+            console.error('Lỗi khi cập nhật trạng thái:', error);
+        }
+    });
+}
+
+//5 phút gọi hàm 1 lần 
+setInterval(updateTrangKhuyenMai, 300000);
+
 $(document).ready(function () {
     hienThiDanhSachKM();
+    updateTrangKhuyenMai()
 });

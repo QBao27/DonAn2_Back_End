@@ -56,7 +56,7 @@ namespace Football_3TL.Areas.ChuSanBong.Controllers
             }
         }
 
-        ////API hiển thị data lên modal sửa 
+        //API hiển thị data lên modal sửa 
         [HttpGet]
         public async Task<IActionResult> GetKhuyenMaiById(int id)
         {
@@ -172,9 +172,7 @@ namespace Football_3TL.Areas.ChuSanBong.Controllers
         }
 
 
-
-
-        ////API sửa 
+        //API sửa 
         [HttpPost]
         public async Task<IActionResult> UpdateKhuyenMai([FromBody] KhuyenMai km)
         {
@@ -271,7 +269,7 @@ namespace Football_3TL.Areas.ChuSanBong.Controllers
         }
 
 
-        ////API xóa gói
+        //API xóa gói
         [HttpPost]
         public async Task<IActionResult> DeleteKhuyenMai(int id)
         {
@@ -303,6 +301,44 @@ namespace Football_3TL.Areas.ChuSanBong.Controllers
             {
                 _log.LogError(ex, "Lỗi khi xóa khuyến mãi");
                 return Json(new { success = false, message = "Lỗi khi xóa khuyến mãi: " + ex.Message });
+            }
+        }
+
+        //API thay đổi trạng thái khuyến mãi
+        [HttpPost]
+        public async Task<IActionResult> ChangeStatusAllKhuyenMai()
+        {
+            try
+            {
+                var today = DateOnly.FromDateTime(DateTime.Today);
+                // Lấy toàn bộ khuyến mãi
+                var listKm = await _db.KhuyenMais.ToListAsync();
+
+                foreach (var km in listKm)
+                {
+                    string newStatus;
+                    if (today < km.NgayBd)
+                        newStatus = "Chưa diễn ra";
+                    else if (today > km.NgayKt)
+                        newStatus = "Đã kết thúc";
+                    else
+                        newStatus = "Đang diễn ra";
+
+                    // Chỉ gán khi có sự khác biệt
+                    if (!string.Equals(km.TrangThai, newStatus, StringComparison.OrdinalIgnoreCase))
+                    {
+                        km.TrangThai = newStatus;
+                        _db.KhuyenMais.Update(km);
+                    }
+                }
+
+                await _db.SaveChangesAsync();
+                return Json(new { success = true, message = "Đã cập nhật trạng thái cho tất cả khuyến mãi." });
+            }
+            catch (Exception ex)
+            {
+                _log.LogError(ex, "Lỗi khi cập nhật trạng thái tất cả khuyến mãi");
+                return Json(new { success = false, message = "Lỗi khi cập nhật trạng thái: " + ex.Message });
             }
         }
 
