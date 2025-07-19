@@ -1,11 +1,14 @@
 ﻿using Football_3TL.Areas.ChuSanBong.Models;
 using Football_3TL.Data;
+using Football_3TL.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace Football_3TL.Areas.ChuSanBong.Controllers
 {
     [Area("ChuSanBong")]
+    [CheckGoiHetHan]
+    [CheckGoiHetHan]
     public class QuanLySanController : Controller
     {
         private readonly Football3tlContext dbContext;
@@ -13,6 +16,8 @@ namespace Football_3TL.Areas.ChuSanBong.Controllers
         {
             this.dbContext = dbContext;
         }
+
+        
         public IActionResult Index()
         {
             return View();

@@ -1,5 +1,6 @@
 ﻿using Football_3TL.Binders;
 using Football_3TL.Data;
+using Football_3TL.Services;
 using Football_3TL.Services.Email;
 using Football_3TL.Services.Vnpay;
 using Microsoft.EntityFrameworkCore;
@@ -28,6 +29,9 @@ builder.Services.AddScoped<IVnPayService, VnPayService>();
 
 // Connect EMail
 builder.Services.AddScoped<IEmailService, EmailService>();
+
+// Đăng ký BackgroundService
+builder.Services.AddHostedService<CheckTrangThaiBackgroundService>();
 
 
 //Đăng ký kết nối csdl

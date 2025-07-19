@@ -109,126 +109,6 @@ namespace Football_3TL.Areas.Customer.Controllers
             }
         }
 
-
-        //Hàm đăng ký
-        //[HttpPost] //dùng formbody khi gửi dữ liệu bằng json or ajax chứ k phải trong from
-        //public async Task<IActionResult> SignUp([FromBody] modelSignUp model)
-        //{
-        //    try
-        //    {
-        //        _log.LogInformation("Bắt đầu quá trình đăng ký với email: {Email}", model?.Email);
-        //        //kiểm tra dữ liệu 
-        //        if (model == null)
-        //        {
-        //            _log.LogWarning("Đăng ký thất bại do dữ liệu không hợp lệ.");
-        //            return Json(new { success = false, message = "Dữ liệu không hợp lệ!" });
-        //        }
-
-        //        if (string.IsNullOrEmpty(model.FullName) || string.IsNullOrEmpty(model.Email) || string.IsNullOrEmpty(model.Phone) || string.IsNullOrEmpty(model.Password) || string.IsNullOrEmpty(model.ConfirmPassword) || string.IsNullOrEmpty(model.Communes) || string.IsNullOrEmpty(model.Province) || string.IsNullOrEmpty(model.PecificAddress))
-        //        {
-        //            _log.LogWarning("Đăng ký thất bại do dữ liệu không hợp lệ.");
-        //            return Json(new { success = false, message = "Dữ liệu bị thiếu!" });
-        //        }
-
-        //        if (_db.ChuSans.Any(u => u.Email == model.Email || u.SoDienThoai == model.Phone))
-        //        {
-        //            _log.LogWarning("Đăng ký thất bại do dữ liệu không hợp lệ.");
-        //            return Json(new { success = false, message = "Tài khoản đã tồn tại!" });
-        //        }
-
-        //        if (model.Password != model.ConfirmPassword)
-        //        {
-        //            _log.LogWarning("Đăng ký thất bại do dữ liệu không hợp lệ.");
-        //            return Json(new { success = false, message = "Mật khẩu xác nhận không khớp!" });
-        //        }
-
-        //        //mã hóa mật khẩu
-        //        string password = HashPassword(model.Password);
-
-        //        //Tạo chủ sân mới
-        //        var chuSan = new ChuSan
-        //        {
-        //            HoVaTen = model.FullName,
-        //            SoDienThoai = model.Phone,
-        //            Email = model.Email,
-        //            TenSanBong = model.NameSanBong,
-        //            Tinh = model.Province,
-        //            Huyen = model.District,
-        //            Xa = model.Communes,
-        //            DiaChi = model.PecificAddress,
-        //        };
-        //        _log.LogInformation("Tạo chủ sân thành công với ID: {MaChuSan}", chuSan.MaChuSan);
-        //        await _db.ChuSans.AddAsync(chuSan);
-        //        await _db.SaveChangesAsync();
-
-        //        //Tạo tài khoản mới
-        //        var taiKhoan = new TaiKhoan
-        //        {
-        //            MaChuSan = chuSan.MaChuSan,
-        //            MatKhau = password,
-        //            Quyen = 1,
-        //            TrangThai = "2"
-        //        };
-
-        //        await _db.TaiKhoans.AddAsync(taiKhoan);
-        //        await _db.SaveChangesAsync();
-        //        _log.LogInformation("Tạo tài khoản cho chủ sân với ID: {MaTaiKhoan}", taiKhoan.MaTaiKhoan);
-
-        //        //Tạo thông tin bài đăng mới 
-        //        // Lấy mã bài đăng lớn nhất hiện tại
-        //        var lastMaBaiDang = await _db.ThongTinBaiDangs
-        //            .OrderByDescending(x => x.MaBaiDang)
-        //            .Select(x => x.MaBaiDang)
-        //            .FirstOrDefaultAsync();
-
-        //        string newMaBaiDang = "BD001"; // Mặc định nếu chưa có bài đăng nào
-
-        //        if (!string.IsNullOrEmpty(lastMaBaiDang))
-        //        {
-        //            // Tách phần số phía sau "BD"
-        //            int number = int.Parse(lastMaBaiDang.Substring(2));
-        //            number++; // tăng lên 1
-        //            newMaBaiDang = "BD" + number.ToString("D3"); // định dạng về BD00x
-        //        }
-
-        //        // Tạo mới bài đăng
-        //        var baiDang = new ThongTinBaiDang
-        //        {
-        //            MaBaiDang = newMaBaiDang,
-        //            GioMoCua = 6,
-        //            GioDongCua = 22,
-        //            MaChuSan = chuSan.MaChuSan
-        //        };
-
-        //        await _db.ThongTinBaiDangs.AddAsync(baiDang);
-        //        await _db.SaveChangesAsync();
-
-        //        //Tạo 4 hình ảnh mặc định
-        //        var hinhAnhs = new List<HinhAnhBaiDang>();
-        //        for (int i = 1; i <= 4; i++)
-        //        {
-        //            hinhAnhs.Add(new HinhAnhBaiDang
-        //            {
-        //                MaBaiDang = baiDang.MaBaiDang,
-        //                HinhAnh = $"/Img/anhSanBongDefault.png",  // pattern chung
-        //                ThuTu = i
-        //            });
-        //        }
-
-        //        // Lưu vào database
-        //        _db.HinhAnhBaiDangs.AddRange(hinhAnhs);
-        //        await _db.SaveChangesAsync();
-
-
-        //        return Json(new { success = true, message = "Tạo tài khoản thành công!" });
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        _log.LogError(ex, "Lỗi khi đăng ký");
-        //        return Json(new { success = false, message = "Lỗi server, vui lòng thử lại sao" });
-        //    }
-        //}
-
         public async Task<IActionResult> PaymentReturn()
         {
             var response = _vnPayService.PaymentExecute(Request.Query);
@@ -311,7 +191,7 @@ namespace Football_3TL.Areas.Customer.Controllers
                 MaGoi = int.Parse(model.MaGoi),
                 NgayBd = DateTime.Now,
                 NgayKt = DateTime.Now.AddMonths(6),
-                TrangThai = "Đang hoạt động"
+                TrangThai = "1"
             };
             await _db.ThongTinDangKies.AddAsync(thongTinDangKy);
 

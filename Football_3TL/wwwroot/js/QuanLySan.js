@@ -9,8 +9,14 @@ function LoadSanBong() {
         type: 'GET',
         dataType: 'json',
         success: function (data) {
-            if (data.error) {
-                alert(data.error);
+            if (data.expired) {
+                // Bị chặn, không làm gì nữa
+                return;
+            }
+
+            if (!Array.isArray(data)) {
+                console.error("Dữ liệu không phải mảng:", data);
+                alert("Dữ liệu lỗi.");
                 return;
             }
 
@@ -23,6 +29,7 @@ function LoadSanBong() {
         }
     });
 }
+
 
 // Hàm hiển thị danh sách sân theo trang
 function renderTable() {

@@ -13,6 +13,11 @@
                 let tableBody = $("#HoaDonTable");
                 tableBody.empty();
 
+                if (data.expired) {
+                    // Bị chặn, không làm gì nữa
+                    return;
+                }
+
                 if (data.length === 0) {
                     tableBody.append(`<tr><td colspan="6" class="text-center">Không có dữ liệu</td></tr>`);
                     $("#pagination-HoaDon").empty();

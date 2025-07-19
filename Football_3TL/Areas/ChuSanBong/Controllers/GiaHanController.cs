@@ -96,7 +96,7 @@ namespace Football_3TL.Areas.ChuSanBong.Controllers
                     MaGoi = thongTinGiaHan.MaGoi,
                     NgayBd = DateTime.Now,
                     NgayKt = DateTime.Now.AddMonths(thongTinGiaHan.ThoiHan),
-                    TrangThai = "Đang hoạt động"
+                    TrangThai = "1"
                 };
                 dbContext.ThongTinDangKies.Add(dangKy);
             }
@@ -104,16 +104,27 @@ namespace Football_3TL.Areas.ChuSanBong.Controllers
             {
                 if (dangKy.MaGoi == thongTinGiaHan.MaGoi)
                 {
-                    // 👉 Cùng gói: cộng thêm tháng
                     dangKy.NgayKt = dangKy.NgayKt.AddMonths(thongTinGiaHan.ThoiHan);
                 }
                 else
                 {
-                    // 👉 Khác gói: đổi MaGoi và cộng tháng từ NgayKt hiện tại
                     dangKy.MaGoi = thongTinGiaHan.MaGoi;
                     dangKy.NgayKt = dangKy.NgayKt.AddMonths(thongTinGiaHan.ThoiHan);
                 }
+
+                var now = DateTime.Now;
+
+                if (dangKy.NgayKt >= now)
+                {
+                    dangKy.TrangThai = "1";
+                }
+                else
+                {
+                    // Vẫn hết hạn thì kệ
+                }
             }
+
+
 
             // Thêm lịch sử
             var lichSu = new LichSu()
@@ -132,6 +143,48 @@ namespace Football_3TL.Areas.ChuSanBong.Controllers
             TempData["Message"] = "Gia hạn thành công!";
             return RedirectToAction("Index", "QuanLyDatSan", new { area = "ChuSanBong" });
         }
+
+        [HttpGet]
+        public async Task<IActionResult> GetThoiHan()
+        {
+            var maChuSan = HttpContext.Session.GetInt32("maChuSan");
+
+            if (maChuSan == null)
+            {
+                return Json(new { success = false, message = "Không tìm thấy MaChuSan trong session." });
+            }
+
+            var thongTin = await dbContext.ThongTinDangKies
+                .Where(x => x.MaChuSan == maChuSan && x.TrangThai == "1")
+                .OrderByDescending(x => x.NgayKt)
+                .FirstOrDefaultAsync();
+
+            if (thongTin == null)
+                return Json(new { success = false, message = "Không tìm thấy thông tin." });
+
+            var now = DateTime.Now;
+            var remaining = (thongTin.NgayKt - now).TotalDays;
+
+            string result;
+
+            if (remaining >= 30)
+            {
+                int months = (int)(remaining / 30);
+                result = $"{months} tháng";
+            }
+            else if (remaining > 0)
+            {
+                int days = (int)Math.Ceiling(remaining);
+                result = $"{days} ngày";
+            }
+            else
+            {
+                result = "Hết hạn";
+            }
+
+            return Json(new { success = true, thoiHan = result });
+        }
+
 
     }
 }

@@ -1,6 +1,7 @@
 ﻿using Football_3TL.Areas.ChuSanBong.Models;
 using Football_3TL.Areas.Customer.Controllers;
 using Football_3TL.Data;
+using Football_3TL.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
@@ -9,6 +10,7 @@ using NuGet.Versioning;
 namespace Football_3TL.Areas.ChuSanBong.Controllers
 {
     [Area("ChuSanBong")]
+    [CheckGoiHetHan]
     public class QuanLyDatSanController : Controller
     {
         //thay thế cho database

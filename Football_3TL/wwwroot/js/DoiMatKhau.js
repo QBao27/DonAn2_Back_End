@@ -229,3 +229,16 @@ $(document).on('click', '.btnGiaHan', function () {
     });
 });
 
+$(document).ready(function () {
+    $.ajax({
+        url: "/ChuSanBong/GiaHan/GetThoiHan",
+        type: 'GET',
+        success: function (res) {
+            if (res.success) {
+                $('#ThoiHanChuSan').text(res.thoiHan);
+            } else {
+                $('#ThoiHanChuSan').text('Không có');
+            }
+        }
+    });
+});

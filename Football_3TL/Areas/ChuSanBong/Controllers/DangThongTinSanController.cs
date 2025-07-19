@@ -1,5 +1,6 @@
 ﻿using Football_3TL.Areas.ChuSanBong.Models;
 using Football_3TL.Data;
+using Football_3TL.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
@@ -10,6 +11,7 @@ using static NuGet.Packaging.PackagingConstants;
 namespace Football_3TL.Areas.ChuSanBong.Controllers
 {
     [Area("ChuSanBong")]
+    [CheckGoiHetHan]
     public class DangThongTinSanController : Controller
     {
         private readonly Football3tlContext dbContext;
