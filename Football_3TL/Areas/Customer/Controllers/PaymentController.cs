@@ -6,6 +6,7 @@ using Football_3TL.Libraries;
 using Football_3TL.Models;
     using Football_3TL.Services.Vnpay;
     using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 namespace Football_3TL.Areas.Customer.Controllers
 {
@@ -111,44 +112,56 @@ namespace Football_3TL.Areas.Customer.Controllers
                     return Json(new { success = false, message = "Thông tin khách hàng không hợp lệ." });
                 }
 
+                Console.WriteLine("==== DỮ LIỆU NHẬN TỪ CLIENT ====");
+                Console.WriteLine($"HoTenKH: {model.HoTenKH}");
+                Console.WriteLine($"SoDienThoaiKH: {model.SoDienThoaiKH}");
+                Console.WriteLine($"MaChuSan: {model.MaChuSan}");
+                Console.WriteLine($"NgayDat (string): {model.NgayDat}");
+                Console.WriteLine($"Amount (gốc): {model.Amount}");
+
+                decimal tongThanhToan = model.Amount;
+
+                // Kiểm tra khuyến mãi
+                var ngayDatParsed = DateOnly.Parse(model.NgayDat);
+                var khuyenMai = await _db.KhuyenMais
+                    .Where(km => km.MaChuSan == int.Parse(model.MaChuSan) &&
+                                 km.NgayBd <= ngayDatParsed &&
+                                 km.NgayKt >= ngayDatParsed && km.TrangThai == "Đang diễn ra")
+                    .OrderByDescending(km => km.GiamGia)
+                    .FirstOrDefaultAsync();
+
+                if (khuyenMai != null)
+                {
+                    var giamGia = tongThanhToan * (khuyenMai.GiamGia / 100);
+                    tongThanhToan -= giamGia;
+                }
+                else
+                {
+                    Console.WriteLine("Không có khuyến mãi áp dụng.");
+                }
+
                 // Lưu thông tin đặt sân tạm vào session
                 var thongTinDatSanTam = new ThongTinDatSanTam
                 {
                     MaChuSan = int.Parse(model.MaChuSan),
-                    NgayDat = DateOnly.Parse(model.NgayDat),
+                    NgayDat = ngayDatParsed,
                     GioDat = TimeOnly.Parse(model.GioDat),
                     ThoiLuong = (int)model.ThoiLuong,
                     MaSan = int.Parse(model.MaSan),
                     TenSan = model.TenSan,
                     GhiChu = model.GhiChu,
-                    HoTenKH = model.HoTenKH, // lưu thêm họ tên khách hàng
+                    HoTenKH = model.HoTenKH,
                     SoDienThoaiKH = model.SoDienThoaiKH,
-                    TongThanhToan = model.Amount
-                    // lưu thêm số điện thoại khách hàng
+                    TongThanhToan = tongThanhToan
                 };
+
+                model.Amount = tongThanhToan;
+
+                Console.WriteLine("Gia: ", model.Amount);
+
                 HttpContext.Session.SetObjectAsJson("ThongTinDatSanTam", thongTinDatSanTam);
 
                 var thongTinInRa = HttpContext.Session.GetObjectFromJson<ThongTinDatSanTam>("ThongTinDatSanTam");
-                if (thongTinInRa != null)
-                {
-                    Console.WriteLine("=== Thông tin đặt sân từ session ===");
-                    Console.WriteLine($"Mã chủ sân: {thongTinInRa.MaChuSan}");
-                    Console.WriteLine($"Ngày đặt: {thongTinInRa.NgayDat}");
-                    Console.WriteLine($"Giờ đặt: {thongTinInRa.GioDat}");
-                    Console.WriteLine($"Thời lượng: {thongTinInRa.ThoiLuong}");
-                    Console.WriteLine($"Mã sân: {thongTinInRa.MaSan}");
-                    Console.WriteLine($"Tên sân: {thongTinInRa.TenSan}");
-                    Console.WriteLine($"Ghi chú: {thongTinInRa.GhiChu}");
-                    Console.WriteLine($"Họ tên KH: {thongTinInRa.HoTenKH}");
-                    Console.WriteLine($"SĐT KH: {thongTinInRa.SoDienThoaiKH}");
-                    Console.WriteLine($"Tổng thanh toán: {thongTinInRa.TongThanhToan}");
-
-                }
-                else
-                {
-                    Console.WriteLine("Không lấy được thông tin từ session.");
-                }
-
                 // Tạo URL thanh toán VNPay
                 var url = _vnPayService.CreatePaymentUrl(model, HttpContext);
 
@@ -160,6 +173,7 @@ namespace Football_3TL.Areas.Customer.Controllers
                 return Json(new { success = false, message = "Lỗi tạo thanh toán." });
             }
         }
+
 
 
 

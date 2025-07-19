@@ -6,14 +6,26 @@
         <div class="mx-5 py-4">
             <!-- reponsive Phần Tên sân bóng + icon -->
             <div class="row">
-                <h4 class="fw-bold" id="TenSanBong">Sân bóng đá KAKA Sport khu đô thị Hòa Quý</h4>
+                <div class="d-flex align-items-center justify-content-between mb-3">
+                    <h4 class="fw-bold mb-0" id="TenSanBong">
+                        Sân bóng đá KAKA Sport khu đô thị Hòa Quý
+                    </h4>
+                    <div id="promoInfo" style="display: none; margin-bottom: 0;">
+                        <!-- Nội dung khuyến mãi ở đây -->
+                    </div>
+                    <div>
+                        <!-- Nội dung khuyến mãi ở đây -->
+                    </div>
+                </div>
 
-                <div class="col-md-6 d-flex align-items-center flex-wrap">
-                    <img src="~/Img/map-pin.svg" alt="" style="width: 24px; height: 27px;">
-                    <div class="ms-2" id="DiaChi" style="font-size: large;">
+                <div class="col-md-6 d-flex align-items-center flex-nowrap">
+                    <img src="~/Img/map-pin.svg" alt=""
+                         style="width: 24px; height: 27px;" />
+                    <div class="ms-2" id="DiaChi" style="font-size: large; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
                         Quảng Nam, Phường Hòa Quý, Quận Ngũ Hành Sơn, Đà Nẵng
                     </div>
                 </div>
+
                 <div class="col-md-6 d-flex justify-content-md-end justify-content-start align-items-center flex-wrap mt-2 mt-md-0">
                     <div style="font-size: large;"> Đánh giá: </div>
                     <div class="ms-2" style="font-size: large;"><span id="averageRating1">5</span>/5</div>
@@ -131,7 +143,7 @@
                             </div>
                             <div>
                                 <select class="form-select form-control mt-3" style="border-radius: 10px;" id="selectSan" required>
-                                    <option value="">Chưa có sân</option>
+                                    <option value="0">Chưa có sân</option>
                                 </select>
                                 <input type="hidden" name="TenSan" id="hiddenTenSan" />
                                 <input type="hidden" name="MaSan" id="hiddenMaSan" />
@@ -142,7 +154,7 @@
                                 <input type="hidden" name="GioDat" id="hiddenGioDat" />
                             </div>
                             <div class="d-flex flex-wrap mt-2">
-                                <div style="font-weight: 700;font-size: large;"> Tổng thanh toán:  </div>
+                                <div style="font-weight: 700;font-size: large;"> Thanh toán:  </div>
                                 <div class="ms-2 fw-bold text-success" style="font-size: large;" id="TongThanhToan"></div>
                                 <input type="hidden" name="Amount" id="Amount" />
                             </div>

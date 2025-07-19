@@ -847,6 +847,7 @@ function setupDatSan() {
     // Khi người dùng đổi ngày
     $('#myID').on('change', function () {
         fetchSanTrong();
+        $('#TongThanhToan').text('');
     });
 
     // Khi người dùng click chọn giờ (giả sử .giodat là khung giờ)
@@ -896,18 +897,7 @@ $(document).ready(function () {
 });
 
 
-$('#selectSan').on('change', function () {
-    const selectedOption = $(this).find('option:selected');
-    const gia = selectedOption.data('gia') || 0;
-    const soGio = $('#timeSelect').val(); // giả sử bạn có dropdown chọn "1 giờ", "1.5 giờ"...
 
-    let heSo = 1;
-    if (soGio.includes("1.5")) heSo = 1.5;
-    else if (soGio.includes("2")) heSo = 2;
-
-    const tong = gia * heSo;
-    $('#TongThanhToan').text(tong.toLocaleString('vi-VN') + 'đ');
-});
 
 //$(document).ready(function () {
 //    $('#selectSan').on('change', function () {
@@ -988,6 +978,7 @@ document.addEventListener("DOMContentLoaded", function () {
         var tongThanhToanText = tongThanhToan.innerText;
         var amount = tongThanhToanText.replace(/\./g, '').replace('đ', '').trim();
         amountInput.value = amount;
+        console.log("gias", amountInput.value)
     }
 
     // Hàm update Giờ Đặt (chỉ lấy giờ bắt đầu, format HH:mm:ss)
@@ -1041,15 +1032,79 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     // Cập nhật ban đầu
-    updateAmount();
     updateGioDat();
     updateSan();
     updateThoiLuong();
     updateNgayDat();
 
     // Tự động lắng nghe thay đổi
-    var observer = new MutationObserver(updateAmount);
-    observer.observe(tongThanhToan, { childList: true, characterData: true, subtree: true });
+    //var observer = new MutationObserver(updateAmount);
+    //observer.observe(tongThanhToan, { childList: true, characterData: true, subtree: true });
+
+    $('#selectSan').on('change', function () {
+        const maSan = $(this).val();
+        if (maSan != 0) {
+            const selectedOption = $(this).find('option:selected');
+            const gia = selectedOption.data('gia') || 0;
+            const soGio = $('#timeSelect').val(); // giả sử bạn có dropdown chọn "1 giờ", "1.5 giờ"...
+
+            let heSo = 1;
+            if (soGio.includes("1.5")) heSo = 1.5;
+            else if (soGio.includes("2")) heSo = 2;
+
+            const tong = gia * heSo;
+            $('#TongThanhToan').text(tong.toLocaleString('vi-VN') + 'đ');
+            ThayDoiGia(tong);
+        }
+    });
+
+    function ThayDoiGia(tongThanhToan) {
+        var maChuSan = $('#MaChuSan').val();
+        var ngayNhan = formatNgayNhan($('#hiddenNgayDat').val()); // Định dạng: yyyy-MM-dd
+        $.ajax({
+            url: "/ChuSanBong/KhuyenMai/ChangePrice",
+            type: "GET",
+            data: {
+                maChuSan: maChuSan,
+                ngayNhan: ngayNhan
+            },
+            success: function (response) {
+                if (response.success && response.data) {
+                    var giamGia = response.data;
+                    var giaSauGiam = tongThanhToan - (tongThanhToan * giamGia / 100);
+                    $('#Amount').val(tongThanhToan);
+                    console.log($('#Amount').val());
+                    // Hiển thị giá gạch và giá mới
+                    $('#TongThanhToan').html(`
+    <span style="font-size: 0.6rem; text-decoration: line-through; color: #dc3545; margin-right: 6px;">
+        ${tongThanhToan.toLocaleString()} VND
+    </span>
+    <span style="font-size: 1.2rem; color: #28a745; font-weight: 700;">
+        ${giaSauGiam.toLocaleString()} VND
+    </span>
+`);
+                }
+                else {
+                    updateAmount();
+                }
+            },
+            error: function (xhr, status, error) {
+                $('#promoInfo').hide();
+                toastr.error("Có lỗi khi lấy thông tin khuyến mãi.");
+                console.error(xhr, status, error);
+            }
+        });
+    }
+    function formatNgayNhan(dateString) {
+        var date = new Date(dateString);
+        if (isNaN(date.getTime())) return null;
+
+        var year = date.getFullYear();
+        var month = (date.getMonth() + 1).toString().padStart(2, '0');
+        var day = date.getDate().toString().padStart(2, '0');
+
+        return `${year}-${month}-${day}`;
+    }
 
     var observerGioDat = new MutationObserver(updateGioDat);
     observerGioDat.observe(timeValue, { childList: true, characterData: true, subtree: true });

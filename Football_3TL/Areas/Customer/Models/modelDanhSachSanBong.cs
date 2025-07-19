@@ -12,5 +12,6 @@
 
         public double SoSaoTB { get; set; }
         public int SoDanhGia { get; set; }
+        public decimal GiamGia { get; internal set; }
     }
 }
