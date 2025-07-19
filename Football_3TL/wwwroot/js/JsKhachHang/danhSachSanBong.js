@@ -41,7 +41,6 @@ function fetchDanhSachSan() {
 
 
 
-// 3. Hàm hiển thị sân theo trang
 function displaySanBong(page = currentPage) {
     const $sanList = $('#listSanBong');
     $sanList.empty();
@@ -52,48 +51,76 @@ function displaySanBong(page = currentPage) {
     const paginatedItems = sanBongs.slice(start, end);
 
     paginatedItems.forEach(san => {
-
-        const soSao = san.soSaoTB % 1 === 0 ? san.soSaoTB : san.soSaoTB.toFixed(1);
+        const soSao = san.soSaoTB % 1 === 0
+            ? san.soSaoTB
+            : san.soSaoTB.toFixed(1);
         const soDanhGia = san.soDanhGia || 0;
 
+        // 1. Xây dựng phần Giảm giá (chỉ khi có giamGia > 0)
+        let discountHtml = '';
+        if (san.giamGia > 0) {
+            discountHtml = `
+                <div>
+                  <span class="px-2 pb-1 rounded"
+                        style="background-color: red; color: yellow; font-weight: bold;">
+                    Giảm giá: ${san.giamGia}%
+                  </span>
+                </div>`;
+        }
+
+        // 2. Render card
         $sanList.append(`
             <div class="col-xl-3 col-lg-4 col-md-6 pe-0 pb-3">
-                <div class="card p-2 border-0 shadow-lg h-100 card-hover"
-                    style="border-radius: 10px !important;">
-                    <img src="${san.anhBaiDang || '/Img/anhSanBongDefault.png'}" 
-                        class="card-img-top img-hover" 
-                        style="border-radius: 10px !important; width: 100%; height: 260px; object-fit: cover;"
-                        alt="Ảnh sân bóng">
-                    <div class="card-body px-0 pb-1 pt-2">
-                        <span class="card-title fw-bold mb-0 text-truncate d-inline-block" style="font-size: large; width: 95%;">${san.tenSanBong}</span>
-                        <div class="card-text m-0"> 
-                            <div class="d-flex">
-                                <span class="me-1 flex-shrink-0">Khu vực: </span>
-                                <span class="text-truncate flex-grow-1" style="max-width: 95%;"> ${san.huyen} - ${san.tinh}</span>
-                            </div>
-                            <div class="mt-1 mb-1">
-                                <span class="me-1">Số sân:</span> <span>${san.soSanBong}</span>
-                            </div>
-                        </div>
-                        <div class="d-flex align-items-center justify-content-between">
-                            <div>
-                                <span>Số đánh giá:</span>
-                                <span class="me-1">${soDanhGia}</span>
-                            </div>
-                            <div>
-                                <span>${soSao}</span>/5
-                                <img src="/Img/star-svgrepo-com.svg" alt="" style="width: 15px;height: 15px;" class="ms-1">
-                            </div>
-                        </div>
-                        <a href="/Customer/DatSan/Index?maChuSan=${san.maChuSan}" class="btn btn-primary w-100 mt-3"
-                            style="border-radius: 10px !important;background-color: #0e2238; height:43px;">Đặt
-                            nhanh kẻo muộn</a>
+              <div class="card p-2 border-0 shadow-lg h-100 card-hover"
+                   style="border-radius: 10px !important;">
+                <img src="${san.anhBaiDang || '/Img/anhSanBongDefault.png'}" 
+                     class="card-img-top img-hover" 
+                     style="border-radius: 10px !important; width: 100%; height: 260px; object-fit: cover;"
+                     alt="Ảnh sân bóng">
+                <div class="card-body px-0 pb-1 pt-2">
+                  <span class="card-title fw-bold mb-0 text-truncate d-inline-block"
+                        style="font-size: large; width: 95%;">
+                    ${san.tenSanBong}
+                  </span>
+                  <div class="card-text m-0"> 
+                    <div class="d-flex">
+                      <span class="me-1 flex-shrink-0">Khu vực: </span>
+                      <span class="text-truncate flex-grow-1" style="max-width: 95%;">
+                        ${san.huyen} - ${san.tinh}
+                      </span>
                     </div>
+                    <div class="mt-1 mb-1 d-flex justify-content-between">
+                      <div>
+                        <span class="me-1">Số sân:</span> <span>${san.soSanBong}</span>
+                      </div>
+                      ${discountHtml}         <!-- chèn ở đây -->
+                    </div>
+                  </div>
+                  <div class="d-flex align-items-center justify-content-between">
+                    <div>
+                      <span>Số đánh giá:</span>
+                      <span class="me-1">${soDanhGia}</span>
+                    </div>
+                    <div>
+                      <span>${soSao}</span>/5
+                      <img src="/Img/star-svgrepo-com.svg" alt=""
+                           style="width: 15px;height: 15px;" class="ms-1">
+                    </div>
+                  </div>
+                  <a href="/Customer/DatSan/Index?maChuSan=${san.maChuSan}"
+                     class="btn btn-primary w-100 mt-3"
+                     style="border-radius: 10px !important;
+                            background-color: #0e2238;
+                            height:43px;">
+                    Đặt nhanh kẻo muộn
+                  </a>
                 </div>
+              </div>
             </div>
         `);
     });
 }
+
 
 
 // 4. Hàm chuyển trang

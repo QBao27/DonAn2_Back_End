@@ -36,7 +36,7 @@ namespace Football_3TL.Areas.ChuSanBong.Controllers
             }
             try
             {
-                var danhSachKhuyenMai = await _db.KhuyenMais
+                var danhSachKhuyenMai = await _db.KhuyenMais.Where(km => km.MaChuSan == maChuSan)
                     .Select(g => new
                     {
                         g.TenKm,
@@ -93,8 +93,16 @@ namespace Football_3TL.Areas.ChuSanBong.Controllers
         [HttpPost]
         public async Task<IActionResult> AddKhuyenMai([FromBody] KhuyenMai km)
         {
+            var maChuSan = HttpContext.Session.GetInt32("maChuSan");
+            if (!maChuSan.HasValue)
+            {
+                _log.LogError("maChuSan is null. Session might not be set.");
+                return Json(new { success = false, message = "Bạn chưa đăng nhập!" });
+            }
+
             try
             {
+                km.MaChuSan = maChuSan;
                 if (km == null)
                 {
                     return Json(new { success = false, message = "Dữ liệu khuyến mãi không hợp lệ!" });
@@ -130,9 +138,11 @@ namespace Football_3TL.Areas.ChuSanBong.Controllers
 
                 // ✅ Kiểm tra giao thời gian: không được trùng với khuyến mãi khác
                 bool isOverlapping = await _db.KhuyenMais
-                    .AnyAsync(k =>
-                        (km.NgayBd <= k.NgayKt && km.NgayKt >= k.NgayBd)
-                    );
+    .AnyAsync(k =>
+        k.MaChuSan == km.MaChuSan &&                   // cùng chủ sân
+        k.MaKm != km.MaKm &&                           // khác mã khuyến mãi (tránh so với chính mình khi update)
+        km.NgayBd <= k.NgayKt && km.NgayKt >= k.NgayBd // kiểm tra giao nhau thời gian
+    );
 
                 if (isOverlapping)
                 {
@@ -158,6 +168,7 @@ namespace Football_3TL.Areas.ChuSanBong.Controllers
                 {
                     km.TrangThai = "Đang diễn ra";
                 }
+
 
                 _db.KhuyenMais.Add(km);
                 await _db.SaveChangesAsync();
@@ -230,17 +241,20 @@ namespace Football_3TL.Areas.ChuSanBong.Controllers
 
                 // Kiểm tra ngày có giao nhau với chương trình khác không
                 bool isOverlapping = await _db.KhuyenMais
-                    .Where(k => k.MaKm != km.MaKm) // loại trừ chính nó
-                    .AnyAsync(k =>
-                        (km.NgayBd <= k.NgayKt && km.NgayKt >= k.NgayBd)
-                    );
+     .AnyAsync(k =>
+         k.MaChuSan == km.MaChuSan &&             // chỉ cùng chủ sân
+         k.MaKm != km.MaKm &&                     // không phải chính nó
+         km.NgayBd <= k.NgayKt &&                 // có giao nhau ngày
+         km.NgayKt >= k.NgayBd
+     );
+
 
                 if (isOverlapping)
                 {
                     return Json(new { success = false, message = "Khoảng thời gian khuyến mãi bị trùng với chương trình khác!" });
                 }
 
-               
+
                 // Cập nhật trạng thái theo ngày hiện tại
                 var today = DateOnly.FromDateTime(DateTime.Today);
                 if (today < km.NgayBd)
@@ -339,6 +353,97 @@ namespace Football_3TL.Areas.ChuSanBong.Controllers
             {
                 _log.LogError(ex, "Lỗi khi cập nhật trạng thái tất cả khuyến mãi");
                 return Json(new { success = false, message = "Lỗi khi cập nhật trạng thái: " + ex.Message });
+            }
+        }
+
+
+        //API lấy thông tin khuyến mãi theo mã chủ sân
+        [HttpGet]
+        public async Task<IActionResult> GetKhuyenMaiByMaChuSan(int maChuSan)
+        {
+            try{ 
+
+                // Lấy 1 khuyến mãi đầu tiên đang diễn ra
+                var promo = await _db.KhuyenMais
+                    .AsNoTracking()
+                    .Where(km => km.MaChuSan == maChuSan
+                              && km.TrangThai == "Đang diễn ra"
+                           )
+                    .OrderBy(km => km.NgayBd)   // ưu tiên khuyến mãi bắt đầu sớm nhất
+                    .Select(km => new
+                    {
+                        km.MaKm,
+                        km.TenKm,
+                        km.GiamGia,
+                        km.NgayBd,
+                        km.NgayKt,
+                        km.TrangThai
+                    })
+                    .FirstOrDefaultAsync();
+
+                if (promo == null)
+                {
+                    // Không tìm thấy khuyến mãi nào đang diễn ra
+                    return Json(new { success = false, message = "Không có khuyến mãi đang diễn ra.", khuyenMai = 0 });
+                }
+
+                return Json(new { success = true, data = promo });
+            }
+            catch (Exception ex)
+            {
+                _log.LogError(ex, "Lỗi khi lấy khuyến mãi theo mã chủ sân");
+                return Json(new { success = false, message = "Lỗi khi lấy khuyến mãi: " + ex.Message });
+            }
+        }
+
+        //API thay đổi giá 
+        [HttpGet] 
+        public async Task<IActionResult> ChangePrice(int maChuSan, string ngayNhan)
+        {
+            try
+            {
+                // Kiểm tra ma chu san
+                if (maChuSan <= 0)
+                {
+                    return Json(new { success = false, message = "Mã chủ sân không hợp lệ!" });
+                }
+                Console.WriteLine(ngayNhan);
+                if (ngayNhan == null)
+                {
+                    return Json(new { success = false, message = "Ngày nhận không hợp lệ!" });
+                }
+
+                var ngayNhan_New = DateOnly.Parse(ngayNhan);
+                Console.WriteLine(ngayNhan_New);
+                if (ngayNhan_New == default)
+                {
+                    return Json(new { success = false, message = "Ngày nhận không hợp lệ!" });
+                }
+
+                Console.WriteLine("data",ngayNhan_New);
+                // Kiểm tra khuyến mãi
+                var khuyenMai = await _db.KhuyenMais
+                    .Where(km => km.MaChuSan == maChuSan &&
+                                 km.NgayBd <= ngayNhan_New &&
+                                 km.NgayKt >= ngayNhan_New && km.TrangThai == "Đang diễn ra")
+                    .OrderByDescending(km => km.GiamGia)
+                    .FirstOrDefaultAsync();
+                decimal giamGia = 0;
+
+                if (khuyenMai == null)
+                {
+                    return Json(new { success = false, message = "Không giảm!" });
+                }
+                else                 {
+                    giamGia = khuyenMai.GiamGia;
+                }
+
+                return Json(new { success = true, data = giamGia });
+            }
+            catch (Exception ex)
+            {
+                _log.LogError(ex, "Lỗi khi cập nhật giá khuyến mãi");
+                return Json(new { success = false, message = "Lỗi khi cập nhật giá: " + ex.Message });
             }
         }
 

@@ -86,6 +86,7 @@ namespace Football_3TL.Areas.Customer.Controllers
                         .ThenInclude(b => b.HinhAnhBaiDangs)
                     .Include(c => c.SanBongs)
                     .Include(c => c.DanhGia) // ✅ Bổ sung Include
+                    .Include(c => c.KhuyenMais)
                     .Where(c => c.TaiKhoans.Any(tk => tk.TrangThai == "2"))
                     .Select(c => new modelDanhSachSanBong
                     {
@@ -109,7 +110,18 @@ namespace Football_3TL.Areas.Customer.Controllers
                                     : 0,
 
                         // ✅ Số lượng đánh giá
-                        SoDanhGia = c.DanhGia.Count()
+                        SoDanhGia = c.DanhGia.Count(),
+
+                        GiamGia = c.KhuyenMais
+                               .Where(km =>
+                                   km.MaChuSan == c.MaChuSan
+                                   && km.TrangThai == "Đang diễn ra"
+                               // hoặc nếu dùng ngày bắt đầu/kết thúc:
+                               // && km.NgayBatDau <= now
+                               // && km.NgayKetThuc >= now
+                               )
+                               .Select(km => km.GiamGia)  // hoặc km.GiamGia
+                               .FirstOrDefault()
                     })
                     .Skip(1)
                     .ToListAsync();

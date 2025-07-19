@@ -478,8 +478,8 @@ function updateTrangKhuyenMai() {
     });
 }
 
-//5 phút gọi hàm 1 lần 
-setInterval(updateTrangKhuyenMai, 300000);
+//5 tiếng gọi hàm 1 lần 
+setInterval(updateTrangKhuyenMai, 5 * 60 * 1000);
 
 $(document).ready(function () {
     hienThiDanhSachKM();
