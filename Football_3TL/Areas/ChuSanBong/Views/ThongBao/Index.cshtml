@@ -2,13 +2,21 @@
     <nav class="navbar navbar-expand px-4 py-3">
         <div class="container-fluid">
             <div class="navbar-collapse collapse">
-                <ul class="navbar-nav justify-content-between w-100 flex-wrap">
+                <ul class="navbar-nav justify-content-between w-100 flex-wrap align-items-baseline">
                     <li>
-                        <h2 class="fw-bold">Gói đã hết hạn! vui lòng gia hạn để tiếp tục sử dụng</h2>
+                        <h2 class="fw-bold">Thông Báo</h2>
                     </li>
                     @await Html.PartialAsync("~/Areas/ChuSanBong/Views/ThongTinChuSan/Index.cshtml")
                 </ul>
             </div>
         </div>
     </nav>
+    <main class="content px-3 py-3">
+        <div class="alert alert-warning text-center mt-5" role="alert" style="font-size: 1.2rem;">
+            <i class="bi bi-exclamation-triangle-fill me-2" style="font-size: 1.5rem; color: #d9534f;"></i>
+            <strong>Gói dịch vụ của bạn đã hết hạn!</strong>
+            <br />
+            Vui lòng gia hạn để tiếp tục sử dụng các tính năng.
+        </div>
+    </main>
 </div>

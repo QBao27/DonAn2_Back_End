@@ -82,12 +82,16 @@ namespace Football_3TL.Areas.Customer.Controllers
                 var list = await _db.ChuSans
                     .AsNoTracking()
                     .Include(c => c.TaiKhoans)
+                    .Include(c => c.ThongTinDangKies)
                     .Include(c => c.ThongTinBaiDangs)
                         .ThenInclude(b => b.HinhAnhBaiDangs)
                     .Include(c => c.SanBongs)
                     .Include(c => c.DanhGia) // ✅ Bổ sung Include
                     .Include(c => c.KhuyenMais)
-                    .Where(c => c.TaiKhoans.Any(tk => tk.TrangThai == "2"))
+                    .Where(c =>
+                        c.TaiKhoans.Any(tk => tk.TrangThai == "2") &&
+                        c.ThongTinDangKies.Any(ttdk => ttdk.TrangThai != "2")
+                    )
                     .Select(c => new modelDanhSachSanBong
                     {
                         MaChuSan = c.MaChuSan,
