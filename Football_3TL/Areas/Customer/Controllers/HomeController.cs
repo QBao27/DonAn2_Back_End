@@ -127,7 +127,6 @@ namespace Football_3TL.Areas.Customer.Controllers
                                .Select(km => km.GiamGia)  // hoặc km.GiamGia
                                .FirstOrDefault()
                     })
-                    .Skip(1)
                     .ToListAsync();
 
                 // 2. Đếm tổng số ChuSan hợp lệ

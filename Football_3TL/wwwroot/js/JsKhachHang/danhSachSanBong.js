@@ -11,6 +11,7 @@ function fetchDanhSachSan() {
         type: "GET",
         success: function (response) {
             if (response.success) {
+                console.log(response)
                 sanBongs = response.data;    // gán dữ liệu từ API
                 danhSachSanSearch = response.data.slice(); // lưu bản gốc
                 const $sel = $('#danhSachTenSan');

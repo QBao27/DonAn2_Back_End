@@ -200,7 +200,7 @@ $(document).ready(function () {
     //    });
     //}
 
-    function submitAssessmentForm() {
+    window.submitAssessmentForm= function () {
         if (!validateAssessmentForm()) {
             return; // Nếu validate fail thì không gửi
         }
