@@ -220,7 +220,22 @@ $(document).on('click', '.btn-show-detail', function () {
 });
 
 
+function TimKiemTaiKhoan() {
+    let keyword = $("#searchTaiKhoan").val().toLowerCase();
 
+    $("#chuSanTableBody tr").each(function () {
+        let rowText = $(this).text().toLowerCase(); // Lấy toàn bộ nội dung hàng
+        if (rowText.includes(keyword)) {
+            $(this).show();
+        } else {
+            $(this).hide();
+        }
+    });
+}
+
+$('#searchTaiKhoan').keyup(function () {
+    TimKiemTaiKhoan();
+});
 
 
 // Gọi hàm khi trang vừa load
