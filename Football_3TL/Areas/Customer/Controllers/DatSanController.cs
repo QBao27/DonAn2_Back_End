@@ -160,6 +160,8 @@ namespace Football_3TL.Areas.Customer.Controllers
                 Console.WriteLine($"🟥 MaSan={ds.MaSan}: [{bStart} - {bEnd}] vs [{gioBD} - {gioKT}] => Overlap: {isOverlap}");
             }
 
+            var khuyenMais = dbContext.GiamGiaTheoGios.Where(km => km.MaChuSan == maChuSan).ToList();
+
             var sanTrong = dbContext.SanBongs
                 .Where(sb => sb.MaChuSan == maChuSan)
                 .ToList()
@@ -175,14 +177,35 @@ namespace Football_3TL.Areas.Customer.Controllers
                         )
                     )
                 )
-                .Select(sb => new
-                {
-                    maSan = sb.MaSan,
-                    tenSan = sb.TenSan,
-                    loaiSan = sb.LoaiSan,
-                    gia = sb.Gia
-                })
-                .ToList();
+               .Select(sb =>
+               {
+                   var giaGoc = (decimal)(sb.Gia ?? 0); // ép sang decimal luôn
+                   decimal giaCuoi = giaGoc;
+
+                   foreach (var km in khuyenMais)
+                   {
+                       if (IsInDiscountTime(gioBD, km.GioBd, km.GioKt))
+                       {
+                           giaCuoi = giaGoc - (giaGoc * km.GiamGia / 100m);
+                           Console.WriteLine($"✅ Sân {sb.MaSan} được giảm từ {giaGoc} còn {giaCuoi} vì nằm trong [{km.GioBd} - {km.GioKt}] với % giảm {km.GiamGia}");
+                           break;
+                       }
+                       else
+                           Console.WriteLine($"✅ Sân {sb.MaSan} không được giảm [{km.GioBd} - {km.GioKt}] còn vì không  nằm trong giá hiện tại {giaCuoi} ");
+                   }
+
+
+                   return new
+                   {
+                       maSan = sb.MaSan,
+                       tenSan = sb.TenSan,
+                       loaiSan = sb.LoaiSan,
+                       gia = giaCuoi,
+                       giaGoc = giaGoc,
+                       apDungGiamGia = giaCuoi < giaGoc
+                   };
+               })
+    .ToList();
 
             Console.WriteLine($"✅ Có {sanTrong.Count} sân còn trống.");
 
@@ -201,5 +224,15 @@ namespace Football_3TL.Areas.Customer.Controllers
 
             return Json(response);
         }
+
+        //hàm kiểm tra giờ bắt đầu có nằm trong khung giờ giảm giá hay k
+        private bool IsInDiscountTime(TimeOnly gio, TimeOnly start, TimeOnly end)
+        {
+            if (start < end)
+                return gio >= start && gio < end;
+            else
+                return gio >= start || gio < end; // xử lý khung giờ qua đêm
+        }
+
     }
 }

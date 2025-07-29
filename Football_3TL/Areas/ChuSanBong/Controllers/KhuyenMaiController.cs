@@ -187,8 +187,15 @@ namespace Football_3TL.Areas.ChuSanBong.Controllers
         [HttpPost]
         public async Task<IActionResult> UpdateKhuyenMai([FromBody] KhuyenMai km)
         {
+            var maChuSan = HttpContext.Session.GetInt32("maChuSan");
+            if (!maChuSan.HasValue)
+            {
+                _log.LogError("maChuSan is null. Session might not be set.");
+                return Json(new { success = false, message = "Bạn chưa đăng nhập!" });
+            }
             try
             {
+                km.MaChuSan = maChuSan;
                 if (km == null)
                 {
                     return Json(new { success = false, message = "Dữ liệu khuyến mãi không hợp lệ!" });
@@ -241,12 +248,12 @@ namespace Football_3TL.Areas.ChuSanBong.Controllers
 
                 // Kiểm tra ngày có giao nhau với chương trình khác không
                 bool isOverlapping = await _db.KhuyenMais
-     .AnyAsync(k =>
-         k.MaChuSan == km.MaChuSan &&             // chỉ cùng chủ sân
-         k.MaKm != km.MaKm &&                     // không phải chính nó
-         km.NgayBd <= k.NgayKt &&                 // có giao nhau ngày
-         km.NgayKt >= k.NgayBd
-     );
+    .AnyAsync(k =>
+        k.MaChuSan == km.MaChuSan &&                   // cùng chủ sân
+        k.MaKm != km.MaKm &&                           // khác mã khuyến mãi (tránh so với chính mình khi update)
+        km.NgayBd <= k.NgayKt && km.NgayKt >= k.NgayBd // kiểm tra giao nhau thời gian
+    );
+
 
 
                 if (isOverlapping)

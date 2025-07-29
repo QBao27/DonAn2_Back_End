@@ -112,7 +112,7 @@ function resetDataThemKM() {
 function resetErrorDataSuaKM() {
     // Xóa text lỗi
     $('#errortenChuongTrinhKhuyenMaiSua').text('');
-    $('#ErrorgiamGia').text('');
+    $('#errorGiamGia').text('');
     $('#errorNgayBatDauChuongTrinhSua').text('');
     $('#errorNgayKetThucChuongTrinhSua').text('');
 

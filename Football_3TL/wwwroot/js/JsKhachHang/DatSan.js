@@ -788,6 +788,7 @@ $(document).ready(function () {
 //    });
 //}
 
+//Lấy danh sách sân bóng
 function fetchSanTrong() {
     const raw = $('#myID').val(); // "26-04-2025"
     const parts = raw.split("-");
@@ -815,7 +816,7 @@ function fetchSanTrong() {
             ngayDat: ngayDat,
             gioBatDau: gioBatDau,
             maChuSan: maChuSan,
-            thoiLuong: thoiLuong // 🔥 Gửi thêm
+            thoiLuong: thoiLuong
         },
         success: function (result) {
             console.log("Kết quả sân trống:", result);
@@ -828,9 +829,19 @@ function fetchSanTrong() {
             } else {
                 select.append('<option value="">Chưa chọn sân</option>');
                 result.forEach(function (san) {
-                    select.append(`<option value="${san.maSan}" data-gia="${san.gia}">
-                        Sân: ${san.tenSan} - ${san.gia}đ
-                    </option>`);
+                    var giaText = '';
+
+                    if (san.apDungGiamGia) {
+                        giaText = `${san.giaGoc}đ → ${san.gia}đ`;
+                    } else {
+                        giaText = `${san.gia}đ`;
+                    }
+
+                    select.append(`
+                    <option value="${san.maSan}" data-gia="${san.gia}">
+                        Sân: ${san.tenSan} - ${giaText} / 1h
+                    </option>
+                `);
                 });
             }
         },
@@ -839,6 +850,7 @@ function fetchSanTrong() {
             console.error('Chi tiết:', xhr.responseText);
         }
     });
+
 }
 
 
