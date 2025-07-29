@@ -162,7 +162,7 @@ function ThemSanBong(tenSan, gia, loaiSan) {
         }),
         success: function (response) {
             if (response.success) {
-                showSweetAlert(response.message);
+                Swal.fire("Thêm thành công!", response.message, "success");
                 // Ẩn modal sau khi thêm thành công
                 $("#them").modal("hide");
                 LoadSanBong();
@@ -342,3 +342,15 @@ function TimKiemSan() {
 $(document).ready(function () {
     LoadSanBong();
 });
+
+function showSweetAlert(title, message, icon) {
+    Swal.fire({
+        title: title,
+        text: message,
+        icon: icon, // success, error, warning, info, question
+        confirmButtonText: 'OK',
+        customClass: {
+            popup: 'custom-swal'
+        }
+    });
+}
