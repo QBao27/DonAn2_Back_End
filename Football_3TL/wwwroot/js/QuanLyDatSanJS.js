@@ -634,7 +634,7 @@ function loadThongTinThanhToan() {
                         <th scope="row">${index + 1}</th>
                         <td class="me-2">${item.tenSan}</td>
                         <td>${item.loaiSan}</td>
-                        <td class="text-center">${item.giaSan} / 1h</td>
+                        <td class="text-center">${item.giaSauGiam} / 1h</td>
                         <td>${item.trangThaiSan}</td>
                         <td class="text-secondary">${item.trangThaiThanhToan}</td>
                         <td>

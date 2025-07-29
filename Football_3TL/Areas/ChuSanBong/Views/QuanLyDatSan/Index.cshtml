@@ -7,6 +7,34 @@
                 <li>
                     <h2 style="font-weight: bolder;">Quản lý đặt sân</h2>
                 </li>
+                @if (ViewBag.KhuyenMai == true)
+                {
+                    <li>
+                        <div class="px-3 py-2 d-flex align-items-center flex-nowrap overflow-hidden"
+                             style="
+                     background-color: #b30000;
+                     border: 1px solid #800000;
+                     border-radius: 8px;
+                     color: yellow;">
+
+                            <!-- Tên KM -->
+                            <span class="fw-bold text-truncate me-4" style="max-width: 800px;">
+                                @ViewBag.TenKhuyenMai
+                            </span>
+
+                            <!-- Phần trăm giảm giá -->
+                            <span class="me-4 text-nowrap fw-bold">
+                                Giảm giá: <span>@ViewBag.MucGiam</span>%
+                            </span>
+
+                            <!-- Thời gian KM -->
+                            <span class="text-nowrap fw-bold">
+                                Thời gian: @ViewBag.NgayBd.ToString("dd/MM/yyyy")
+                                &ndash; @ViewBag.NgayKt.ToString("dd/MM/yyyy")
+                            </span>
+                        </div>
+                    </li>
+                }
                 @await Html.PartialAsync("~/Areas/ChuSanBong/Views/ThongTinChuSan/Index.cshtml")
             </ul>
         </div>
@@ -82,7 +110,9 @@
                                                 <th scope="row">@soThuTu</th>
                                                 <td class="me-2">@i.TenSan</td>
                                                 <td>@i.LoaiSan</td>
-                                                <td class="text-center"><span id="giaSanDat">@i.GiaSan</span> / 1h</td>
+                                                <td class="text-center">
+                                                    <span id="giaSanDat">@i.GiaSan</span> / 1h
+                                                    </td>
                                                 <td>@i.TrangThai</td>
                                                 <td class="text-secondary">@i.TrangThaiThanhToan</td>
                                                 <td>

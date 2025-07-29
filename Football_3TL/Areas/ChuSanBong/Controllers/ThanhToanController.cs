@@ -35,6 +35,7 @@ namespace Football_3TL.Areas.ChuSanBong.Controllers
                     _log.LogError("maChuSan is null. Session might not be set.");
                     return Json(new { success = false, message = "Bạn chưa đăng nhập!" });
                 }
+
                 var thongTin = await _db.ThongTinDatSans
                             .Where(tt => tt.MaChuSan == maChuSan && tt.TrangThaiThanhToan == "Chưa thanh toán")
                             .Include(tt => tt.MaSanNavigation)  // Kết hợp thông tin sân bóng
