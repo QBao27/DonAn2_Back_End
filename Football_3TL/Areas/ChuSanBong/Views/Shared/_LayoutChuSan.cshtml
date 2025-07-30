@@ -81,6 +81,21 @@
                         </li>
                     </ul>
                 </li>
+                <li class="sidebar-item">
+                    <a class="sidebar-link collapsed has-dropdown" data-bs-toggle="collapse"
+                       data-bs-target="#auth" aria-expanded="false" aria-controls="auth">
+                        <i class="lni lni-agenda"></i>
+                        <span>Quản lý khuyến mãi</span>
+                    </a>
+                    <ul id="auth" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
+                        <li class="sidebar-item">
+                            <a class="sidebar-link" asp-controller="HoaDon" asp-action="Index">Chương khuyến mãi</a>
+                        </li>
+                        <li class="sidebar-item">
+                            <a class="sidebar-link" asp-controller="ThongKe" asp-action="Index">Khuyến mãi theo giờ</a>
+                        </li>
+                    </ul>
+                </li>
             </ul>
         </div>
         @RenderBody()

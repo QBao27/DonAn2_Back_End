@@ -446,17 +446,29 @@ $(document).ready(function () {
             return;
         }
 
-        var roundedRating = Math.round(averageRating); // hoặc Math.ceil / Math.floor nếu bạn muốn
+        var fullStars = Math.floor(averageRating);
+        var hasHalfStar = (averageRating - fullStars) >= 0.5;
 
         var stars = document.querySelectorAll('.saoTrungBinh');
+
         stars.forEach(function (star, index) {
-            if (index < roundedRating) {
-                star.classList.add('text-warning');
+            if (index < fullStars) {
+                // Sao đầy
+                star.classList.remove('fa-star-half-alt', 'far');
+                star.classList.add('fas', 'fa-star', 'text-warning');
+            } else if (index === fullStars && hasHalfStar) {
+                // Sao nửa
+                star.classList.remove('fa-star', 'far');
+                star.classList.add('fas', 'fa-star-half-alt', 'text-warning');
             } else {
+                // Sao rỗng
+                star.classList.remove('fa-star', 'fa-star-half-alt', 'fas');
+                star.classList.add('far', 'fa-star');
                 star.classList.remove('text-warning');
             }
         });
     }
+
 
     function ThongTinKhuyenMai() {
         var maChuSan = $('#MaChuSan').val();
