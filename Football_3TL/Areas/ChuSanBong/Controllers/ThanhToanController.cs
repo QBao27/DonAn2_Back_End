@@ -21,8 +21,37 @@ namespace Football_3TL.Areas.ChuSanBong.Controllers
 
         public IActionResult Index()
         {
+            var maChuSan = HttpContext.Session.GetInt32("maChuSan");
+            if (!maChuSan.HasValue)
+            {
+                // return RedirectToAction("Login", "Account");
+                // Còn nếu vẫn muốn trả JSON:
+                return Json(new { success = false, message = "Bạn chưa đăng nhập!" });
+            }
+
+            var today = DateOnly.FromDateTime(DateTime.Now);
+
+            // Chỉ kiểm tra có khuyến mãi hay không
+            var khuyenMai = _db.KhuyenMais
+             .AsNoTracking()
+             .FirstOrDefault(km =>
+                 km.MaChuSan == maChuSan &&
+                 km.TrangThai == "Đang diễn ra" &&
+                 km.NgayBd <= today &&
+                 km.NgayKt >= today);
+
+            var coKhuyenMai = khuyenMai != null;
+            double mucGiam = coKhuyenMai ? (double)khuyenMai.GiamGia : 0;
+
+            ViewBag.KhuyenMai = coKhuyenMai;
+            ViewBag.MucGiam = mucGiam;
+            ViewBag.TenKhuyenMai = khuyenMai?.TenKm;
+            ViewBag.NgayBd = khuyenMai?.NgayBd;
+            ViewBag.NgayKt = khuyenMai?.NgayKt;
+
             return View();
         }
+
 
         //API lấy thông tin đặt sân chưa thanh toán
         public async Task<IActionResult> getThongTinDatSanTT()
@@ -50,7 +79,6 @@ namespace Football_3TL.Areas.ChuSanBong.Controllers
                                 LoaiSan = tt.MaSanNavigation.LoaiSan
                             })
                             .ToListAsync();
-
                 return Json(new { success = true, data = thongTin, message = "Lấy thông tin thành công!" });
             }
             catch (Exception)

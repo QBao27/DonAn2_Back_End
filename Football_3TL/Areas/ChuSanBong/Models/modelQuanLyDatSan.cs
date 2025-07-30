@@ -10,5 +10,6 @@
         public int? MaDatSan { get; set; }
         public int? MaSan { get; set; }
         public double? giaGoc { get; set; }
+        public bool ApDungGiamGia { get; internal set; }
     }
 }
