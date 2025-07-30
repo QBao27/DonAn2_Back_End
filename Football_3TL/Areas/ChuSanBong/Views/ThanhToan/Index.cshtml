@@ -5,6 +5,34 @@
                 <li>
                     <h2 style="font-weight: bolder;">Thanh Toán</h2>
                 </li>
+                @if (ViewBag.KhuyenMai == true)
+                {
+                    <li>
+                        <div class="px-3 py-2 d-flex align-items-center flex-nowrap overflow-hidden"
+                             style="
+                         background-color: #b30000;
+                         border: 1px solid #800000;
+                         border-radius: 8px;
+                         color: yellow;">
+
+                            <!-- Tên KM -->
+                            <span class="fw-bold text-truncate me-4" style="max-width: 800px;">
+                                @ViewBag.TenKhuyenMai
+                            </span>
+
+                            <!-- Phần trăm giảm giá -->
+                            <span class="me-4 text-nowrap fw-bold">
+                                Giảm giá: <span>@ViewBag.MucGiam</span>%
+                            </span>
+
+                            <!-- Thời gian KM -->
+                            <span class="text-nowrap fw-bold">
+                                Thời gian: @ViewBag.NgayBd.ToString("dd/MM/yyyy")
+                                &ndash; @ViewBag.NgayKt.ToString("dd/MM/yyyy")
+                            </span>
+                        </div>
+                    </li>
+                }
                 <li class="nav-item dropdown">
                     <a href="#" data-bs-toggle="dropdown" class="nav-icon pe-md-0">
                         <img src="~/Img/account.png" class="avatar img-fluid" alt="">
@@ -52,9 +80,8 @@
                                     <th scope="col" class="col-1">STT</th>
                                     <th scope="col" class="col-2">Tên sân</th>
                                     <th scope="col" class="col-1">Loại sân</th>
-                                    <th scope="col" class="col-2 text-center">Giá sân</th>
-                                    <th scope="col" class="col-2">Trạng thái</th>
-                                    <th scope="col" class="col-2">Thanh toán</th>
+                                    <th scope="col" class="col-2 text-center">Trạng thái</th>
+                                    <th scope="col" class="col-3 text-center">Thanh toán</th>
                                     <th scope="col" class="col-2"></th>
                                 </tr>
                             </thead>

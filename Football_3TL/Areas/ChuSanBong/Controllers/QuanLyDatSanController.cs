@@ -212,6 +212,9 @@ namespace Football_3TL.Areas.ChuSanBong.Controllers
                 }
                 else 
                 {
+                    Console.WriteLine($"Khung giờ: {model.KhungGio}, Thời lượng: {model.ThoiLuong}");
+                    var khuyenMais = _db.GiamGiaTheoGios.Where(km => km.MaChuSan == maChuSan).ToList();
+
                     //Nếu chọn ok thì lấy ngày đã chọn kiểm tra với ngày đặt lấy thời gian đã chọn và thời lượng kiểm tra xem nó có nằm trong thời gian đã đặt hay không (dựa vào thời lượng và giờ đặt)
                     danhSachSanBong = sanBongData
                      .Select(s =>
@@ -232,12 +235,43 @@ namespace Football_3TL.Areas.ChuSanBong.Controllers
                                 )
                             )
                          );
+
+                         // Giá gốc của sân
+                         decimal giaGoc = (decimal)(coKhuyenMai ? (s.Gia - (s.Gia * mucGiam / 100)) : s.Gia);
+
+                         // Biến lưu giá cuối cùng (có thể đã áp dụng khuyến mãi)
+                         decimal giaSauKM = giaGoc;
+
+                         foreach (var km in khuyenMais)
+                         {
+                             if (checkGioKhuyenMai(
+                                     model.KhungGio.Value,
+                                     km.GioBd,
+                                     km.GioKt))
+                             {
+                                 giaSauKM = giaGoc - (giaGoc * km.GiamGia / 100m);
+                                 Console.WriteLine(
+                                     $"✅ Sân {s.MaSan} được giảm từ {giaGoc} còn {giaSauKM} " +
+                                     $"vì nằm trong [{km.GioBd:HH:mm} - {km.GioKt:HH:mm}] với % giảm {km.GiamGia}"
+                                 );
+                                 break; // nếu chỉ áp dụng 1 khuyến mãi
+                             }
+                             else
+                             {
+                                 Console.WriteLine(
+                                     $"⚠️ Sân {s.MaSan} không được giảm " +
+                                     $"[{km.GioBd:HH:mm} - {km.GioKt:HH:mm}]"
+                                 );
+                             }
+                         }
                          return new modelQuanLyDatSan
                          {
+                             MaSan = s.MaSan,
                              TenSan = s.TenSan,
                              LoaiSan = s.LoaiSan,
-                             GiaSan = coKhuyenMai ? (s.Gia - (s.Gia * mucGiam / 100)) : s.Gia,
-                             MaSan = s.MaSan,
+                             GiaSan = (double?)giaSauKM,
+                             giaGoc = (double?)giaGoc,
+                             ApDungGiamGia = (giaSauKM < giaGoc),
                              TrangThai = thongTin?.TrangThaiSan ?? "Trống",
                              TrangThaiThanhToan = thongTin?.TrangThaiThanhToan ?? "Sân chưa đặt",
                              MaDatSan = thongTin?.MaDatSan ?? 0
@@ -473,6 +507,15 @@ namespace Football_3TL.Areas.ChuSanBong.Controllers
             }
         }
 
-        
+        //hàm kiểm tra xem giờ đặt có nằm trong khoảng thời gian khuyến mãi hay không
+        private bool checkGioKhuyenMai(TimeOnly gio, TimeOnly start, TimeOnly end)
+        {
+            if (start < end)
+                return gio >= start && gio < end;
+            else
+                return gio >= start || gio < end; // xử lý khung giờ qua đêm
+        }
+
+
     }
 }

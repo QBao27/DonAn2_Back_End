@@ -325,6 +325,12 @@ function resetErrorDatSan() {
 
 //Đóng mở modal đặt sân
 function modalDatSanTrong(btn) {
+    if ($('#selectGio').val() === "") {
+        toastr.warning("Bạn chưa chọn đủ thông tin!", "", {
+            timeOut: 1000 // Giới hạn thời gian hiển thị là 1 giây
+        });
+        return;
+    }
     $('#modalDatSanTrong').modal('toggle');
      //Lấy dữ liệu
     let ngayNhan = $('#myIDQLDS').val().trim() || null;
@@ -625,6 +631,7 @@ function loadThongTinThanhToan() {
         dataType: 'json', // Dữ liệu trả về dạng JSON
         success: function (response) {
             if (response.success) {
+                console.log(response.data);
                 var tbody = $("#danhSachSanThanhToan");
                 tbody.empty(); // Xóa nội dung cũ nếu có
                 if (response.data.length > 0) {
@@ -633,10 +640,9 @@ function loadThongTinThanhToan() {
                         var row = `<tr>
                         <th scope="row">${index + 1}</th>
                         <td class="me-2">${item.tenSan}</td>
-                        <td>${item.loaiSan}</td>
-                        <td class="text-center">${item.giaSauGiam} / 1h</td>
-                        <td>${item.trangThaiSan}</td>
-                        <td class="text-secondary">${item.trangThaiThanhToan}</td>
+                        <td class="">${item.loaiSan}</td>
+                        <td class="text-center">${item.trangThaiSan}</td>
+                        <td class="text-secondary text-center">${item.trangThaiThanhToan}</td>
                         <td>
                             <button type="button" class="btn btn-success btn-sm w-100" style="border-radius: 10px;" onclick="getDataDatSan(${item.maDatSan}); modalThanhToan();">
                                 Thanh toán
