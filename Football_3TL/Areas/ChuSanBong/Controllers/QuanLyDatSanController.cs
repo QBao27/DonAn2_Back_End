@@ -56,6 +56,16 @@ namespace Football_3TL.Areas.ChuSanBong.Controllers
                         ThongTinDatSans = s.ThongTinDatSans
                     })
                     .ToList();
+                var khuyenMai = _db.KhuyenMais
+             .AsNoTracking()
+             .FirstOrDefault(km =>
+                 km.MaChuSan == maChuSan &&
+                 km.TrangThai == "Đang diễn ra" &&
+                 km.NgayBd <= today &&
+                 km.NgayKt >= today);
+
+                var coKhuyenMai = khuyenMai != null;
+                double mucGiam = coKhuyenMai ? (double)khuyenMai.GiamGia : 0;
 
                 // Bước 2: Ánh xạ dữ liệu sang modelQuanLyDatSan và tính toán TrangThai, TrangThaiThanhToan
                 var danhSachSanBong = sanBongData
@@ -72,14 +82,21 @@ namespace Football_3TL.Areas.ChuSanBong.Controllers
                         {
                             TenSan = s.TenSan,
                             LoaiSan = s.LoaiSan,
-                            GiaSan = s.Gia,
+                            GiaSan = coKhuyenMai ? (s.Gia - (s.Gia * mucGiam / 100)) : s.Gia,
                             MaSan = s.MaSan,
                             TrangThai = thongTin?.TrangThaiSan ?? "Trống",
                             TrangThaiThanhToan = thongTin?.TrangThaiThanhToan ?? "Sân chưa đặt",
-                            MaDatSan = thongTin?.MaDatSan ?? 0
+                            MaDatSan = thongTin?.MaDatSan ?? 0,
                         };
                     })
                     .ToList();
+                Console.WriteLine(danhSachSanBong);
+
+                ViewBag.KhuyenMai = coKhuyenMai;
+                ViewBag.MucGiam = mucGiam;
+                ViewBag.TenKhuyenMai = khuyenMai?.TenKm;
+                ViewBag.NgayBd = khuyenMai?.NgayBd;
+                ViewBag.NgayKt = khuyenMai?.NgayKt;// nếu muốn hiển thị tên khuyến mãi
 
                 return View(danhSachSanBong);
             }
@@ -123,9 +140,29 @@ namespace Football_3TL.Areas.ChuSanBong.Controllers
                     .ToListAsync();
 
                 List<modelQuanLyDatSan>? danhSachSanBong = null;
+                var khuyenMai = _db.KhuyenMais
+            .AsNoTracking()
+            .FirstOrDefault(km =>
+                km.MaChuSan == maChuSan &&
+                km.TrangThai == "Đang diễn ra" &&
+                km.NgayBd <= model.NgayNhan &&
+                km.NgayKt >= model.NgayNhan);
+
+                var coKhuyenMai = khuyenMai != null;
+                double mucGiam = coKhuyenMai ? (double)khuyenMai.GiamGia : 0;
 
                 if (model.NgayNhan == null)
                 {
+                    khuyenMai = _db.KhuyenMais
+            .AsNoTracking()
+            .FirstOrDefault(km =>
+                km.MaChuSan == maChuSan &&
+                km.TrangThai == "Đang diễn ra" &&
+                km.NgayBd <= today &&
+                km.NgayKt >= today);
+
+                    coKhuyenMai = khuyenMai != null;
+                    mucGiam = coKhuyenMai ? (double)khuyenMai.GiamGia : 0;
                     //Nếu chưa chọn ngày thì lấy thời điểm hiện tại kiểm tra ngày hiện tại và giờ với ngày đặt và giờ đặt
                     danhSachSanBong = sanBongData
                     .Select(s =>
@@ -141,7 +178,7 @@ namespace Football_3TL.Areas.ChuSanBong.Controllers
                         {
                             TenSan = s.TenSan,
                             LoaiSan = s.LoaiSan,
-                            GiaSan = s.Gia,
+                            GiaSan = coKhuyenMai ? (s.Gia - (s.Gia * mucGiam / 100)) : s.Gia,
                             MaSan = s.MaSan,
                             TrangThai = thongTin?.TrangThaiSan ?? "Trống",
                             TrangThaiThanhToan = thongTin?.TrangThaiThanhToan ?? "Sân chưa đặt",
@@ -164,7 +201,7 @@ namespace Football_3TL.Areas.ChuSanBong.Controllers
                          {
                              TenSan = s.TenSan,
                              LoaiSan = s.LoaiSan,
-                             GiaSan = s.Gia,
+                             GiaSan = coKhuyenMai ? (s.Gia - (s.Gia * mucGiam / 100)) : s.Gia,
                              MaSan = s.MaSan,
                              TrangThai = thongTin?.TrangThaiSan ?? "Trống",
                              TrangThaiThanhToan = thongTin?.TrangThaiThanhToan ?? "Sân chưa đặt",
@@ -199,7 +236,7 @@ namespace Football_3TL.Areas.ChuSanBong.Controllers
                          {
                              TenSan = s.TenSan,
                              LoaiSan = s.LoaiSan,
-                             GiaSan = s.Gia,
+                             GiaSan = coKhuyenMai ? (s.Gia - (s.Gia * mucGiam / 100)) : s.Gia,
                              MaSan = s.MaSan,
                              TrangThai = thongTin?.TrangThaiSan ?? "Trống",
                              TrangThaiThanhToan = thongTin?.TrangThaiThanhToan ?? "Sân chưa đặt",
@@ -436,6 +473,6 @@ namespace Football_3TL.Areas.ChuSanBong.Controllers
             }
         }
 
-
+        
     }
 }

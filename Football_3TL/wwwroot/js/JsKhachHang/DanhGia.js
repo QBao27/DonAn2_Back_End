@@ -480,7 +480,7 @@ $(document).ready(function () {
        color: yellow;                /* toàn bộ chữ vàng */
      ">
   <!-- Tên KM -->
-  <span class="fw-bold text-truncate me-4" style="max-width: 200px;">
+  <span class="fw-bold text-truncate me-4" style="max-width: 800px;">
     ${km.tenKm}
   </span>
 
