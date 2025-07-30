@@ -127,6 +127,8 @@ namespace Football_3TL.Areas.Customer.Controllers
                                .Select(km => km.GiamGia)  // hoặc km.GiamGia
                                .FirstOrDefault()
                     })
+                    .OrderByDescending(x => x.SoSaoTB)
+                    .ThenByDescending(x => x.SoDanhGia)
                     .ToListAsync();
 
                 var tongSoSan = await _db.ChuSans
