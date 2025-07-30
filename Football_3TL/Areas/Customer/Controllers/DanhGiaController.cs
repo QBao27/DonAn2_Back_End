@@ -46,12 +46,16 @@ namespace Football_3TL.Areas.Customer.Controllers
                     return Json(new { success = false, message = "Số điện thoại không tồn tại trong hệ thống. Vui lòng đặt sân." });
                 }
 
+                var danhSachMaKhachHang = dbContext.KhachHangs
+                                        .Where(kh => kh.SoDienThoai == PhoneNumber)
+                                        .Select(kh => kh.MaKhachHang)
+                                        .ToList();
                 // 2. Kiểm tra KH đó có từng đặt sân với MaChuSan này chưa
                 var daDatSan = dbContext.ThongTinDatSans
-                    .Any(ds =>
-                        ds.MaKhachHang == khachHang.MaKhachHang &&
-                        ds.MaChuSan == MaChuSan
-                    );
+                                 .Any(ds =>
+                                     danhSachMaKhachHang.Contains(ds.MaKhachHang) &&
+                                     ds.MaChuSan == MaChuSan
+                                 );
 
                 if (!daDatSan)
                 {
