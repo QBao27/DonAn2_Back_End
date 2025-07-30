@@ -129,9 +129,11 @@ namespace Football_3TL.Areas.Customer.Controllers
                     })
                     .ToListAsync();
 
-                // 2. Đếm tổng số ChuSan hợp lệ
                 var tongSoSan = await _db.ChuSans
-                    .Where(c => c.TaiKhoans.Any(tk => tk.TrangThai == "2"))
+                    .Where(c =>
+                        c.TaiKhoans.Any(tk => tk.TrangThai == "2") &&
+                        c.ThongTinDangKies.Any(ttdk => ttdk.TrangThai != "2")
+                    )
                     .CountAsync();
 
                 return Json(new { success = true, data = list, tongSan = tongSoSan });

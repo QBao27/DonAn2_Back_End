@@ -374,3 +374,20 @@ function deleteGoi(id) {
 $(document).ready(function () {
     hienThiDanhSachGoi();
 });
+
+function TimKiemGoi() {
+    let keyword = $("#timKiemGoi").val().toLowerCase();
+
+    $("#goiDangKyTable tr").each(function () {
+        let rowText = $(this).text().toLowerCase(); // Lấy toàn bộ nội dung hàng
+        if (rowText.includes(keyword)) {
+            $(this).show();
+        } else {
+            $(this).hide();
+        }
+    });
+}
+
+$('#timKiemGoi').keyup(function () {
+    TimKiemGoi();
+});
